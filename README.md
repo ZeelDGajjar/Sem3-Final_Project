@@ -59,20 +59,5 @@ Zombied helps players intuitively understand:
 
 ---
 
-## 👥 Team
-
-Developed by:  
-**Team Zombied** 🧟‍♀️  
-> Turning physics problems into interplanetary adventures.
-
----
-
-## 📜 License
-
-This project is developed for educational purposes.  
-Feel free to study, modify, or expand upon it for learning and classroom use.
-
----
-
 ### 🌌 “Learn. Launch. Land.”  
 *Explore the universe — one physics problem at a time.*
