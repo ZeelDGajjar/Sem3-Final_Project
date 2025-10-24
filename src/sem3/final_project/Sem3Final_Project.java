@@ -36,6 +36,7 @@ public class Sem3Final_Project extends Application {
         
         //initialize the core game data models 
         gameState = new GameState();
+        gameModel  = new GameModel(gameState);
         
        primaryStage.show();
     }

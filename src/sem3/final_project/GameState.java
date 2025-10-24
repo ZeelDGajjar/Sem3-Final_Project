@@ -9,5 +9,4 @@ package sem3.final_project;
  * @author Vedika
  */
 class GameState {
-    
 }
