@@ -57,13 +57,12 @@ public class Sem3Final_Project extends Application {
 
         System.out.println("Menu scene loaded successfully.");
 
-    } catch (Exception e) {
+       } catch (Exception e) {
         // If something goes wrong, print the error details
         e.printStackTrace();
         System.out.println("Error loading menu.fxml. Check the file path.");
     }
-
-
+        
         
        primaryStage.setTitle("Zombied: Space Physics Game");
        primaryStage.show();
