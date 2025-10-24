@@ -4,6 +4,8 @@
 package sem3.final_project;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -21,9 +23,10 @@ public class Sem3Final_Project extends Application {
     private static GameModel gameModel; 
     private static GameState gameState; 
 
-    /**
-     * @param args the command line arguments
-     */
+   //need to be able to swtich from different fxml 
+    
+    
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -33,13 +36,23 @@ public class Sem3Final_Project extends Application {
         
         //initialize the core game data models 
         gameState = new GameState();
-       
-        
-        
-        
-        
         
        primaryStage.show();
+    }
+    
+     /**
+     * Switches the current scene to another FXML view.
+     * Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
+     */
+    public static void switchScene(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Sem3Final_Project.class.getResource(fxmlPath));
+            Scene scene = new Scene(loader.load());
+            primaryStage.setScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error switching to scene: " + fxmlPath);
+        }
     }
     
     public static GameModel getGameModel() {
