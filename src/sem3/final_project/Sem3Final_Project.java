@@ -3,6 +3,7 @@
  */
 package sem3.final_project;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,23 +25,54 @@ public class Sem3Final_Project extends Application {
     private static GameState gameState; 
 
    //need to be able to swtich from different fxml 
-    
-    
-    
+   
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         
         //initialize the core game data models 
         gameState = new GameState();
-        gameModel  = new GameModel(gameState);
+        gameModel  = new GameModel(gameState); 
         
+        //load and display the main scene ( menu)
+        
+        try {
+        // Load the first scene (menu screen) from the FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/zombied/view/menu.fxml")); //*** need to create it 
+ 
+        // Create a new Scene using the FXML layout
+        Scene menuScene = new Scene(loader.load());
+
+        // Set the title of the window
+        primaryStage.setTitle("Zombied: Space Physics Game");
+   
+         // Set the menu scene on the stage
+        primaryStage.setScene(menuScene);
+
+        // Show the stage (make the window appear)
+        primaryStage.show();
+
+        System.out.println("Menu scene loaded successfully.");
+
+    } catch (Exception e) {
+        // If something goes wrong, print the error details
+        e.printStackTrace();
+        System.out.println("Error loading menu.fxml. Check the file path.");
+    }
+
+
+        
+       primaryStage.setTitle("Zombied: Space Physics Game");
        primaryStage.show();
     }
     
+     /**
+     * Switches the current scene to another FXML view.
+     * Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
+     */    
      /**
      * Switches the current scene to another FXML view.
      * Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
