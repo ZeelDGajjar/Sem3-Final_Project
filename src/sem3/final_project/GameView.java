@@ -47,8 +47,8 @@ public class GameView extends Application {
         Label levelLabel = new Label("Level");
         Label TimerLabel = new Label("Timer ");
         
-          angleSlider.valueProperty().addListener((observeable, oldvalue, newvalue) −>
-          {e -> handelSlider()
+          angleSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            handleSlider(newValue.doubleValue());
              });
        
        stage.show();
@@ -63,11 +63,8 @@ public class GameView extends Application {
     public void updateScore() {
         
     }
-
-    private void handelSlider() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public void handleSlider(double angle) {
+        System.out.println("Angle has changed to  " + angle);
     }
-    
-    
-    
 }
