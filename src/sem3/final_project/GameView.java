@@ -4,6 +4,11 @@
  */
 package sem3.final_project;
 
+import javafx.application.Application;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 /**
  *
  * @author Vedika
@@ -20,6 +25,29 @@ package sem3.final_project;
 //score 
 
 
-public class GameView {
+public class GameView extends Application {
+
+    @Override
+    public void start(Stage stage) {
+        //textfield 
+        TextField speedInput = new TextField();
+        //slider to add 
+        
+        //labels 
+        Label levelLabel = new Label("Level");
+        Label TimerLabel = new Label("Timer ");
+       
+       stage.show();
+    }
+    
+    //method 
+    public void ShowZombied() {
+        //result feedback , animation , hit effect 
+        
+    }
+    
+    public void updateScore() {
+        
+    }
     
 }
