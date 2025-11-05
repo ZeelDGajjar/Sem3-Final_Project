@@ -4,11 +4,22 @@
  */
 package sem3.final_project;
 
+import java.util.List;
+
 /**
  *
  * @author Vedika
  */
 class GameModel {
+       private int currentLevel; 
+       private int maxLevels; 
+       private double difficultyFactor; 
+       private long levelStartTime; 
+       private long levelTimeLimit; 
+       private Projectile projectile; 
+       private List<Planet> planets; 
+       
+       
        private GameState gameState;
     
     // Constructor that receives the GameState
