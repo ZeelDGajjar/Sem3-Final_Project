@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -34,6 +35,8 @@ public class GameView extends Application {
 
     @Override
     public void start(Stage stage) {
+        
+        Pane pane = new Pane();
         //textfield 
         TextField speedInput = new TextField();
         
@@ -49,7 +52,16 @@ public class GameView extends Application {
         
           angleSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             handleSlider(newValue.doubleValue());
-             });
+            });
+          
+          //button handler 
+          Launch.setOnAction(e -> 
+          {
+            
+          }
+          );
+          
+        pane.getChildren().addAll(speedInput, angleSlider, Launch, levelLabel, TimerLabel);
        
        stage.show();
     }
