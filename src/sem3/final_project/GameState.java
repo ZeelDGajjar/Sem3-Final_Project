@@ -11,12 +11,13 @@ package sem3.final_project;
  */
 class GameState {
     private int score; 
-    private int level; 
     private int attempts; 
     private long totalPlayTimeSec; //total time spent playing 
+    
     private int currentLevel; 
-    private boolean isZombied; 
     private int maxLevelReached;
+    
+    private boolean isZombied;
     
     public GameState() {
         resetAll();
@@ -30,36 +31,60 @@ class GameState {
         this.maxLevelReached = 1; 
     }
     
-    public void trackScore() {
-        
+    public void UpdateScore(int points ) {
+        if (points > 0) {
+            this.score += points; 
+        }
     }
     
-    public void setLevel() {
-        
+    /**
+     * method used to move forward 
+     * called by the gameModel to advance a level
+     * @param level 
+     */
+    public void setCurrentLevel(int level) {
+        this.currentLevel = Math.max(1,level);
+        if (level > maxLevelReached) {
+            maxLevelReached = level; 
+        }
     }
     
+    /**
+     * add one attempt every time a projectile is launched
+     */
     public void addAttempts() {
-        
+        this.attempts++; 
     }
     
     public int  getAttempts() {
         return attempts;
     }
     
-    public void resetGame() {
-        
+    
+     /**
+     * Adds time spend during launch or level ( controller will track)
+     * @param duration 
+     */
+    public void addPlayTime(long durationSeconds) {
+        if (durationSeconds > 0) {
+            this.totalPlayTimeSec += durationSeconds; 
+        }
     }
+    
+    /**
+     * Called when a player fails the level bu timeout or crashing
+     * @return 
+     */
+    public void setZombied (boolean zombied) {
+        this.isZombied = zombied; 
+    }
+    
     
     public boolean isGameOver() {
-        return true ; //** just for now 
+        return isZombied ; //** just for now 
     }
     
-    public void addPlayTime(long duration ) {
-        
-    }
-    
-    
-    //add more getters and setters
+    /// Getters 
     public int getScore() {
         return score; 
     }
@@ -68,8 +93,16 @@ class GameState {
         return totalPlayTimeSec;
     }
     
-    public getCurrentLevel() {
+    public int getCurrentLevel() {
         return currentLevel;
+    }
+    
+       public int getMaxLevelReached() {
+        return maxLevelReached;
+    }
+
+    public boolean isZombied() {
+        return isZombied;
     }
     
     
