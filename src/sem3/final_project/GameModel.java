@@ -22,6 +22,8 @@ class GameModel {
        //simulation objects
        private Projectile projectile; 
        private List<Planet> planets; 
+       private Planet targetPlanet; 
+       private Trajectory lastTrajectory; 
        
        
        private GameState gameState;
@@ -44,8 +46,42 @@ class GameModel {
    
     
     
+   
+    //getter and setters 
     public GameState getGameState() {
         return gameState;
     }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public double getDifficultyFactor() {
+        return difficultyFactor;
+    }
+
+    public void setPlanets(List<Planet> planets) {
+        this.planets = planets;
+        if (!planets.isEmpty()) {
+            this.targetPlanet = planets.get(currentLevel - 1);
+        }
+    }
+
+    public Planet getTargetPlanet() {
+        return targetPlanet;
+    }
+
+    public Trajectory getLastTrajectory() {
+        return lastTrajectory;
+    }
+
+    public long getLevelTimeLimit() {
+        return levelTimeLimit;
+    }
+
+    public void setLevelTimeLimit(long limitSeconds) {
+        this.levelTimeLimit = limitSeconds;
+    }
 }
+
 
