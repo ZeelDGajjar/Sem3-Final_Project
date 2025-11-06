@@ -104,6 +104,10 @@ class GameState {
     public boolean isZombied() {
         return isZombied;
     }
+
+    void updateScore(int pointsEarned) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }

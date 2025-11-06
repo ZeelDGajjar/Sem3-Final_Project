@@ -43,6 +43,20 @@ class GameModel {
         gameState.setCurrentLevel(currentLevel);
     }
     
+      /**
+     * Called when rocket reaches target planet
+     */
+    private void handleSuccessfulHit() {
+        int pointsEarned = (int) (100 * difficultyFactor);
+        gameState.updateScore(pointsEarned);
+
+        // Unlock next level if possible
+        if (currentLevel < maxLevels) {
+            currentLevel++;
+        } else {
+            gameState.setZombied(true); // winning final level = game finished
+        }
+    }
    
     
     
