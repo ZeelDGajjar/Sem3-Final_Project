@@ -86,7 +86,22 @@ class GameModel {
         }
         return remaining;
     }
-    //
+   
+     public boolean isTimeUp() {
+        return getRemainingLevelTime() <= 0;
+    }
+
+    /**
+     * Move to next level, resetting timer
+     */
+    public void advanceLevel() {
+        if (currentLevel < maxLevels) {
+            currentLevel++;
+            startLevel();
+        } else {
+            gameState.setZombied(true);
+        }
+    }
     
     
    
@@ -124,10 +139,6 @@ class GameModel {
 
     public void setLevelTimeLimit(long limitSeconds) {
         this.levelTimeLimit = limitSeconds;
-    }
-
-    private boolean isTimeUp() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 
