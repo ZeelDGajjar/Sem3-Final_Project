@@ -6,7 +6,7 @@ package sem3.final_project;
 
 
 /**
- *
+ * Tracks the player's progress : score , attempts, timers and game failure state
  * @author Vedika
  */
 class GameState {
