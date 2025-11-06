@@ -72,7 +72,20 @@ class GameModel {
         }
     }
    
-    
+     /**
+     * Track the countdown
+     * called regularly in controller to update UI
+     */
+    public long getRemainingLevelTime() {
+        long elapsedSec = (System.currentTimeMillis() - levelStartTime) / 1000;
+        long remaining = levelTimeLimit - elapsedSec;
+
+        if (remaining <= 0) {
+            gameState.setZombied(true);
+            return 0;
+        }
+        return remaining;
+    }
     
    
     //getter and setters 
