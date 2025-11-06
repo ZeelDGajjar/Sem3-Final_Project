@@ -57,6 +57,20 @@ class GameModel {
             gameState.setZombied(true); // winning final level = game finished
         }
     }
+    
+       /**
+     * Called when rocket fails: track failure reason and game over if planets/zombies eat you :)
+     */
+    private void handleMiss(Trajectory trajectory) {
+
+        boolean timedOut = isTimeUp();
+        if (timedOut) {
+            gameState.setZombied(true);
+            trajectory.setFailureReason("Timeout: Zombie planets caught you!");
+        } else {
+            trajectory.setFailureReason("Missed the target planet!");
+        }
+    }
    
     
     
@@ -95,6 +109,10 @@ class GameModel {
 
     public void setLevelTimeLimit(long limitSeconds) {
         this.levelTimeLimit = limitSeconds;
+    }
+
+    private boolean isTimeUp() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 
