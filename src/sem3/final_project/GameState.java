@@ -4,7 +4,6 @@
  */
 package sem3.final_project;
 
-import static com.sun.webkit.perf.PerfLogger.resetAll;
 
 /**
  *
@@ -14,7 +13,7 @@ class GameState {
     private int score; 
     private int level; 
     private int attempts; 
-    private long totalPlayTime; //total time spent playing 
+    private long totalPlayTimeSec; //total time spent playing 
     private int currentLevel; 
     private boolean isZombied; 
     private int maxLevelReached;
@@ -26,7 +25,7 @@ class GameState {
     public void resetAll() {
         this.score = 0; 
         this.attempts = 0; 
-        this.totalPlayTime = (long) 0.0;
+        this.totalPlayTimeSec = (long) 0.0;
         this.isZombied = false; 
         this.maxLevelReached = 1; 
     }
@@ -44,7 +43,7 @@ class GameState {
     }
     
     public int  getAttempts() {
-        return 10; //**just for now 
+        return attempts;
     }
     
     public void resetGame() {
@@ -59,7 +58,19 @@ class GameState {
         
     }
     
-    public long getTotalPlayTime() {
-        return 10;  //just for now 
+    
+    //add more getters and setters
+    public int getScore() {
+        return score; 
     }
+    
+    public double getTotalPlayTimeSeconds() {
+        return totalPlayTimeSec;
+    }
+    
+    public getCurrentLevel() {
+        return currentLevel;
+    }
+    
+    
 }
