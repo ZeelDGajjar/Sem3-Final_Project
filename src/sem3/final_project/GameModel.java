@@ -12,12 +12,12 @@ import java.util.List;
  */
 class GameModel {
        private int currentLevel; 
-       private int maxLevels;  //make final and set a fix value 
+       private int maxLevels = 8;  //make final and set a fix value 
        private double difficultyFactor; 
        
        //time 
        private long levelStartTime; 
-       private long levelTimeLimit; //seconds allowed per level 
+       private long levelTimeLimit = 30 ; //seconds allowed per level 
        
        //simulation objects
        private Projectile projectile; 
@@ -42,6 +42,18 @@ class GameModel {
         this.difficultyFactor = 1.0 + (currentLevel - 1) * 0.5;
         gameState.setCurrentLevel(currentLevel);
     }
+    
+    //method to find the trajectory result 
+    public void processTrajectoryResult(boolean hit, Trajectory traj) {
+    this.lastTrajectory = traj;
+
+    if (hit) {
+        handleSuccessfulHit();
+    } else {
+        handleMiss(traj);
+    }
+}
+
     
       /**
      * Called when rocket reaches target planet
@@ -140,6 +152,14 @@ class GameModel {
     public void setLevelTimeLimit(long limitSeconds) {
         this.levelTimeLimit = limitSeconds;
     }
-}
+    
+    public void setProjectile(Projectile projectile) {
+        this.projectile = projectile;
+    }
+    
+    public void setLastTrajectory(Trajectory trajectory) {
+        this.lastTrajectory = trajectory;
+    }
 
+}
 
