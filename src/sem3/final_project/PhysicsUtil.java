@@ -8,9 +8,9 @@ package sem3.final_project;
  *
  * @author Vedika
  */
-class Projectile {
+class PhysicsUtil {
 
-    Projectile(double speed, double angleDegrees) {
+    static Trajectory calculateTrajectoryPoint(Projectile projectile, double difficultyFactor) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

@@ -5,14 +5,13 @@
 package sem3.final_project;
 
 import java.util.List;
-
 /**
  *
  * @author Vedika
  */
-class GameModel {
+       public class GameModel {
        private int currentLevel; 
-       private int maxLevels = 8;  //make final and set a fix value 
+       private final int maxLevels = 8;  //make final and set a fix value 
        private double difficultyFactor; 
        
        //time 
@@ -43,6 +42,30 @@ class GameModel {
         gameState.setCurrentLevel(currentLevel);
     }
     
+     /**
+     * Run physics simulation → updates trajectory and determines success/failure.
+     */
+    public Trajectory simulateLaunch(double speed, double angleDegrees) {
+
+        gameState.addAttempts();
+        projectile = new Projectile(speed, angleDegrees);
+
+        Trajectory trajectory = PhysicsUtil.calculateTrajectoryPoint(projectile, difficultyFactor);
+        this.lastTrajectory = trajectory;
+
+        boolean hit = CollisionUtil.checkCollision(trajectory, targetPlanet);
+
+        if (hit) {
+            handleSuccessfulHit();
+            trajectory.setFailureReason(null);
+        } else {
+            handleMiss(trajectory);
+        }
+
+        return trajectory;
+    }
+
+    
     //method to find the trajectory result 
     public void processTrajectoryResult(boolean hit, Trajectory traj) {
     this.lastTrajectory = traj;
@@ -53,7 +76,12 @@ class GameModel {
         handleMiss(traj);
     }
 }
-
+    //method to udpate the target planet when the level changes 
+    private void updateTargetPlanet() {
+    if (planets != null && currentLevel - 1 < planets.size()) {
+        targetPlanet = planets.get(currentLevel - 1);
+    }
+}
     
       /**
      * Called when rocket reaches target planet
@@ -65,6 +93,8 @@ class GameModel {
         // Unlock next level if possible
         if (currentLevel < maxLevels) {
             currentLevel++;
+            updateTargetPlanet(); 
+            startLevel();
         } else {
             gameState.setZombied(true); // winning final level = game finished
         }
