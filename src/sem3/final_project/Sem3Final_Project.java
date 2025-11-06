@@ -39,7 +39,7 @@ public class Sem3Final_Project extends Application {
         gameState = new GameState();
         gameModel  = new GameModel(gameState); 
         
-        //load and display the main scene ( menu)
+        //load and display the main scene (menu)
         
         try {
         // Load the first scene (menu screen) from the FXML file
