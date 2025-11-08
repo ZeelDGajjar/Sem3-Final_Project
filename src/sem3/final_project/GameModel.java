@@ -183,9 +183,12 @@ import java.util.List;
      * notify all observers that the game state has changed
      */
     public void notifyObservers() {
-        for (GameObserver obs : observers) {
-            obs.onGameStateUpdated(this); //error 
-        }
+       if (observers == null || observers.isEmpty()) {
+           return;
+       }
+       for(GameObserver obs : observers) {
+           obs.onGameStateChanged(gameState); 
+       }
     }
         
       /**
