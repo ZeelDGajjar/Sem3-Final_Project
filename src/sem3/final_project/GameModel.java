@@ -22,10 +22,13 @@ import java.util.List;
        private Projectile projectile; 
        private List<Planet> planets; 
        private Planet targetPlanet; 
-       private Trajectory lastTrajectory; 
+      // private Trajectory lastTrajectory; 
        
+       //observer
+       private List<GameObserver> observers; 
        
        private GameState gameState;
+       private boolean isZombied; 
     
     // Constructor that receives the GameState
     public GameModel(GameState gameState) {
@@ -41,6 +44,32 @@ import java.util.List;
         this.difficultyFactor = 1.0 + (currentLevel - 1) * 0.5;
         gameState.setCurrentLevel(currentLevel);
     }
+    
+    public void advanceLevel() {
+        
+    }
+    
+    public void resetLevel() {
+        
+    }
+    
+    public void isFinalLevel() {
+        
+    }
+    
+    //about time 
+    public void startLevelTimer() {
+        
+    }
+    
+    public void isLevelTimeUp() {
+        
+    }
+    
+    public void getRemainingLevelTime(long remainingLevelTime) {
+        
+    }
+    
     
      /**
      * Run physics simulation → updates trajectory and determines success/failure.
@@ -64,7 +93,26 @@ import java.util.List;
 
         return trajectory;
     }
-
+    
+    public String checkFailure(Trajectory traj) {
+        return "ok"; //for now
+    }
+    
+    public void updateGameState(boolean success) {
+        
+    }
+    
+    public void resetGame() {
+        
+    }
+    
+    public void addObserver(GameObserver observer) {
+        
+    }
+    
+    public void notifyObservers() {
+        
+    }
     
     //method to find the trajectory result 
     public void processTrajectoryResult(boolean hit, Trajectory traj) {
@@ -131,22 +179,10 @@ import java.util.List;
    
      public boolean isTimeUp() {
         return getRemainingLevelTime() <= 0;
-    }
-
-    /**
-     * Move to next level, resetting timer
-     */
-    public void advanceLevel() {
-        if (currentLevel < maxLevels) {
-            currentLevel++;
-            startLevel();
-        } else {
-            gameState.setZombied(true);
-        }
-    }
     
-    
-   
+     }
+     
+     
     //getter and setters 
     public GameState getGameState() {
         return gameState;

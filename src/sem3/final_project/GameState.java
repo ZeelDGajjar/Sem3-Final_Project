@@ -115,7 +115,6 @@ class GameState {
         this.isZombied = zombied; 
     }
 
-
     public boolean isZombied() {
         return isZombied;
     }
