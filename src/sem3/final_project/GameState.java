@@ -7,6 +7,7 @@ package sem3.final_project;
 
 /**
  * Tracks the player's progress : score , attempts, timers and game failure state
+ * Handles updating and retrieving game state information.
  * @author Vedika
  */
 class GameState {
@@ -21,9 +22,12 @@ class GameState {
     private boolean isZombied;
     
     public GameState() {
-        resetAll();
+        resetAll(); //initialize all values 
     }
     
+    /**
+     * Resets all game state values to their initial values
+     */
     public void resetAll() {
         this.score = 0; 
         this.attempts = 0; 
@@ -32,9 +36,16 @@ class GameState {
         this.maxLevelReached = 1; 
     }
     
-    public void UpdateScore(int points ) {
-        if (points > 0) {
-            this.score += points; 
+    /**
+     * Adds points to the player's score. 
+     * @param points points to add
+     */
+    public void UpdateScore(int pointsEarned ) {
+        if (pointsEarned > 0) {
+            this.score += pointsEarned; 
+        } else if (pointsEarned < 0) {
+            //prevent the score from going below 0, so handle the penelalites safely
+            this.score = Math.max(0, this.score + PointsEarned);
         }
     }
     
@@ -61,7 +72,6 @@ class GameState {
         return attempts;
     }
     
-    
      /**
      * Adds time spend during launch or level ( controller will track)
      * @param duration 
@@ -70,6 +80,10 @@ class GameState {
         if (durationSeconds > 0) {
             this.totalPlayTimeSec += durationSeconds; 
         }
+    }
+    
+     public double getTotalPlayTimeSeconds() {
+        return totalPlayTimeSec;
     }
     
     /**
@@ -81,26 +95,22 @@ class GameState {
     }
     
     
-    public boolean isGameOver() {
-        return isZombied ; //** just for now 
-    }
-    
     /// Getters 
     public int getScore() {
         return score; 
     }
     
-    public double getTotalPlayTimeSeconds() {
-        return totalPlayTimeSec;
-    }
+    
     
     public int getCurrentLevel() {
         return currentLevel;
     }
+
     
        public int getMaxLevelReached() {
         return maxLevelReached;
     }
+
 
     public boolean isZombied() {
         return isZombied;
@@ -117,9 +127,5 @@ class GameState {
         this.score = Math.max(0, this.score + pointsEarned);
     }
     // If pointsEarned is 0, do nothing
-}
-
     }
-    
-    
 }
