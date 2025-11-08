@@ -4,7 +4,6 @@
  */
 package sem3.final_project;
 
-
 /**
  * Tracks the player's progress : score , attempts, timers and game failure state
  * Handles updating and retrieving game state information.
@@ -52,7 +51,6 @@ class GameState {
         //if pointsEarned == 0, do nothing 
     }
     
-   
     public int getScore() {
         return score; 
     }
@@ -106,7 +104,6 @@ class GameState {
      public double getTotalPlayTimeSeconds() {
         return totalPlayTimeSec;
     }
-     
      
      //Game State / Failure methods 
     
