@@ -27,7 +27,7 @@ import java.util.List;
        private Projectile projectile; 
        private List<Planet> planets; 
        private Planet targetPlanet; 
-      // private Trajectory lastTrajectory; 
+       private Trajectory lastTrajectory; //most recent launch result 
        
        //observer 
        private List<GameObserver> observers; 
@@ -70,7 +70,7 @@ import java.util.List;
     
     public void resetLevel() {
         projectile = null; 
-        lastProjectile = null; 
+        lastTrajectory = null; 
         startLevel();
     }
      /**
@@ -80,17 +80,35 @@ import java.util.List;
         return currentLevel == maxLevels; 
     }
     
-    //about time 
+    //Time methods 
+    
+    /**
+     * Starts or restarts the level timer 
+     */ 
     public void startLevelTimer() {
-        
+        this.levelStartTime = System.currentTimeMillis();
     }
     
-    public void isLevelTimeUp() {
-        
+    /**
+     * checks if level time is up
+     */
+    public boolean isLevelTimeUp() {
+        return getRemainingLevelTime() <= 0; 
     }
     
-    public void getRemainingLevelTime(long remainingLevelTime) {
-        
+    /**
+     * return remaining seconds for this level 
+     * @param remainingLevelTime 
+     */
+    public long getRemainingLevelTime(long remainingLevelTime) {
+        long elapsSec = (System.currentTimeMillis() - levelStartTime) / 1000; 
+        long remaining = levelTimeLimit - elapsSec; 
+        if (remaining <= 0) {
+            gameState.setZombied(true);
+            isZombied = true; 
+            return 0; 
+        }
+        return remaining; 
     }
     
     
