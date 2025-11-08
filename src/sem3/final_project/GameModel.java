@@ -187,19 +187,7 @@ import java.util.List;
             obs.onGameStateUpdated(this); //error 
         }
     }
-    
-    //method to find the trajectory result 
-    public void processTrajectoryResult(boolean hit, Trajectory traj) {
-    this.lastTrajectory = traj;
-
-    if (hit) {
-        handleSuccessfulHit();
-    } else {
-        handleMiss(traj);
-    }
-
-}
-    
+        
       /**
      * Called when rocket reaches target planet
      */
@@ -236,6 +224,8 @@ import java.util.List;
     if (planets != null && currentLevel - 1 < planets.size()) {
         targetPlanet = planets.get(currentLevel - 1);
     }
+    }
+    
      /**
      * Track the countdown
      * called regularly in controller to update UI
@@ -265,6 +255,10 @@ import java.util.List;
     public int getCurrentLevel() {
         return currentLevel;
     }
+    
+    public boolean isZombied() {
+        return isZombied; 
+    }
 
     public double getDifficultyFactor() {
         return difficultyFactor;
@@ -272,9 +266,7 @@ import java.util.List;
 
     public void setPlanets(List<Planet> planets) {
         this.planets = planets;
-        if (!planets.isEmpty()) {
-            this.targetPlanet = planets.get(currentLevel - 1);
-        }
+        updateTargetPlanet();
     }
 
     public Planet getTargetPlanet() {
