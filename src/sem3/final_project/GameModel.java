@@ -170,12 +170,22 @@ import java.util.List;
         startLevel();
     }
     
+    /** 
+     * observer pattern : register observer
+     * @param observer 
+     */
     public void addObservers(GameObserver observer) {
-        
+        if (!observers.contains(observer));
+        observers.add(observer);
     }
     
+    /**
+     * notify all observers that the game state has changed
+     */
     public void notifyObservers() {
-        
+        for (GameObserver obs : observers) {
+            obs.onGameStateUpdated(this); //error 
+        }
     }
     
     //method to find the trajectory result 
@@ -187,12 +197,7 @@ import java.util.List;
     } else {
         handleMiss(traj);
     }
-}
-    //method to udpate the target planet when the level changes 
-    private void updateTargetPlanet() {
-    if (planets != null && currentLevel - 1 < planets.size()) {
-        targetPlanet = planets.get(currentLevel - 1);
-    }
+
 }
     
       /**
@@ -203,12 +208,12 @@ import java.util.List;
         gameState.updateScore(pointsEarned);
 
         // Unlock next level if possible
-        if (currentLevel < maxLevels) {
-            currentLevel++;
-            updateTargetPlanet(); 
-            startLevel();
+        if (isFinalLevel()) {
+            System.out.println("All levels complete!");
+            isZombied = true; 
+            gameState.setZombied(true);
         } else {
-            gameState.setZombied(true); // winning final level = game finished
+            advanceLevel();
         }
     }
     
@@ -216,16 +221,21 @@ import java.util.List;
      * Called when rocket fails: track failure reason and game over if planets/zombies eat you :)
      */
     private void handleMiss(Trajectory trajectory) {
-
-        boolean timedOut = isTimeUp();
-        if (timedOut) {
+        
+        if (isLevelTimeUp()) {
             gameState.setZombied(true);
             trajectory.setFailureReason("Timeout: Zombie planets caught you!");
         } else {
+            gameState.updateScore(-10);
             trajectory.setFailureReason("Missed the target planet!");
         }
     }
    
+    //method to udpate the target planet when the level changes 
+    private void updateTargetPlanet() {
+    if (planets != null && currentLevel - 1 < planets.size()) {
+        targetPlanet = planets.get(currentLevel - 1);
+    }
      /**
      * Track the countdown
      * called regularly in controller to update UI
