@@ -38,9 +38,18 @@ package sem3.final_project;
 
     /**
      * Called when the game ends (either by winning or losing)
-     * @param isZombied 
+     * @param isZombied true if the player lost (e.g timeout or failure),
+     * false if they won the final level
      */
     default void onGameOver(boolean isZombied) {
         // optional implementation
+    }
+    
+    /**
+     * Called periodically to update the remaining seconds
+     * @param reamainingSeconds how many seconds are left in the UI
+     */
+    default void onTimerUpdate( long reamainingSeconds) {
+        //default
     }
 }
