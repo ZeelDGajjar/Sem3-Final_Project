@@ -11,6 +11,7 @@ package sem3.final_project;
  */
 class GameState {
     private int score; 
+    private int level; 
     private int attempts; 
     private long totalPlayTimeSec; //total time spent playing 
     
@@ -105,8 +106,19 @@ class GameState {
         return isZombied;
     }
 
-    void updateScore(int pointsEarned) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void updateScore(int pointsEarned) {
+    // Only add positive points
+    if (pointsEarned > 0) {
+        this.score += pointsEarned;
+    }
+    // Optionally, you could handle negative points (penalties)
+    else if (pointsEarned < 0) {
+        // Prevent score going below 0
+        this.score = Math.max(0, this.score + pointsEarned);
+    }
+    // If pointsEarned is 0, do nothing
+}
+
     }
     
     
