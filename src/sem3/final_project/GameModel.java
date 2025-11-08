@@ -4,14 +4,19 @@
  */
 package sem3.final_project;
 
+import java.util.ArrayList;
 import java.util.List;
+
 /**
- *
+ * Core game logic model : 
+ * Handles level progression, physics simulation , and timer logic
+ * Coordinates with GameState to track player progress 
+ * Notifies observers (views/ controllers) when the state changes
  * @author Vedika
  */
        public class GameModel {
        private int currentLevel; 
-       private final int maxLevels = 8;  //make final and set a fix value 
+       private final int maxLevels = 5;  //make final and set a fix value 
        private double difficultyFactor; 
        
        //time 
@@ -24,7 +29,7 @@ import java.util.List;
        private Planet targetPlanet; 
       // private Trajectory lastTrajectory; 
        
-       //observer
+       //observer 
        private List<GameObserver> observers; 
        
        private GameState gameState;
@@ -35,26 +40,44 @@ import java.util.List;
         this.gameState = gameState;
         this.currentLevel = 1; 
         this.difficultyFactor = 1.0;
+        this.observers = new ArrayList<>();
     }
 
      /** Start a level by updating timers and dynamic difficulty */
     public void startLevel() {
-        System.out.println("Level started.");
+        System.out.println("Level " + currentLevel +  "started.");
          this.levelStartTime = System.currentTimeMillis();
         this.difficultyFactor = 1.0 + (currentLevel - 1) * 0.5;
+        this.isZombied = false; 
         gameState.setCurrentLevel(currentLevel);
     }
     
+    /**
+     * advance to next level or ends game if last level reached
+     */
     public void advanceLevel() {
-        
+        if (currentLevel < maxLevels) {
+            currentLevel++; 
+            updateTargetPlanet();
+            startLevel();
+        }
+        else {
+            isZombied = true; //game finised 
+            gameState.setZombied(true);
+        }
+        notifyObservers();
     }
     
     public void resetLevel() {
-        
+        projectile = null; 
+        lastProjectile = null; 
+        startLevel();
     }
-    
-    public void isFinalLevel() {
-        
+     /**
+      * check if this is the final level 
+      */
+    public boolean isFinalLevel() {
+        return currentLevel == maxLevels; 
     }
     
     //about time 
@@ -106,7 +129,7 @@ import java.util.List;
         
     }
     
-    public void addObserver(GameObserver observer) {
+    public void addObservers(GameObserver observer) {
         
     }
     
