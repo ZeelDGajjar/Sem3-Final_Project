@@ -41,7 +41,7 @@ class GameState {
      * Adds points to the player's score. 
      * @param points points to add
      */
-    public void UpdateScore(int pointsEarned ) {
+    public void updateScore(int pointsEarned ) {
         if (pointsEarned > 0) {
             this.score += pointsEarned; 
         } else if (pointsEarned < 0) {

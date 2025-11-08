@@ -116,7 +116,11 @@ import java.util.List;
      * Run physics simulation → updates trajectory and determines success/failure.
      */
     public Trajectory simulateLaunch(double speed, double angleDegrees) {
-
+       
+        if (targetPlanet == null ) {
+            System.err.println("No target planet set. Cannot simuulate launch");
+            return null; 
+        }
         gameState.addAttempts();
         projectile = new Projectile(speed, angleDegrees);
 
@@ -131,20 +135,39 @@ import java.util.List;
         } else {
             handleMiss(trajectory);
         }
-
+        notifyObservers();
         return trajectory;
     }
     
+    //Determines and returns failure reason text for UI 
     public String checkFailure(Trajectory traj) {
-        return "ok"; //for now
-    }
+        if (traj == null) return "No trajectory.";
+        if (gameState.isZombied()) return "Game over!";
+        if (traj.getFailureReason() != null) return traj.getFailureReason();
+        return "Success!";
+    } 
     
+    //** Updates GameState depending on whether the player succeeded
     public void updateGameState(boolean success) {
-        
+        if (success) {
+        int pointsEarned = (int) (100 * difficultyFactor);
+            gameState.updateScore(pointsEarned);
+        } else {
+            gameState.updateScore(-10); // penalty for failure
+        }
+        notifyObservers();
     }
     
+    /**
+     * resets the entire game back to level 1
+     */
     public void resetGame() {
-        
+        currentLevel = 1; 
+        difficultyFactor = 1.0; 
+        isZombied = false; 
+        gameState.resetAll();
+        updateTargetPlanet();
+        startLevel();
     }
     
     public void addObservers(GameObserver observer) {
