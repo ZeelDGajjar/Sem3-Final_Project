@@ -89,18 +89,12 @@ import java.util.List;
         this.levelStartTime = System.currentTimeMillis();
     }
     
-    /**
-     * checks if level time is up
-     */
-    public boolean isLevelTimeUp() {
-        return getRemainingLevelTime() <= 0; 
-    }
     
     /**
      * return remaining seconds for this level 
      * @param remainingLevelTime 
      */
-    public long getRemainingLevelTime(long remainingLevelTime) {
+    public long getRemainingLevelTime() {
         long elapsSec = (System.currentTimeMillis() - levelStartTime) / 1000; 
         long remaining = levelTimeLimit - elapsSec; 
         if (remaining <= 0) {
@@ -108,10 +102,18 @@ import java.util.List;
             isZombied = true; 
             return 0; 
         }
+        notifyTimerUpdate(remaining);
         return remaining; 
     }
     
+    /**
+     * checks if level time is up
+     */
+    public boolean isLevelTimeUp() {
+        return getRemainingLevelTime() <= 0; 
+    }
     
+     //Phyiscs simualtion 
      /**
      * Run physics simulation → updates trajectory and determines success/failure.
      */
@@ -143,7 +145,7 @@ import java.util.List;
     public String checkFailure(Trajectory traj) {
         if (traj == null) return "No trajectory.";
         if (gameState.isZombied()) return "Game over!";
-        if (traj.getFailureReason() != null) return traj.getFailureReason();
+        if (traj.getFailureReason() != null) return traj.getFailureReason().toString();
         return "Success!";
     } 
     
@@ -174,9 +176,10 @@ import java.util.List;
      * observer pattern : register observer
      * @param observer 
      */
-    public void addObservers(GameObserver observer) {
-        if (!observers.contains(observer));
+    public void addObserver(GameObserver observer) {
+        if (!observers.contains(observer)) {
         observers.add(observer);
+    }
     }
     
     /**
@@ -228,26 +231,17 @@ import java.util.List;
         targetPlanet = planets.get(currentLevel - 1);
     }
     }
-    
-     /**
-     * Track the countdown
-     * called regularly in controller to update UI
-     */
-    public long getRemainingLevelTime() {
-        long elapsedSec = (System.currentTimeMillis() - levelStartTime) / 1000;
-        long remaining = levelTimeLimit - elapsedSec;
-
-        if (remaining <= 0) {
-            gameState.setZombied(true);
-            return 0;
-        }
-        return remaining;
-    }
    
      public boolean isTimeUp() {
         return getRemainingLevelTime() <= 0;
     
      }
+     
+       private void notifyTimerUpdate(long remaining) {
+       for (GameObserver obs : observers ) {
+           obs.onTimerUpdate(remaining);
+       }
+    }
      
      
     //getter and setters 
