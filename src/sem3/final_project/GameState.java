@@ -36,6 +36,8 @@ class GameState {
         this.maxLevelReached = 1; 
     }
     
+    // Score methods 
+    
     /**
      * Adds points to the player's score. 
      * @param points points to add
@@ -45,14 +47,21 @@ class GameState {
             this.score += pointsEarned; 
         } else if (pointsEarned < 0) {
             //prevent the score from going below 0, so handle the penelalites safely
-            this.score = Math.max(0, this.score + PointsEarned);
+            this.score = Math.max(0, this.score + pointsEarned);
         }
+        //if pointsEarned == 0, do nothing 
     }
     
+   
+    public int getScore() {
+        return score; 
+    }
+    
+    //level methods 
+    
     /**
-     * method used to move forward 
-     * called by the gameModel to advance a level
-     * @param level 
+     * Sets the current level and updates maxLevel is needed
+     * @param level  level to set (the minimum is 1)
      */
     public void setCurrentLevel(int level) {
         this.currentLevel = Math.max(1,level);
@@ -60,6 +69,16 @@ class GameState {
             maxLevelReached = level; 
         }
     }
+    
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+    
+    public int getMaxLevelReached() {
+        return maxLevelReached;
+    }
+    
+    //attempts methods 
     
     /**
      * add one attempt every time a projectile is launched
@@ -71,6 +90,8 @@ class GameState {
     public int  getAttempts() {
         return attempts;
     }
+    
+    //Play time methods 
     
      /**
      * Adds time spend during launch or level ( controller will track)
@@ -85,47 +106,28 @@ class GameState {
      public double getTotalPlayTimeSeconds() {
         return totalPlayTimeSec;
     }
+     
+     
+     //Game State / Failure methods 
     
     /**
-     * Called when a player fails the level bu timeout or crashing
-     * @return 
+     * Sets the game failure (true if player failed level)
+     * @param zombied Whether player has failed 
      */
     public void setZombied (boolean zombied) {
         this.isZombied = zombied; 
-    }
-    
-    
-    /// Getters 
-    public int getScore() {
-        return score; 
-    }
-    
-    
-    
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
-
-    
-       public int getMaxLevelReached() {
-        return maxLevelReached;
     }
 
 
     public boolean isZombied() {
         return isZombied;
     }
-
-    public void updateScore(int pointsEarned) {
-    // Only add positive points
-    if (pointsEarned > 0) {
-        this.score += pointsEarned;
-    }
-    // Optionally, you could handle negative points (penalties)
-    else if (pointsEarned < 0) {
-        // Prevent score going below 0
-        this.score = Math.max(0, this.score + pointsEarned);
-    }
-    // If pointsEarned is 0, do nothing
+    
+    /**
+     * checks if the game is over (based on failure state for now)
+     * @return true if the player failed 
+     */
+    public boolean isGameOver() {
+        return isZombied; 
     }
 }
