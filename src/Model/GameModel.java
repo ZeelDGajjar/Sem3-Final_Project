@@ -4,12 +4,14 @@
  */
 package Model;
 
+import Model.GameState;
+
 /**
  *
  * @author Vedika
  */
 public class GameModel {
-       private GameState gameState;
+    private GameState gameState;
     
     // Constructor that receives the GameState
     public GameModel(GameState gameState) {

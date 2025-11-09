@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Main Application class for the game
+ * Main Application class for the Zombied game
  * This class launches the JavaFx application, loads the menu screen
  * and manages shared game state and scene switching
  * @author Vedika
@@ -51,7 +51,7 @@ public class Sem3Final_Project extends Application {
         // Set the title of the window
         primaryStage.setTitle("Zombied: Space Physics Game");
    
-        // Set the menu scene on the stage
+         // Set the menu scene on the stage
         primaryStage.setScene(menuScene);
 
         // Show the stage (make the window appear)
