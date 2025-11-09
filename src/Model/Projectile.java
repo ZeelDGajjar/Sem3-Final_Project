@@ -4,8 +4,10 @@
  */
 package Model;
 
+import java.util.*;
 import java.util.List;
 import java.util.Vector;
+import javafx.geometry.Point2D;
 import javafx.scene.effect.Light.Point;
 
 /**
@@ -27,21 +29,67 @@ public class Projectile {
         this.velocity = velocity;
     }
     
-//    public List<Point> calculateTrajectory(List<Planet> planets) {
+//    public List<Point2D> calculateTrajectory(List<Planet> planets) {
+//        return;
 //    }
-//    
-//    public double calculateRange(List<Planet> planets) {
-//        return 
-//    }
-//    
-//    public double calculateTimeOfFlight(List<Planet> planets) {
-//    }
-//    
-//    public double clculateMaxHeight(List<Planet> planets) {
-//    }
-//    
-//    public Point updatePosition(double time, List<Planet> planets) {
-//    }
-//    
-//    public void reset() {}
+    
+    public double calculateRange(List<Planet> planets) {
+        return 0; 
+    }
+    
+    public double calculateTimeOfFlight(List<Planet> planets) {
+        return 0;
+    }
+    
+    public double clculateMaxHeight(List<Planet> planets) {
+        return 0;
+    }
+    
+    public Point2D updatePosition(double time, List<Planet> planets) {
+        return new Point2D(4,5);
+    }
+    
+    public void reset() {
+    }
+    
+    // Setters and Getters
+    public Vector getPosition() {
+        return position;
+    }
+    
+    public Vector getVelocity() {
+        return velocity;
+    }
+    
+    public double getSpeed() {
+        return speed;
+    }
+    
+    public double getAngle() {
+        return angle;
+    }
+    
+    public double getMass() {
+        return mass;
+    }
+    
+    public void setPosition(Vector position) {
+        this.position = position;
+    }
+    
+    public void setVelocity(Vector velocity) {
+        this.velocity = velocity;
+    }
+    
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+    
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+    
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
 }
