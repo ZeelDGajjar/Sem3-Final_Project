@@ -1,25 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package sem3.final_project;
+
+package Model;
 
 import java.util.List;
-import javafx.scene.effect.Light.Point;
+import javafx.geometry.Point2D;
 
 /**
- *
+ * Trajectory class that handles the trajectory
  * @author zeelg
  */
 public class Trajectory {
-    private List<Point> path;
+    private List<Point2D> path;
     private boolean success;
     private String failureReason;
     
-    public Trajectory(List<Point> path, boolean success, String failureReason) {
+    public Trajectory(){}
+    
+    public Trajectory(List<Point2D> path) {
         this.path = path;
-        this.success = success;
-        this.failureReason = failureReason;
     }
     
     /**
@@ -27,15 +24,11 @@ public class Trajectory {
      * 
      * @param p The given point to add
      */
-    public void addPoint(Point p) {
+    public void addPoint(Point2D p) {
         path.add(p);
     }
     
-    /**
-     * Getters and setters
-     * 
-     * @return 
-     */
+    // Getters and Setters
     public boolean getSuccess() {
         return success;
     }
