@@ -218,7 +218,14 @@ import java.util.List;
                obs.onGameStateChanged(gameState); 
            }
         }
+        
+        /**
+        * Notifies all registered observers about the remaining level time.
+        * This method is called internally by the GameModel whenever the countdown changes.
+        *
+        * @param remaining the number of seconds remaining in the current level
 
+        */
         private void notifyTimerUpdate(long remaining) {
            for (GameObserver obs : observers ) {
                obs.onTimerUpdate(remaining);
@@ -244,7 +251,12 @@ import java.util.List;
             targetPlanet = planets.get(currentLevel - 1);
         }
         }
-
+        
+         /**
+         * Checks whether the current level's time has run out.
+         *
+         * @return true if the level timer has reached zero, false otherwise
+         */
         public boolean isTimeUp() {
             return getRemainingLevelTime() <= 0;
 
