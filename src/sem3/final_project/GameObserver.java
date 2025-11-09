@@ -21,12 +21,25 @@ package sem3.final_project;
      
      /**
  * Called whenever the GameModel updates the GameState
- * ( for example, after a successful hit, score changes, or timer update ) 
+ * ( for example, after a successful hit, score changes, or timer update )
+ * notification for the state
  * @param newState the updated GameState object
  * @author Vedika
  */
     void onGameStateChanged(GameState newState);
-
+    
+    
+    /**
+     * Called to notify the observer that the game model has been updated.
+     * This default implementation does nothing 
+     * Classes implementing this interface can override this method 
+     * to perform actions when the game state changes 
+     * notification for the full model 
+     * @param model the gameModel instance that has changed
+     */
+    default void update(GameModel model) {
+        
+    }
     
     /**
      * Called when the player advances to a new level 
