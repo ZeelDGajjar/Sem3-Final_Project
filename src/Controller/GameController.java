@@ -6,7 +6,7 @@ package Controller;
 
 import javafx.animation.Timeline;
 import Model.GameModel;
-import View.GameView;
+//import View.GameView;
 
 /**
  *
@@ -14,13 +14,13 @@ import View.GameView;
  */
 public class GameController {
     private GameModel model;
-    private GameView view;
+   // private GameView view;
     private SoundController soundController;
     private Timeline countdownTimer;
     
-    public GameController(GameModel model, GameView view){
+    public GameController(GameModel model){
         this.model = model;
-        this.view = view;
+        //this.view = view;
     }
     
     /**

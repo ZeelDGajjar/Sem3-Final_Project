@@ -3,10 +3,12 @@
  */
 package Main;
 
-import Model.GameState;
 import Model.GameModel;
+import Model.GameState;
 import java.io.IOException;
-import javafx.application.Application;
+import javafx.application.Application;import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,7 +24,7 @@ public class Sem3Final_Project extends Application {
     //Main game window 
     private static Stage primaryStage; 
     
-    //Shared models used accross the controllers 
+    //Shared models used accross the controllers     
     private static GameModel gameModel; 
     private static GameState gameState; 
 
@@ -39,7 +41,7 @@ public class Sem3Final_Project extends Application {
         gameState = new GameState();
         gameModel  = new GameModel(gameState); 
         
-        //load and display the main scene ( menu)
+        //load and display the main scene (menu)
         
         try {
         // Load the first scene (menu screen) from the FXML file
@@ -64,20 +66,14 @@ public class Sem3Final_Project extends Application {
         e.printStackTrace();
         System.out.println("Error loading menu.fxml. Check the file path.");
     }
-        
-        
        primaryStage.setTitle("Zombied: Space Physics Game");
        primaryStage.show();
     }
     
-     /**
-     * Switches the current scene to another FXML view.
-     * Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
-     */    
-     /**
-     * Switches the current scene to another FXML view.
-     * Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
-     */
+    ///
+    // * Switches the current scene to another FXML view.
+     //* Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
+     //*/
     public static void switchScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(Sem3Final_Project.class.getResource(fxmlPath));
