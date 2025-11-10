@@ -16,8 +16,8 @@ import java.util.List;
  */
        public class GameModel {
        private int currentLevel; 
-       private final int maxLevels = 5;  //make final and set a fix value 
-       private double difficultyFactor; 
+       private final int maxLevel = 5;  //make final and set a fix value 
+       private double difficultyFactor; //scales the difficulty , for example by increasing gravity, reducing accuracy
        private boolean isZombied; 
        
        //time 
@@ -25,13 +25,13 @@ import java.util.List;
        private long levelTimeLimit = 30 ; //seconds allowed per level 
        
        //simulation objects
-       private Projectile projectile; 
+       private Projectile projectile; //the launched object
        private List<Planet> planets; 
-       private Planet targetPlanet; 
-       private Trajectory lastTrajectory; //most recent launch result 
+       private Planet targetPlanet;  //represents win condition, calculated flight path of the projectile
+       private Trajectory lastTrajectory; //most recent launch result (motion)
        
        //observer 
-       private List<GameObserver> observers; 
+       private List<GameObserver> observers; //controllers or views that react whenever something changes
        
        private GameState gameState; //tracks score, attempts etc..
     
@@ -47,7 +47,7 @@ import java.util.List;
         public void startLevel() {
             System.out.println("Level " + currentLevel +  "started.");
              this.levelStartTime = System.currentTimeMillis();
-            this.difficultyFactor = 1.0 + (currentLevel - 1) * 0.5;
+            this.difficultyFactor = 1.0 + (currentLevel - 1) * 0.5; //+0.5 per level
             this.isZombied = false; 
             gameState.setCurrentLevel(currentLevel);
         }
@@ -56,7 +56,7 @@ import java.util.List;
          * advance to next level or ends game if last level reached
          */
         public void advanceLevel() {
-            if (currentLevel < maxLevels) {
+            if (currentLevel < maxLevel) {
                 currentLevel++; 
                 updateTargetPlanet();
                 startLevel();
@@ -78,7 +78,7 @@ import java.util.List;
           * returns true if the current level is the last one
           */
         public boolean isFinalLevel() {
-            return currentLevel == maxLevels; 
+            return currentLevel == maxLevel; 
         }
 
         //Time logic 
@@ -96,10 +96,10 @@ import java.util.List;
         public long getRemainingLevelTime() {
             long elapsSec = (System.currentTimeMillis() - levelStartTime) / 1000; 
             long remaining = levelTimeLimit - elapsSec; 
-            if (remaining <= 0) {
+            if (remaining <= 0) {  //no time left 
                 gameState.setZombied(true);
                 isZombied = true; 
-                return 0; 
+                return 0; //timer expired 
             }
             notifyTimerUpdate(remaining);
             return remaining; 
@@ -122,7 +122,7 @@ import java.util.List;
           */
         public Trajectory simulateLaunch(double speed, double angleDegrees) {
 
-            if (targetPlanet == null ) {
+            if (targetPlanet == null ) { //must have a targetPlanet
                 System.err.println("No target planet set. Cannot simuulate launch");
                 return null; 
             }
@@ -148,9 +148,18 @@ import java.util.List;
 
         //Determines and returns failure reason text for UI 
         public String checkFailure(Trajectory traj) {
-            if (traj == null) return "No trajectory.";
-            if (gameState.isZombied()) return "Game over!";
-            if (traj.getFailureReason() != null) return traj.getFailureReason().toString();
+            if (traj == null) {
+                return "No trajectory.";
+            }
+            
+            if (gameState.isZombied()) {
+                return "Game over!";
+            }
+            
+            if (traj.getFailureReason() != null) {
+                return traj.getFailureReason().toString();
+            }
+            
             return "Success!";
         } 
 
@@ -173,7 +182,7 @@ import java.util.List;
             gameState.updateScore(pointsEarned);
 
             // Unlock next level if possible
-            if (isFinalLevel()) {
+            if (isFinalLevel()) { 
                 System.out.println("All levels complete!");
                 isZombied = true; 
                 gameState.setZombied(true);
@@ -197,13 +206,13 @@ import java.util.List;
         }
 
          //observers methods 
-        /** 
+        /** //no duplicate observers
          * observer pattern : register observer
-         * @param observer 
+         * @param observer the view or controller that reacts when a change happens
          */
         public void addObserver(GameObserver observer) {
-            if (!observers.contains(observer)) {
-            observers.add(observer);
+            if (!observers.contains(observer)) { //checks wheter the list already contains the observer
+            observers.add(observer); //if not present, then it adds it to the list 
         }
         }
 
@@ -244,12 +253,11 @@ import java.util.List;
             startLevel();
         }    
 
-
-        //method to udpate the target planet when the level changes 
+        //method to udpate the target planet when the level changes
         private void updateTargetPlanet() {
         if (planets != null && currentLevel - 1 < planets.size()) {
-            targetPlanet = planets.get(currentLevel - 1);
-        }
+            targetPlanet = planets.get(currentLevel - 1); //follow the same index, if level is N, then target planet should be at index N-1 of the arraylist 
+           }
         }
         
          /**
@@ -309,4 +317,3 @@ import java.util.List;
             this.lastTrajectory = trajectory;
         }
     }
-
