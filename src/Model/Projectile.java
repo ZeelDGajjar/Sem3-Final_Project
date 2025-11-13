@@ -21,6 +21,11 @@ public class Projectile {
     private Vector position;
     private Vector velocity;
     
+    public Projectile(double speed, double angle) {
+        this.speed = speed;
+        this.angle = angle;
+    }
+    
     public Projectile(double speed, double angle, double mass, Vector position, Vector velocity) {
         this.speed = speed;
         this.angle = angle;
