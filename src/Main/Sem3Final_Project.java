@@ -45,7 +45,7 @@ public class Sem3Final_Project extends Application {
         
         try {
         // Load the first scene (menu screen) from the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/zombied/view/menu.fxml")); //*** need to create it 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("@/View/GameView.fxml")); //*** need to create it 
  
         // Create a new Scene using the FXML layout
         Scene menuScene = new Scene(loader.load());
@@ -76,7 +76,7 @@ public class Sem3Final_Project extends Application {
      //*/
     public static void switchScene(String fxmlPath) {
         try {
-            FXMLLoader loader = new FXMLLoader(Sem3Final_Project.class.getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(Sem3Final_Project.class.getResource("/src/View/GameView.fxml"));
             Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
         } catch (Exception e) {

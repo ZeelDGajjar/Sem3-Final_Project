@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -174,20 +173,20 @@
                         <Insets left="15.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Pane prefHeight="303.0" prefWidth="431.0">
+                  <Pane prefHeight="303.0" prefWidth="431.0" style="-fx-background-image: url(&quot;\src\Images&quot;);">
                      <children>
-                        <Circle fx:id="marsPath" fill="#1f93ff00" layoutX="18.0" layoutY="169.0" radius="244.0" stroke="WHITE" strokeDashOffset="1.0" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="jupiterPath" fill="#1f93ff00" layoutX="58.0" layoutY="168.0" radius="295.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="saturnPath" fill="#1f93ff00" layoutX="93.0" layoutY="168.0" radius="330.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="uraniusPath" fill="#1f93ff00" layoutX="100.0" layoutY="172.0" radius="395.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="neptunePath" fill="#1f93ff00" layoutX="120.0" layoutY="166.0" radius="435.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="venusPath" fill="#1f93ff00" layoutX="-14.0" layoutY="169.0" radius="153.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="earthPath" fill="#1f93ff00" layoutX="5.0" layoutY="165.0" radius="188.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="moonPath" fill="#1f93ff00" layoutX="186.0" layoutY="171.0" radius="38.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="mercuryPath" fill="#1f93ff00" layoutX="-14.0" layoutY="165.0" radius="110.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6;" />
-                        <Circle fx:id="Earth" fill="DODGERBLUE" layoutX="187.0" layoutY="172.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="marsPath" fill="#1f93ff00" layoutX="18.0" layoutY="169.0" radius="244.0" stroke="WHITE" strokeDashOffset="1.0" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="jupiterPath" fill="#1f93ff00" layoutX="58.0" layoutY="168.0" radius="295.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="saturnPath" fill="#1f93ff00" layoutX="93.0" layoutY="168.0" radius="330.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="uraniusPath" fill="#1f93ff00" layoutX="100.0" layoutY="172.0" radius="395.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="neptunePath" fill="#1f93ff00" layoutX="120.0" layoutY="166.0" radius="435.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.6px;" />
+                        <Circle fx:id="venusPath" fill="#1f93ff00" layoutX="-18.0" layoutY="166.0" radius="152.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="earthPath" fill="#1f93ff00" layoutX="5.0" layoutY="165.0" radius="188.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="moonPath" fill="#1f93ff00" layoutX="186.0" layoutY="173.0" radius="40.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="mercuryPath" fill="#1f93ff00" layoutX="-14.0" layoutY="165.0" radius="110.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="Earth" layoutX="187.0" layoutY="172.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: url(&quot;/src/Images/Earth.png&quot;);" /> 
                         <Circle fx:id="Sun" fill="DODGERBLUE" layoutX="-6.0" layoutY="167.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="Venus" fill="DODGERBLUE" layoutX="112.0" layoutY="247.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="Venus" fill="DODGERBLUE" layoutX="104.0" layoutY="252.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
                         <Circle fx:id="Mercury" fill="DODGERBLUE" layoutX="80.0" layoutY="108.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
                         <Circle fx:id="Mars" fill="DODGERBLUE" layoutX="247.0" layoutY="76.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
                         <Circle fx:id="Jupiter" fill="DODGERBLUE" layoutX="338.0" layoutY="220.0" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
@@ -207,11 +206,11 @@
                               <Font name="Segoe UI Semibold" size="13.0" />
                            </font>
                            <effect>
-                              <InnerShadow choke="0.13" height="40.47" radius="18.275" width="34.63">
+                              <DropShadow height="83.29" radius="44.5525" spread="0.42" width="96.92">
                                  <color>
-                                    <Color green="0.04736842215061188" blue="0.31578946113586426" />
+                                    <Color red="0.32302001118659973" green="0.1023000031709671" blue="0.9300000071525574" opacity="0.5806599259376526" />
                                  </color>
-                              </InnerShadow>
+                              </DropShadow>
                            </effect>
                         </Button>
                         <ImageView fx:id="audioInput" fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">

@@ -21,7 +21,7 @@ public class Projectile {
     private Vector position;
     private Vector velocity;
     
-    public Projectile(double speed, double angle) {
+    public Projectile(int speed, int angle, int par2, int par3) {
         this.speed = speed;
         this.angle = angle;
     }
@@ -96,5 +96,13 @@ public class Projectile {
     
     public void setMass(double mass) {
         this.mass = mass;
+    }
+
+    public double getX() {
+        return (double) position.get(0);   
+    }
+
+    double getY() {
+        return (double) position.get(1);
     }
 }
