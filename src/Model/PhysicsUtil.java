@@ -7,6 +7,7 @@ package Model;
 import java.util.List;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.Light;
+import javafx.scene.effect.Light.Point;
 
 /**
  *
@@ -24,7 +25,7 @@ public class PhysicsUtil {
      * @param initialPosition
      * @return 
      */
-    public Point2D trajectory(double speed, double angledeg, double t, List<Planet> planets, Light.Point initialPosition) {
+    public Point2D trajectory(double speed, double angledeg, double t, List<Planet> planets, Point initialPosition) {
         double x = initialPosition.getX() + calculateHorizontal(speed, angledeg, t, planets);
         double y = initialPosition.getY() + calculateVertical(speed, angledeg, t, planets);
         return new Point2D(x,y);
@@ -61,7 +62,7 @@ public class PhysicsUtil {
         
         double ax = 0;
         for (Planet planet : planets) {
-            ax += gravityEffect(new Projectile(0, 0, 0, 0), planet);
+            ax += gravityEffect(new Projectile(0.0, 0.0), planet);
         }
         return horizontalSpeed * t + 0.5 * ax * t * t;
     }
@@ -80,7 +81,7 @@ public class PhysicsUtil {
         
         double ax = 0;
         for (Planet planet : planets) {
-            ax += gravityEffect(new Projectile(0, 0, 0, 0), planet);
+            ax += gravityEffect(new Projectile(0.0, 0.0), planet);
         }
         return verticalSpeed * t + 0.5 * ax * t * t;
     }

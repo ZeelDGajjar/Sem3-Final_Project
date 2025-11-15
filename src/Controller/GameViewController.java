@@ -5,19 +5,21 @@
 package Controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
 /**
  * FXML Controller class
  *
@@ -70,6 +72,8 @@ public class GameViewController implements Initializable {
     @FXML
     private Circle Moon;
     @FXML
+    private ImageView image;
+    @FXML
     private Button btnReset;
     @FXML
     private ImageView audioInput;
@@ -81,22 +85,38 @@ public class GameViewController implements Initializable {
     private Slider directionInput;
     @FXML
     private Button btnLaunch;
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image image = new Image(getClass().getResource("/Images/Earth.png").toExternalForm());
-        Earth.setFill(new ImagePattern(image));
+        List<Circle> planets = List.of(Earth, Moon, Sun, Mercury, Venus, Mars, Jupiter, Saturn, Uranius, Neptune);
+        
+        //Adding images in the circles
+        for (Circle planet : planets) {
+            String path = "/Images/" + planet.getId() + ".png";
+            Image planetImg = new Image(getClass().getResourceAsStream(path));
+            planet.setFill(new ImagePattern(planetImg));
+        }
+        
     }    
-
+    
     @FXML
     private void ResetBtnClicked(ActionEvent event) {
+        speedInput.setText("");
+        directionInput.setValue(0);
+        
+        Image img = new Image(getClass().getResourceAsStream("/Images/Earth.png"));
+        Earth.setFill(new ImagePattern(img));
+
+    }
+
+    @FXML
+    private void DirectionDragDropped(DragEvent event) {
     }
 
     @FXML
     private void LaunchBtnClicked(ActionEvent event) {
     }
-    
+
 }
