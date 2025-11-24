@@ -86,7 +86,7 @@ class Planet {
      * @return distance in the units of the game
      */
     public double getDistanceFromProjectile(Projectile projectile) {
-        return projectile.getPosition().distance(postion);
+        return projectile.getPosition().distance(position);
     }
     
     /**
