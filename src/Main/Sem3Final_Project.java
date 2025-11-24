@@ -6,10 +6,12 @@ package Main;
 import Model.GameModel;
 import Model.GameState;
 import java.io.IOException;
-import javafx.application.Application;import javafx.fxml.FXMLLoader;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -20,76 +22,28 @@ import javafx.stage.Stage;
  * @author Vedika
  */
 public class Sem3Final_Project extends Application {
-    
-    //Main game window 
+
     private static Stage primaryStage; 
-    
-    //Shared models used accross the controllers     
+
     private static GameModel gameModel; 
     private static GameState gameState; 
 
-   //need to be able to swtich from different fxml 
-   
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        
-        //initialize the core game data models 
-        gameState = new GameState();
-        gameModel  = new GameModel(gameState); 
-        
-        //load and display the main scene (menu)
-        
+    public void start(Stage primaryStage) {
         try {
-        // Load the first scene (menu screen) from the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("@/View/GameView.fxml")); //*** need to create it 
- 
-        // Create a new Scene using the FXML layout
-        Scene menuScene = new Scene(loader.load());
+            System.out.println(getClass().getResource("/View/GameView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/GameView.fxml"));
 
-        // Set the title of the window
-        primaryStage.setTitle("Zombied: Space Physics Game");
-   
-         // Set the menu scene on the stage
-        primaryStage.setScene(menuScene);
-
-        // Show the stage (make the window appear)
-        primaryStage.show();
-
-        System.out.println("Menu scene loaded successfully.");
-
-       } catch (Exception e) {
-        // If something goes wrong, print the error details
-        e.printStackTrace();
-        System.out.println("Error loading menu.fxml. Check the file path.");
-    }
-       primaryStage.setTitle("Zombied: Space Physics Game");
-       primaryStage.show();
-    }
-    
-    ///
-    // * Switches the current scene to another FXML view.
-     //* Example usage: Sem3Final_Project.switchScene("/zombied/view/game.fxml");
-     //*/
-    public static void switchScene(String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(Sem3Final_Project.class.getResource("/src/View/GameView.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Marathon Simulator");
             primaryStage.setScene(scene);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error switching to scene: " + fxmlPath);
+            primaryStage.show();
+        } catch (IOException ex) {
+            System.getLogger(Sem3Final_Project.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-    }
-    
-    public static GameModel getGameModel() {
-        return gameModel; 
-    }
-    
-    public static GameState getGameState() {
-        return gameState;    
     }
 }
