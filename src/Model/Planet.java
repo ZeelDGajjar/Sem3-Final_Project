@@ -9,29 +9,53 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Light.Point;
 
 /**
- *
+ * Represents a planet in the MODEL layer of the game
+ * A planet stores only data (position, radius, name etc)
+ * and provides collision/ hit detection logic for the physics after
  * @author Vedika
  */
 class Planet {
-    
-    private Point position; 
-    private int radius; 
-    private boolean target; 
-    private String color; 
+
     private String name; 
+    private Point2D position; 
+    private int radius; 
+    private boolean isTarget; 
+    private String color; 
     private Point2D coordinates; 
     private double distance; 
-
-    double getX() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private double mass; 
+    
+    /**
+     * Constructor that creates a new planet 
+     * @param name name of the planet 
+     * @param position position as Point2D (X,Y)
+     * @param radius collision radius 
+     * @param mass used when gravity is applied 
+     * @param color for the View when deciding how to draw
+     * @param isTarget whether this planet is the target for the current level
+     */
+    public Planet (String name, Point2D position, double radius, double mass, String color, boolean isTarget) {
+        this.name = name; 
+        this.position = position; 
+        this.mass = mass; 
+        this.color = color; 
+        this.isTarget = isTarget; 
     }
 
-    double getY() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public double getX() {
+        return position.getX();
     }
 
-    double getMass() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public double getY() {
+       return position.getY();
+    }
+
+    public double getMass() {
+        return mass; 
+    }
+    
+    public Point2D getPosition() {
+        return position;
     }
     
     //methods
@@ -62,10 +86,10 @@ class Planet {
     }
     
     public double calculateGravityAt(Point pos) {
-        
+        //calculate the gravity 
     }
     
     public void render(GraphicsContext gc) {
-        
+        /////////////////
     }
 }
