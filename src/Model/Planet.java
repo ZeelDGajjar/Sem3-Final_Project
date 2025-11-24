@@ -58,6 +58,18 @@ class Planet {
         return position;
     }
     
+    public boolean isTarget() {
+        return isTarget; 
+    }
+    
+    public String getName() {
+        return name; 
+    }
+    
+    public String getColor() {
+        return color; 
+    }
+    
     //methods
     public boolean checkHit(Projectile projectile) {
         boolean isHit = false; 
@@ -68,28 +80,64 @@ class Planet {
             return false; 
         }
     }
-    
-    public double getDistanceFromProjectile(Projectile p) {
-        return distance;
+    /**
+     * Distance from projectile to this planet's center
+     * @param projectile the projectile to measure 
+     * @return distance in the units of the game
+     */
+    public double getDistanceFromProjectile(Projectile projectile) {
+        return projectile.getPosition().distance(postion);
     }
     
+    /**
+     * Randomize planet position based on level of difficulty
+     * Higher levels place planets more far 
+     * @param level 
+     */
     public void generateRandomPosition(int level) {
-       //position =  Math.random() * 3; 
+       double min = 100 * level;
+        double max = 300 * level;
+        double x = min + Math.random() * (max - min);
+        double y = min + Math.random() * (max - min);
+        this.position = new Point2D(x, y);
     }
     
+    /**
+     * increase radius to make the planet easier to hit 
+     * @param factor multiplier for size increase
+     */
     public void increaseRadiusFactor(double factor) {
-        
+        this.radius *= factor; 
     }
     
+    /**
+     * Decrease radius to make the planet harder to hit 
+     * @param factor factor divison for size reduction 
+     */
     public void decreaseRadiusFactor(double factor) {
-        
+        this.radius /= factor; 
     }
     
-    public double calculateGravityAt(Point pos) {
-        //calculate the gravity 
+    /**
+     * Calculate gravitational influence on a projectile
+     * 
+     * @param Projectilepos
+     * @return gravity strength value
+     */
+    public double calculateGravityAt(Point Projecitlepos) {
+        
     }
     
     public void render(GraphicsContext gc) {
         /////////////////
+    }
+    
+    @Override
+    public String toString() {
+        return "Planet{name=" + name +
+               ", x=" + getX() +
+               ", y=" + getY() +
+               ", radius=" + radius +
+               ", target=" + isTarget + "}";
     }
 }
