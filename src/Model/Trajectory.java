@@ -3,6 +3,7 @@ package Model;
 
 import java.util.List;
 import javafx.geometry.Point2D;
+import Controller.GameViewController;
 
 /**
  * Trajectory class that handles the trajectory
@@ -21,7 +22,6 @@ public class Trajectory {
     
     /**
      * Adds points to the path list
-     * 
      * @param p The given point to add
      */
     public void addPoint(Point2D p) {

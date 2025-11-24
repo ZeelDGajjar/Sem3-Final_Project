@@ -9,61 +9,84 @@ import java.util.List;
 import java.util.Vector;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.Light.Point;
+import Controller.GameViewController;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 /**
- *
+ * The projectile class that calculates the projectile motion of the rocket
  * @author zeelg
  */
 public class Projectile {
     private double speed;
     private double angle;
-    private double mass;
-    private Vector position;
-    private Vector velocity;
+    private double mass;             
+    private Point2D position;                // Need to take into account any changing velocity
+    private double xVelocity;
+    private double yVelocity;
+    private Planet planet;
     
-    public Projectile(double speed, double angle) {
+    public Projectile(double speed, double angle, Planet planet) {
         this.speed = speed;
-        this.angle = angle;
+        this.angle = Math.toRadians(angle);
+        this.planet = planet;
+        xVelocity = speed * cos(angle);
+        yVelocity = speed * sin(angle);
     }
     
-    public Projectile(double speed, double angle, double mass, Vector position, Vector velocity) {
+    public Projectile(double speed, double angle, double mass, Point2D position, Planet planet) {
         this.speed = speed;
         this.angle = angle;
         this.mass = mass;
         this.position = position;
-        this.velocity = velocity;
+        this.planet = planet;
+        this.xVelocity = speed * cos(angle);
+        this.yVelocity = speed * sin(angle);
     }
     
-//    public List<Point2D> calculateTrajectory(List<Planet> planets) {
-//        return;
-//    }
-    
-    public double calculateRange(List<Planet> planets) {
-        return 0; 
+    public List<Point2D> calculateTrajectory(Planet planet) {
     }
     
-    public double calculateTimeOfFlight(List<Planet> planets) {
-        return 0;
+    public double calculateRange() {
+        
+        return (Math.pow(speed, 2) * sin(angle) * 2 ) / (planet.gravity); 
     }
     
-    public double clculateMaxHeight(List<Planet> planets) {
-        return 0;
+    /**
+     * Calculates the time of a flight based on the target planet
+     * @param planet the given target planet
+     * @return a double value that shows the seconds of the flight
+     */
+    public double calculateTimeOfFlight(Planet planet) {
+        return ((2 * speed * sin(angle)) / (planet.gravity));
     }
     
-    public Point2D updatePosition(double time, List<Planet> planets) {
-        return new Point2D(4,5);
+    /**
+     * Calculates the max Height based on a given planet
+     * @param planet the given planet 
+     * @return a double value of the max height
+     */
+    public double calculateMaxHeight(Planet planet) {
+        return Math.pow(speed * Math.sin(angle), 2) / (2 * planet.gravity);
     }
     
+    /**
+     * Updates position based on given position --might not be correct
+     * @param point2D the given point2D
+     */
+    public void updatePosition(Point2D position) {
+        this.position = position;
+    }
+    
+    /**
+     * Resets the original position
+     */
     public void reset() {
     }
     
     // Setters and Getters
-    public Vector getPosition() {
+    public Point2D getPosition() {
         return position;
-    }
-    
-    public Vector getVelocity() {
-        return velocity;
     }
     
     public double getSpeed() {
@@ -78,12 +101,8 @@ public class Projectile {
         return mass;
     }
     
-    public void setPosition(Vector position) {
+    public void setPosition(Point2D position) {
         this.position = position;
-    }
-    
-    public void setVelocity(Vector velocity) {
-        this.velocity = velocity;
     }
     
     public void setSpeed(double speed) {
@@ -96,13 +115,5 @@ public class Projectile {
     
     public void setMass(double mass) {
         this.mass = mass;
-    }
-
-    public double getX() {
-        return (double) position.get(0);   
-    }
-
-    double getY() {
-        return (double) position.get(1);
     }
 }

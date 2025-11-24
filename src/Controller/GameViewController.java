@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -85,6 +86,8 @@ public class GameViewController implements Initializable {
     private Slider directionInput;
     @FXML
     private Button btnLaunch;
+    @FXML
+    private Pane rocket;
     /**
      * Initializes the controller class.
      */
@@ -118,5 +121,4 @@ public class GameViewController implements Initializable {
     @FXML
     private void LaunchBtnClicked(ActionEvent event) {
     }
-
 }
