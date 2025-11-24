@@ -45,6 +45,7 @@ public class Projectile {
     }
     
     public List<Point2D> calculateTrajectory(Planet planet) {
+        return new List<Point2D>() ;
     }
     
     public double calculateRange() {

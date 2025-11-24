@@ -8,7 +8,10 @@ package Model;
  *
  * @author Vedika
  */
-class Planet {
+public class Planet {
+
+    public Planet(Planet planet, double radiu, Point2D position) {
+    }
     double gravity;
 
     double getX() {

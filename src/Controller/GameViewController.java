@@ -21,6 +21,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import Model.Planet;
+import javafx.geometry.Point2D;
+
 /**
  * FXML Controller class
  *
@@ -88,18 +91,25 @@ public class GameViewController implements Initializable {
     private Button btnLaunch;
     @FXML
     private Pane rocket;
+    
+    List<Circle> circlePlanets = List.of(Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranius, Neptune);
+    double[] radius = {696340, 2440, 6052, 6371, 3390, 69911, 58232, 25559, 24764};
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<Circle> planets = List.of(Earth, Moon, Sun, Mercury, Venus, Mars, Jupiter, Saturn, Uranius, Neptune);
         
         //Adding images in the circles
-        for (Circle planet : planets) {
-            String path = "/Images/" + planet.getId() + ".png";
+        for (int i = 0; i < circlePlanets.length; i++) {
+            String path = "/Images/" + circlePlanets.get(i) + ".png";
             Image planetImg = new Image(getClass().getResourceAsStream(path));
-            planet.setFill(new ImagePattern(planetImg));
+            circlePlanets.get(i).setFill(new ImagePattern(planetImg));
+            
+            Point2D position;
+            position = new Point2D(circlePlanets.get(i).centerXProperty(), circlePlanets.get(i).centerYProperty());
+            Planet planet = new Planet(planet, radius[i], position);
         }
         
     }    
