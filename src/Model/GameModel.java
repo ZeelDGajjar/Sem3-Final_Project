@@ -127,7 +127,7 @@ import java.util.List;
                 return null; 
             }
             gameState.addAttempts();
-            projectile = new Projectile(speed, angleDegrees);
+            projectile = new Projectile(speed, angleDegrees);  ///adapt 
 
             Trajectory trajectory = PhysicsUtil.calculateTrajectoryPoint(projectile, difficultyFactor);
             this.lastTrajectory = trajectory;
