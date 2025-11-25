@@ -70,24 +70,30 @@ class Planet {
         return color; 
     }
     
-    //methods
-    public boolean checkHit(Projectile projectile) {
-        boolean isHit = false; 
-        if (isHit ) {
-            return true; 
-        }
-        else{
-            return false; 
-        }
+    public int getRadius() {
+        return radius; 
     }
+    
     /**
-     * Distance from projectile to this planet's center
-     * @param projectile the projectile to measure 
-     * @return distance in the units of the game
+     * Checks if a projectile collides with this planet.
+     * @param projectile the projectile to test
+     * @return true if the projectile hits the planet
      */
-    public double getDistanceFromProjectile(Projectile projectile) {
-        return projectile.getPosition().distance(position);
+    public boolean checkHit(Projectile projectile) {
+        Point2D p = projectile.getPosition();
+        double dx = p.getX() - getX();
+        double dy = p.getY() - getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        return distance <= radius;
     }
+//    /**
+//     * Distance from projectile to this planet's center
+//     * @param projectile the projectile to measure 
+//     * @return distance in the units of the game
+//     */
+//    public double getDistanceFromProjectile(Projectile projectile) {
+//        return projectile.getPosition().distance(position);
+//    }
     
     /**
      * Randomize planet position based on level of difficulty
@@ -112,7 +118,7 @@ class Planet {
     
     /**
      * Decrease radius to make the planet harder to hit 
-     * @param factor factor divison for size reduction 
+     * @param factor factor divisor for size reduction 
      */
     public void decreaseRadiusFactor(double factor) {
         this.radius /= factor; 
@@ -125,12 +131,14 @@ class Planet {
      * @return gravity strength value
      */
     public double calculateGravityAt(Point Projecitlepos) {
-        
+        double distance = Projectile.distance(position);
+        if(distance == 0) return 0; 
+        return mass / (distance * distance);       
     }
     
-    public void render(GraphicsContext gc) {
-        /////////////////
-    }
+//    public void render(GraphicsContext gc) {
+//       
+//    }
     
     @Override
     public String toString() {

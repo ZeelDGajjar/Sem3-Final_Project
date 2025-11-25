@@ -23,22 +23,46 @@ public class collisionUtil {
      * @return true if projectile hits the planet 
      */
     public static boolean checkCollision(Projectile projectile, Planet planet) {
-        
+         double dx = projectile.getX() - planet.getX();
+        double dy = projectile.getY() - planet.getY();
+
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        // If projectile has radius, include it:
+        double projectileRadius = projectile.getRadius(); 
+        double planetRadius = planet.getRadius();
+
+        return distance <= (planetRadius + projectileRadius);
     }
     
      /**
      * Checks collision between the projectile and a list of planets.
-     * Used in GameModel.simulateLaunch()
+     * used in GameModel.simulateLaunch()
      * @param projectile projectile to check
      * @param planets list of planets
      * @return the planet that was hit, or null if none
      */
-    public static Planet checkAnyCollsion(Projectile projectile, List<Planet>planet) {
+    public static Planet checkAnyCollsion(Projectile projectile, List<Planet>planets) {
         for (Planet planet : planets) {
             if (checkCollision(projectile, planet)) {
                 return planet; 
             }
         }
         return null; 
+    }
+    
+    /**
+     * Checks if a projectile leaves game boundaries.
+     * This is used to determine Zombied or a miss.
+     * @param projectile projectile to check
+     * @param width screen width
+     * @param height screen height
+     * @return true if projectile is outside boundaries
+     */
+    public static boolean isOutOfBounds(Projectile projectile, double width, double height) {
+        double x = projectile.getPosition().getX();
+        double y = projectile.getPosition().getY();
+
+        return (x < 0 || x > width || y < 0 || y > height);
     }
 }
