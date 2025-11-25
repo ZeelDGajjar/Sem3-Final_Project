@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
@@ -12,19 +11,6 @@
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/collisionUtil.java</file>
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/GameModel.java</file>
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Projectile.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Controller/GameController.java</file>
         </group>
     </open-files>
 </project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Controller/GameViewController.java</file>
-            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/View/NewFXMain.java</file>
-        </group>
-    </open-files>
-</project-private>
->>>>>>> main
