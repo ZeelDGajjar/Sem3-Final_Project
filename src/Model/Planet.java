@@ -41,38 +41,6 @@ class Planet {
         this.color = color; 
         this.isTarget = isTarget; 
     }
-
-    public double getX() {
-        return position.getX();
-    }
-
-    public double getY() {
-       return position.getY();
-    }
-
-    public double getMass() {
-        return mass; 
-    }
-    
-    public Point2D getPosition() {
-        return position;
-    }
-    
-    public boolean isTarget() {
-        return isTarget; 
-    }
-    
-    public String getName() {
-        return name; 
-    }
-    
-    public String getColor() {
-        return color; 
-    }
-    
-    public int getRadius() {
-        return radius; 
-    }
     
     /**
      * Checks if a projectile collides with this planet.
@@ -126,7 +94,6 @@ class Planet {
     
     /**
      * Calculate gravitational influence on a projectile
-     * 
      * @param Projectilepos
      * @return gravity strength value
      */
@@ -147,5 +114,37 @@ class Planet {
                ", y=" + getY() +
                ", radius=" + radius +
                ", target=" + isTarget + "}";
+    }
+    
+        public double getX() {
+        return position.getX();
+    }
+
+    public double getY() {
+       return position.getY();
+    }
+
+    public double getMass() {
+        return mass; 
+    }
+    
+    public Point2D getPosition() {
+        return position;
+    }
+    
+    public boolean isTarget() {
+        return isTarget; 
+    }
+    
+    public String getName() {
+        return name; 
+    }
+    
+    public String getColor() {
+        return color; 
+    }
+    
+    public int getRadius() {
+        return radius; 
     }
 }
