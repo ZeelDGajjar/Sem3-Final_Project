@@ -21,7 +21,7 @@ public class Projectile {
     private Vector position;
     private Vector velocity;
     
-    public Projectile(int speed, int angle, int par2, int par3) {
+    public Projectile(double speed, double angle) {
         this.speed = speed;
         this.angle = angle;
     }
