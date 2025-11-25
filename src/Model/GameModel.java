@@ -7,17 +7,17 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Core game logic model : 
- * Handles level progression, physics simulation , and timer logic
- * Coordinates with GameState to track player progress 
- * Notifies observers (views/ controllers) when the state changes
- * @author Vedika
- */
-       public class GameModel {
+    /**
+     * Core game logic model : 
+     * Handles level progression, physics simulation , and timer logic
+     * Coordinates with GameState to track player progress 
+     * Notifies observers (views/ controllers) when the state changes
+     * @author Vedika
+     */
+    public class GameModel {
        private int currentLevel; 
        private final int maxLevel = 5;  
-       private double difficultyFactor; //scales the difficulty , for example by increasing gravity, reducing accuracy
+       private double difficultyFactor; //ex. increase gravity, decrease accuracy
        private boolean isZombied; 
        
        //time 
@@ -31,7 +31,7 @@ import java.util.List;
        private Trajectory lastTrajectory; //most recent launch result (motion)
        
        //observer 
-       private List<GameObserver> observers; //controllers or views that react whenever something changes
+       private List<GameObserver> observers; //reacts wheneever somehting changes
        
        private GameState gameState; //tracks score, attempts etc..
     
@@ -46,7 +46,7 @@ import java.util.List;
             this.observers = new ArrayList<>();
         }
 
-       /**
+        /**
         * Starts the current level 
         * resets timers, update the difficulty scaling, and refreshes level state
         * GameState is updated to correspond with the active level
@@ -243,7 +243,7 @@ import java.util.List;
         public void addObserver(GameObserver observer) {
             if (!observers.contains(observer)) { //checks wheter the list already contains the observer
             observers.add(observer); //if not present, then it adds it to the list 
-        }
+          }
         }
 
         /**
@@ -252,10 +252,10 @@ import java.util.List;
         public void notifyObservers() {
            if (observers == null || observers.isEmpty()) {
                return;
-           }
+            }
            for(GameObserver obs : observers) {
                obs.onGameStateChanged(gameState); 
-           }
+            }
         }
         
         /**
@@ -263,7 +263,6 @@ import java.util.List;
         * This method is called internally by the GameModel whenever the countdown changes.
         *
         * @param remaining the number of seconds remaining in the current level
-
         */
         private void notifyTimerUpdate(long remaining) {
            for (GameObserver obs : observers ) {
@@ -296,11 +295,9 @@ import java.util.List;
          */
         public boolean isTimeUp() {
             return getRemainingLevelTime() <= 0;
-
         }
 
-
-        //getter and setters 
+ 
         public GameState getGameState() {
             return gameState;
         }
@@ -329,7 +326,6 @@ import java.util.List;
             return levelTimeLimit;
         }
         
-        
         /**
         * Sets the list of planets used for each level and updates the current target planet.
         *
@@ -342,13 +338,11 @@ import java.util.List;
         
         /**
         * Sets the level's time limit.
-        *
         * @param limitSeconds the number of seconds each level should last
         */
         public void setLevelTimeLimit(long limitSeconds) {
             this.levelTimeLimit = limitSeconds;
         }
-        
         
         public void setProjectile(Projectile projectile) {
             this.projectile = projectile;

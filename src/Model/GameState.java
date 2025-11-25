@@ -11,17 +11,19 @@ package Model;
  */
 public class GameState {
     private int score; 
-    private int level; 
     private int attempts; 
-    private long totalPlayTimeSec; //total time spent playing 
+    private long totalPlayTimeSec;  
     
     private int currentLevel; 
     private int maxLevelReached;
     
     private boolean isZombied;
     
+    /**
+     * Creates a new gameState with all values initialized to defaults
+     */
     public GameState() {
-        resetAll(); //initialize all values 
+        resetAll(); 
     }
     
     /**
@@ -35,17 +37,18 @@ public class GameState {
         this.maxLevelReached = 1; 
     }
     
-    // Score methods 
+    // SCORE METHODS 
     
     /**
      * Adds points to the player's score. 
-     * @param points points to add
+     * prevents the score from dropping below zero
+     * @param pointsEarned number of points to add (can be negative)
      */
     public void updateScore(int pointsEarned ) {
         if (pointsEarned > 0) {
             this.score += pointsEarned; 
         } else if (pointsEarned < 0) {
-            //prevent the score from going below 0, so handle the penelalites safely
+            //handles the penality safely (prevents the score to go below 0)
             this.score = Math.max(0, this.score + pointsEarned);
         }
         //if pointsEarned == 0, do nothing 
@@ -55,18 +58,20 @@ public class GameState {
         return score; 
     }
     
-    //level methods 
+    //LEVEL METHODS  
     
     /**
      * Sets the current level and updates maxLevel is needed
-     * @param level  level to set (the minimum is 1)
+     * @param level  level to set (the minimum allowed is 1)
      */
     public void setCurrentLevel(int level) {
         this.currentLevel = Math.max(1,level);
+        
         if (level > maxLevelReached) {
             maxLevelReached = level; 
         }
     }
+    
     
     public int getCurrentLevel() {
         return currentLevel;
@@ -76,10 +81,10 @@ public class GameState {
         return maxLevelReached;
     }
     
-    //attempts methods 
+    //ATTEMPTS METHODS 
     
     /**
-     * add one attempt every time a projectile is launched
+     * Increments the number of attempts, whenever a projectile is launched
      */
     public void addAttempts() {
         this.attempts++; 
@@ -89,11 +94,11 @@ public class GameState {
         return attempts;
     }
     
-    //Play time methods 
+    //PLAY TIMING 
     
      /**
-     * Adds time spend during launch or level ( controller will track)
-     * @param duration 
+     * Adds time spent in the current level(must be positive)
+     * @param durationSeconds time duration in seconds 
      */
     public void addPlayTime(long durationSeconds) {
         if (durationSeconds > 0) {
@@ -105,23 +110,27 @@ public class GameState {
         return totalPlayTimeSec;
     }
      
-     //Game State / Failure methods 
+     //GAME FAILURE STATE (ZOMBIED)
     
     /**
-     * Sets the game failure (true if player failed level)
-     * @param zombied Whether player has failed 
+     * Sets the game failure state
+     * @param zombied  true if the player has failed the level 
      */
     public void setZombied (boolean zombied) {
         this.isZombied = zombied; 
     }
 
+    /**
+     * 
+     * @return true if the player has failed 
+     */
     public boolean isZombied() {
         return isZombied;
     }
     
     /**
-     * checks if the game is over (based on failure state for now)
-     * @return true if the player failed 
+     * Determines if the game is over based on the failure state
+     * @return true if the game is over (player failed)
      */
     public boolean isGameOver() {
         return isZombied; 

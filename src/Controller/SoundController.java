@@ -8,7 +8,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 /**
- *
+ * Manages all audio of the project 
  * @author Vedika 
  */
 class SoundController {
@@ -16,12 +16,7 @@ class SoundController {
     private MediaPlayer music; 
     private double volume = 0.5; 
     private boolean muted = false; 
-    
-    
-    //the filePath of the music 
-    //i put it inside of view for now //is inside of view for now 
-    
-    //for now i add the one i added in my assigment but need to change 
+   
     /**
      * Plays background music on loop.
      */
@@ -37,7 +32,7 @@ class SoundController {
     }
     
     /**
-     * Stops background music.
+     * Stops currently playing background music, if any
      */
     public void stopBackgroundMusic() {
         if (backgroundMusic != null) {
@@ -72,8 +67,9 @@ class SoundController {
         }
     }
     
-     /**
-     * @return true if music is muted
+    /**
+     * Returns whether the game audio is currently muted
+     * @return true if all audio is muted, false otherwise
      */
     public boolean isMuted() {
         return muted;
