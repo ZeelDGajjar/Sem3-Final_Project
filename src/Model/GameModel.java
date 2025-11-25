@@ -132,7 +132,7 @@ import java.util.List;
             Trajectory trajectory = PhysicsUtil.calculateTrajectoryPoint(projectile, difficultyFactor);
             this.lastTrajectory = trajectory;
 
-            boolean hit = CollisionUtil.checkCollision(trajectory, targetPlanet);
+            boolean hit = collisionUtil.checkCollision(trajectory, targetPlanet);
 
             if (hit) {
                 handleSuccessfulHit();
