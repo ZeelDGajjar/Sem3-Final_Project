@@ -76,7 +76,7 @@ public class GameViewController implements Initializable {
     @FXML
     private Circle Moon;
     @FXML
-    private ImageView image;
+    private ImageView rocket;
     @FXML
     private Button btnReset;
     @FXML
@@ -100,10 +100,6 @@ public class GameViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        //Adding images in the circles
-        for (int i = 0; i < circlePlanets.length; i++) {
-            String path = "/Images/" + circlePlanets.get(i) + ".png";
             Image planetImg = new Image(getClass().getResourceAsStream(path));
             circlePlanets.get(i).setFill(new ImagePattern(planetImg));
             
@@ -111,8 +107,7 @@ public class GameViewController implements Initializable {
             position = new Point2D(circlePlanets.get(i).centerXProperty(), circlePlanets.get(i).centerYProperty());
             Planet planet = new Planet(planet, radius[i], position);
         }
-        
-    }    
+    }
     
     @FXML
     private void ResetBtnClicked(ActionEvent event) {
@@ -126,6 +121,7 @@ public class GameViewController implements Initializable {
 
     @FXML
     private void DirectionDragDropped(DragEvent event) {
+        
     }
 
     @FXML
