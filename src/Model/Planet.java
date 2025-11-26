@@ -8,7 +8,11 @@ package Model;
  *
  * @author Vedika
  */
-class Planet {
+public class Planet {
+
+    public Planet(Planet planet, double radiu, Point2D position) {
+    }
+    double gravity;
 
     double getX() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -21,5 +25,8 @@ class Planet {
     double getMass() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    double getGravity() {
+        return gravity;
+    }
 }
