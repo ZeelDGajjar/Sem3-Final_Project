@@ -146,7 +146,7 @@ import java.util.List;
             gameState.addAttempts();
             projectile = new Projectile(speed, angleDegrees);  ///adapt 
 
-            Trajectory trajectory = PhysicsUtil.calculateTrajectoryPoint(projectile, difficultyFactor);
+            Trajectory trajectory = PhysicsUtil.calculateTrajectory(projectile, difficultyFactor);
             this.lastTrajectory = trajectory;
 
             boolean hit = collisionUtil.checkCollision(trajectory, targetPlanet);
@@ -179,7 +179,7 @@ import java.util.List;
             }
             
             if (traj.getFailureReason() != null) {
-                return traj.getFailureReason().toString();
+                return traj.getFailureReason();
             }
             
             return "Success!";

@@ -33,7 +33,7 @@ public class Trajectory {
         return success;
     }
     
-    public String failureReason() {
+    public String getFailureReason() {
         return failureReason;
     }
     
@@ -41,7 +41,7 @@ public class Trajectory {
         success = true;
     }
     
-    public void setfailureReason(String reason) {
+    public void setFailureReason(String reason) {
         failureReason = reason;
     }
 }
