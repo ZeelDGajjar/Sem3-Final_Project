@@ -11,8 +11,6 @@ import java.util.List;
  * projectiles and planets in the game
  * @author Vedika
  */
-
-
 public class collisionUtil {
     
     /**
