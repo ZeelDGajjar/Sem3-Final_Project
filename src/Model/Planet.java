@@ -15,7 +15,11 @@ import javafx.scene.effect.Light.Point;
  * and provides collision/ hit detection logic for the physics after
  * @author Vedika
  */
-class Planet {
+public class Planet {
+
+    public Planet(Planet planet, double radiu, Point2D position) {
+    }
+    double gravity;
 
     private String name; 
     private Vector<Double> position; 
@@ -146,5 +150,6 @@ class Planet {
     
     public double getRadius() {
         return radius; 
+
     }
 }
