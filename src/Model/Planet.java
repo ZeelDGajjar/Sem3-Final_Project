@@ -7,7 +7,6 @@ package Model;
 import java.util.Random;
 import java.util.Vector;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Light.Point;
 
 /**
