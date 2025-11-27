@@ -1,120 +1,144 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 import java.util.*;
 import java.util.List;
-import java.util.Vector;
 import javafx.geometry.Point2D;
-import javafx.scene.effect.Light.Point;
-import Controller.GameViewController;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * The projectile class that calculates the projectile motion of the rocket
  * @author zeelg
  */
 public class Projectile {
-    private double speed;
-    private double angle;
     private double mass;             
-    private Point2D position;                // Need to take into account any changing velocity
-    private double xVelocity;
-    private double yVelocity;
-    private Planet planet;
+    private Vector2 position;                
+    private Vector2 velocity;
     
-    public Projectile(double speed, double angle, Planet planet) {
-        this.speed = speed;
-        this.angle = Math.toRadians(angle);
-        this.planet = planet;
-        xVelocity = speed * cos(angle);
-        yVelocity = speed * sin(angle);
+    private double dt = 0.02;
+    
+    public Projectile(double mass, Vector2 initialPosition, Vector2 velocity) {
+        this.mass = 1;
+        this.position = initialPosition;
+        this.velocity = velocity;
     }
     
-    public Projectile(double speed, double angle, double mass, Point2D position, Planet planet) {
-        this.speed = speed;
-        this.angle = angle;
+    public Projectile(double speed, double angle, double mass, Vector2 initialPosition) {
         this.mass = mass;
-        this.position = position;
-        this.planet = planet;
-        this.xVelocity = speed * cos(angle);
-        this.yVelocity = speed * sin(angle);
-    }
-    
-    public List<Point2D> calculateTrajectory(Planet planet) {
-        return new List<Point2D>() ;
-    }
-    
-    public double calculateRange() {
-        
-        return (Math.pow(speed, 2) * sin(angle) * 2 ) / (planet.gravity); 
+        this.position = initialPosition;
+        this.velocity = new Vector2(speed * Math.cos(Math.toRadians(angle)), speed * Math.sin(Math.toRadians(angle)));
     }
     
     /**
-     * Calculates the time of a flight based on the target planet
-     * @param planet the given target planet
-     * @return a double value that shows the seconds of the flight
+     * Simulates full trajectory based on planets given
+     * @param planets the list of planets given
+     * @return a list of point in 2d space
      */
-    public double calculateTimeOfFlight(Planet planet) {
-        return ((2 * speed * sin(angle)) / (planet.gravity));
+    public List<Point2D> calculateTrajectory(List<Planet> planets) {
+        List<Point2D> points = new ArrayList<>();
+        
+        Vector2 simPosition = new Vector2(position.x ,position.y);
+        Vector2 simVelocity = new Vector2(velocity.x, velocity.y);
+        
+        for (int i = 0 ; i < 2000; i++) {
+            Vector2 acceleration = PhysicsUtil.computeGravity(mass, position, planets);
+            
+            simVelocity = simVelocity.add(simVelocity.scale(dt));
+            simPosition = position.add(simPosition.scale(dt));
+            
+            points.add(new Point2D(simPosition.x, simPosition.y));
+        }
+        
+        return points;
+    }
+    
+    
+    /**
+     * Calculates the time of the flight based on trajectory
+     * @param planets the given list of planets
+     * @return a double value
+     */
+    public double calculateTimeOfFlight(List<Planet> planets) {
+        return calculateTrajectory(planets).size() * dt;
+    }
+    
+    /**
+     * Calculates range of the trajectory based on given planets
+     * @param planets the given list of planets
+     * @return a double value of range
+     */
+    public double calculateRange(List<Planet> planets) {
+        List<Point2D> trajectory = calculateTrajectory(planets);
+        return trajectory.get(trajectory.size() - 1).getX();
     }
     
     /**
      * Calculates the max Height based on a given planet
-     * @param planet the given planet 
+     * @param planets the given list of planets
      * @return a double value of the max height
      */
-    public double calculateMaxHeight(Planet planet) {
-        return Math.pow(speed * Math.sin(angle), 2) / (2 * planet.gravity);
+    public double calculateMaxHeight(List<Planet> planets) {
+        List<Point2D> t = calculateTrajectory(planets);
+        
+        double max = Double.NEGATIVE_INFINITY;
+        
+        for (Point2D p : t) {
+            if (p.getY() > max) max = p.getY();
+        }
+        return max;
     }
     
     /**
-     * Updates position based on given position --might not be correct
-     * @param point2D the given point2D
+     * Updates position and advance the projectile one time-step
+     * @param dt the given delta time
+     * @param planets the given list of planets
+     * @return the next point based on acceleration in 2d
      */
-    public void updatePosition(Point2D position) {
-        this.position = position;
+    public Point2D updatePosition(double dt,  List<Planet> planets) {
+        Vector2 acceleration = PhysicsUtil.computeGravity(mass, position, planets);
+        
+        velocity = velocity.add(acceleration.scale(dt));
+        position = position.add(acceleration.scale(dt));
+        
+        return new Point2D(position.x, position.y);
     }
     
     /**
      * Resets the original position
      */
     public void reset() {
+        this.position = new Vector2(0, 0);
+        this.velocity = new Vector2(0, 0);
     }
     
     // Setters and Getters
-    public Point2D getPosition() {
+    public Vector2 getPosition() {
         return position;
-    }
-    
-    public double getSpeed() {
-        return speed;
-    }
-    
-    public double getAngle() {
-        return angle;
     }
     
     public double getMass() {
         return mass;
     }
     
-    public void setPosition(Point2D position) {
+    public Vector2 getVelocity(){
+        return velocity;
+    }
+    
+    public void setPosition(Vector2 position) {
         this.position = position;
-    }
-    
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-    
-    public void setAngle(double angle) {
-        this.angle = angle;
     }
     
     public void setMass(double mass) {
         this.mass = mass;
+    }
+    
+    public void setVelocity(Vector2 vel) {
+        this.velocity = vel;
+    }
+    
+    public double getX() {
+        return position.x;
+    }
+    
+    public double getY() {
+        return position.y;
     }
 }

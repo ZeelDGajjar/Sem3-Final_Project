@@ -53,11 +53,10 @@ public class Vector2 {
     }
 
     /**
-     * Normalizes the vector enlarged by scaling
-     * @param n the given factor to undo the scaling for
+     * Normalizes the vector
      * @return the given original vector
      */
-    public Vector2 normalize(double n){
-        return (magnitude() == 0) ? new Vector2(0, 0) : new Vector2(x / n, y / n);
+    public Vector2 normalize(){
+        return (magnitude() == 0) ? new Vector2(0, 0) : new Vector2(x / magnitude(), y / magnitude());
     }
 }
