@@ -161,11 +161,11 @@ import java.util.Vector;
 
         projectile = new Projectile(speed, angleDegrees, 1.0, initialPos, initialVel);
 
-        // ---- Compute trajectory using PhysicsUtil ----
+        //  Compute trajectory using PhysicsUtil 
         Trajectory trajectory = PhysicsUtil.calculateTrajectory(projectile, planets, difficultyFactor);
         this.lastTrajectory = trajectory;
 
-        // ---- COLLISION CHECK (NEW: uses projectile position only) ----
+        //COLLISION CHECK (NEW: uses projectile position only) 
         Planet hitPlanet = CollisionUtil.checkAnyCollsion(projectile, planets);
 
         if (hitPlanet != null && hitPlanet.equals(targetPlanet)) {
