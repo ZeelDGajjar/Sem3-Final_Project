@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.util.Random;
+import java.util.Vector;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Light.Point;
@@ -17,10 +19,9 @@ import javafx.scene.effect.Light.Point;
 class Planet {
 
     private String name; 
-    private Point2D position; 
-    private int radius; 
+    private Vector<Double> position; 
+    private double radius; 
     private boolean isTarget; 
-    private String color; 
     private Point2D coordinates; 
     private double distance; 
     private double mass; 
@@ -28,18 +29,20 @@ class Planet {
     /**
      * Constructor that creates a new planet 
      * @param name name of the planet 
-     * @param position position as Point2D (X,Y)
-     * @param radius collision radius 
-     * @param mass used when gravity is applied 
-     * @param color for the View when deciding how to draw
+     * @param x x-coordinate
+     * @param y y -coordinate
+     * @param radius collision radius
+     * @param mass mass used when gravity is applied
      * @param isTarget whether this planet is the target for the current level
      */
-    public Planet (String name, Point2D position, double radius, double mass, String color, boolean isTarget) {
-        this.name = name; 
-        this.position = position; 
-        this.mass = mass; 
-        this.color = color; 
-        this.isTarget = isTarget; 
+    public Planet(String name, double x, double y, int radius, double mass, boolean isTarget) {
+        this.name = name;
+        this.position = new Vector<>();
+        this.position.add(x); // x
+        this.position.add(y); // y
+        this.radius = radius;
+        this.mass = mass;
+        this.isTarget = isTarget;
     }
     
     /**
@@ -48,9 +51,8 @@ class Planet {
      * @return true if the projectile hits the planet
      */
     public boolean checkHit(Projectile projectile) {
-        Point2D p = projectile.getPosition(); //needs to be a vector 
-        double dx = p.getX() - getX();
-        double dy = p.getY() - getY();
+        double dx = projectile.getX() - getX();
+        double dy = projectile.getY() - getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
         return distance <= radius;
     }
@@ -69,11 +71,13 @@ class Planet {
      * @param level 
      */
     public void generateRandomPosition(int level) {
-       double min = 100 * level;
+        Random rand = new Random();
+        double min = 100 * level;
         double max = 300 * level;
-        double x = min + Math.random() * (max - min);
-        double y = min + Math.random() * (max - min);
-        this.position = new Point2D(x, y);
+        double x = min + rand.nextDouble() * (max - min);
+        double y = min + rand.nextDouble() * (max - min);
+        position.set(0, x);
+        position.set(1, y);
     }
     
     /**

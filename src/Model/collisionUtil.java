@@ -11,7 +11,7 @@ import java.util.List;
  * projectiles and planets in the game
  * @author Vedika
  */
-public class collisionUtil {
+public class CollisionUtil {
     
     /**
      * Checks whether a projectile hits a specific planet 

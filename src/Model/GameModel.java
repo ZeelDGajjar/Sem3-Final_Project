@@ -6,6 +6,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
     /**
      * Core game logic model : 
@@ -145,22 +146,38 @@ import java.util.List;
             }
             gameState.addAttempts();
             
-            //create initial position 
-            projectile = new Projectile(speed, angleDegrees);  ///adapt 
+            gameState.addAttempts();
 
-            Trajectory trajectory = PhysicsUtil.calculateTrajectory(projectile, difficultyFactor);
-            this.lastTrajectory = trajectory;
+        // INITIAL POSITION
+        Vector initialPos = new Vector();
+        initialPos.add(0.0); // X start
+        initialPos.add(0.0); // Y start
 
-            boolean hit = collisionUtil.checkCollision(trajectory, targetPlanet);//use another way
+        // INITIAL VELOCITY
+        double radians = Math.toRadians(angleDegrees);
+        Vector initialVel = new Vector();
+        initialVel.add(speed * Math.cos(radians));
+        initialVel.add(speed * Math.sin(radians));
 
-            if (hit) {
-                handleSuccessfulHit();
-                trajectory.setFailureReason(null);
-            } else {
-                handleMiss(trajectory);
-            }
-            notifyObservers();
-            return trajectory;
+        projectile = new Projectile(speed, angleDegrees, 1.0, initialPos, initialVel);
+
+        // ---- Compute trajectory using PhysicsUtil ----
+        Trajectory trajectory = PhysicsUtil.calculateTrajectory(projectile, planets, difficultyFactor);
+        this.lastTrajectory = trajectory;
+
+        // ---- COLLISION CHECK (NEW: uses projectile position only) ----
+        Planet hitPlanet = CollisionUtil.checkAnyCollsion(projectile, planets);
+
+        if (hitPlanet != null && hitPlanet.equals(targetPlanet)) {
+            handleSuccessfulHit();
+            trajectory.setFailureReason(null);
+        } else {
+            handleMiss(trajectory);
+        }
+
+        notifyObservers();
+        return trajectory;
+            
         }
 
         //success and failures handling 
