@@ -22,7 +22,7 @@ public class Planet {
     double gravity;
 
     private String name; 
-    private Vector<Double> position; 
+    private Point2D position; 
     private double radius; 
     private boolean isTarget; 
     private Point2D coordinates; 
@@ -40,9 +40,7 @@ public class Planet {
      */
     public Planet(String name, double x, double y, int radius, double mass, boolean isTarget) {
         this.name = name;
-        this.position = new Vector<>();
-        this.position.add(x); // x
-        this.position.add(y); // y
+        this.position = new Point2D(x,y);
         this.radius = radius;
         this.mass = mass;
         this.isTarget = isTarget;
@@ -54,8 +52,9 @@ public class Planet {
      * @return true if the projectile hits the planet
      */
     public boolean checkHit(Projectile projectile) {
-        double dx = projectile.getX() - getX();
-        double dy = projectile.getY() - getY();
+        Point2D projPos = projectile.getPosition();
+        double dx = projPos.getX() - getX();
+        double dy = projPos.getY() - getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
         return distance <= radius;
     }
@@ -79,8 +78,7 @@ public class Planet {
         double max = 300 * level;
         double x = min + rand.nextDouble() * (max - min);
         double y = min + rand.nextDouble() * (max - min);
-        position.set(0, x);
-        position.set(1, y);
+        this.position = new Point2D(x,y);
     }
     
     /**
@@ -104,9 +102,9 @@ public class Planet {
      * @param Projectilepos
      * @return gravity strength value
      */
-    public double calculateGravityAt(Point Projectile) {
-        double dx = getX() - Projectile.getX();
-        double dy = getY() - Projectile.getY();
+    public double calculateGravityAt(Point2D point) {
+        double dx = getX() - point.getX();
+        double dy = getY() - point.getY();
         double distance = Math.sqrt(dx*dx + dy*dy);
         if (distance == 0) return 0;
         return mass / (distance * distance);
@@ -123,20 +121,21 @@ public class Planet {
                ", target=" + isTarget + "}";
     }
     
-        public double getX() {
-        return position.get(0);
-    }
-
+    
+   public double getX() {
+    return position.getX(); 
+   }
+   
     public double getY() {
-       return position.get(1);
-    }
-
-    public double getMass() {
-        return mass; 
+     return position.getY(); 
     }
     
-    public Vector<Double> getPosition() {
+    public Point2D getCoordinates() {
         return position; 
+    }
+    
+    public double getMass() {
+        return mass; 
     }
     
     public boolean isTarget() {
