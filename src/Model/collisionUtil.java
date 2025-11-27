@@ -27,10 +27,10 @@ public class collisionUtil {
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         // If projectile has radius, include it:
-        double projectileRadius = projectile.getRadius(); 
+        double projectileRadius = projectile.getRadius(); //
         double planetRadius = planet.getRadius();
 
-        return distance <= (planetRadius + projectileRadius);
+        return distance <= (planetRadius + projectileRadius);  //check the position of the projectile instead
     }
     
      /**
@@ -58,8 +58,8 @@ public class collisionUtil {
      * @return true if projectile is outside boundaries
      */
     public static boolean isOutOfBounds(Projectile projectile, double width, double height) {
-        double x = projectile.getPosition().getX();
-        double y = projectile.getPosition().getY();
+        double x = projectile.getPosition().getX();//
+        double y = projectile.getPosition().getY();//
 
         return (x < 0 || x > width || y < 0 || y > height);
     }

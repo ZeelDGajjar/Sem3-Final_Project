@@ -48,7 +48,7 @@ class Planet {
      * @return true if the projectile hits the planet
      */
     public boolean checkHit(Projectile projectile) {
-        Point2D p = projectile.getPosition();
+        Point2D p = projectile.getPosition(); //needs to be a vector 
         double dx = p.getX() - getX();
         double dy = p.getY() - getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
@@ -98,7 +98,7 @@ class Planet {
      * @return gravity strength value
      */
     public double calculateGravityAt(Point Projecitlepos) {
-        double distance = Projectile.distance(position);
+        double distance = Projectile.distance(position); //make a vector 
         if(distance == 0) return 0; 
         return mass / (distance * distance);       
     }

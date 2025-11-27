@@ -144,12 +144,14 @@ import java.util.List;
                 return null; 
             }
             gameState.addAttempts();
+            
+            //create initial position 
             projectile = new Projectile(speed, angleDegrees);  ///adapt 
 
             Trajectory trajectory = PhysicsUtil.calculateTrajectory(projectile, difficultyFactor);
             this.lastTrajectory = trajectory;
 
-            boolean hit = collisionUtil.checkCollision(trajectory, targetPlanet);
+            boolean hit = collisionUtil.checkCollision(trajectory, targetPlanet);//use another way
 
             if (hit) {
                 handleSuccessfulHit();
