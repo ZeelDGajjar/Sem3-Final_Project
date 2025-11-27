@@ -85,7 +85,7 @@ class Planet {
      * @param factor multiplier for size increase
      */
     public void increaseRadiusFactor(double factor) {
-        this.radius *= factor; 
+        this.radius = (int) (this.radius * factor); 
     }
     
     /**
@@ -93,7 +93,7 @@ class Planet {
      * @param factor factor divisor for size reduction 
      */
     public void decreaseRadiusFactor(double factor) {
-        this.radius /= factor; 
+        this.radius = (int) (this.radius / factor);
     }
     
     /**
@@ -101,15 +101,15 @@ class Planet {
      * @param Projectilepos
      * @return gravity strength value
      */
-    public double calculateGravityAt(Point Projecitlepos) {
-        double distance = Projectile.distance(position); //make a vector 
-        if(distance == 0) return 0; 
-        return mass / (distance * distance);       
+    public double calculateGravityAt(Point Projectile) {
+        double dx = getX() - Projectile.getX();
+        double dy = getY() - Projectile.getY();
+        double distance = Math.sqrt(dx*dx + dy*dy);
+        if (distance == 0) return 0;
+        return mass / (distance * distance);
     }
     
-//    public void render(GraphicsContext gc) {
-//       
-//    }
+
     
     @Override
     public String toString() {
@@ -121,19 +121,19 @@ class Planet {
     }
     
         public double getX() {
-        return position.getX();
+        return position.get(0);
     }
 
     public double getY() {
-       return position.getY();
+       return position.get(1);
     }
 
     public double getMass() {
         return mass; 
     }
     
-    public Point2D getPosition() {
-        return position;
+    public Vector<Double> getPosition() {
+        return position; 
     }
     
     public boolean isTarget() {
@@ -144,11 +144,8 @@ class Planet {
         return name; 
     }
     
-    public String getColor() {
-        return color; 
-    }
     
-    public int getRadius() {
+    public double getRadius() {
         return radius; 
     }
 }
