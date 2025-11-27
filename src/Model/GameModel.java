@@ -7,6 +7,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javafx.geometry.Point2D;
 
     /**
      * Core game logic model : 
@@ -145,39 +146,41 @@ import java.util.Vector;
                 return null; 
             }
             gameState.addAttempts();
-            
-            gameState.addAttempts();
 
-        // INITIAL POSITION
-        Vector initialPos = new Vector();
-        initialPos.add(0.0); // X start
-        initialPos.add(0.0); // Y start
+                // Starting position (0,0) as Point2D
+            Point2D initialPos = new Point2D(0, 0);
 
-        // INITIAL VELOCITY
-        double radians = Math.toRadians(angleDegrees);
-        Vector initialVel = new Vector();
-        initialVel.add(speed * Math.cos(radians));
-        initialVel.add(speed * Math.sin(radians));
+            // Use Projectile constructor exactly as given
+            projectile = new Projectile(speed, angleDegrees, targetPlanet);
 
-        projectile = new Projectile(speed, angleDegrees, 1.0, initialPos, initialVel);
+            // Compute trajectory using provided PhysicsUtil
+            PhysicsUtil physics = new PhysicsUtil();
+            List<Point2D> trajPoints = new ArrayList<>();
 
-        //  Compute trajectory using PhysicsUtil 
-        Trajectory trajectory = PhysicsUtil.calculateTrajectory(projectile, planets, difficultyFactor);
-        this.lastTrajectory = trajectory;
+            // simulate for a number of steps (time t)
+            double dt = 0.1;
+            double maxTime = 30; // prevent infinite loop
+            for (double t = 0; t <= maxTime; t += dt) {
+                Point2D pt = physics.trajectory(speed, angleDegrees, t, planets, new javafx.scene.effect.Light.Point());
+                if (pt != null) {
+                    trajPoints.add(pt);
+                }
+            }
 
-        //COLLISION CHECK (NEW: uses projectile position only) 
+        lastTrajectory = new Trajectory(trajPoints);
+
+        // Check collisions
         Planet hitPlanet = CollisionUtil.checkAnyCollsion(projectile, planets);
 
         if (hitPlanet != null && hitPlanet.equals(targetPlanet)) {
             handleSuccessfulHit();
-            trajectory.setFailureReason(null);
+            lastTrajectory.setFailureReason(null);
         } else {
-            handleMiss(trajectory);
+            handleMiss(lastTrajectory);
         }
 
         notifyObservers();
-        return trajectory;
-            
+        return lastTrajectory;
         }
 
         //success and failures handling 
