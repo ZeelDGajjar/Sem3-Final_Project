@@ -4,9 +4,11 @@
  */
 package Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 /**
  * Controller for the result screen.
@@ -26,5 +28,28 @@ public class ResultController {
     @FXML
     private Label levelReachedLabel; 
 
+     /**
+     * Initialize the ResultController with outcome data.
+     * Call this after loading the FXML.
+     */
+    public void setResult(String warningMessage, String failureReason, int levelReached) {
+        warningMessageLabel.setText(warningMessage);
+        FailureReasonLabel.setText(failureReason);
+        levelReachedLabel.setText("Level " + levelReached);
+    }
+    
+    /**
+     * Handle Try Again button click.
+     * This will close the result window and return to the main menu or restart the game.
+     */
+    @FXML
+    private void handleTryAgain(ActionEvent event) {
+        // Close the result window
+        Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
+        stage.close();
+    }
 
 }
+     
+     
+
