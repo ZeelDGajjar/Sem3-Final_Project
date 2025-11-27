@@ -15,7 +15,7 @@ public class collisionUtil {
     
     /**
      * Checks whether a projectile hits a specific planet 
-     * Collision = distance between centers is less or equal to radius
+     * collision occurs when distance (projectile, planet) is less than or equal to planet radius
      * @param projectile projectile to check 
      * @param planet planet to test collision with 
      * @return true if projectile hits the planet 
@@ -26,11 +26,9 @@ public class collisionUtil {
 
         double distance = Math.sqrt(dx * dx + dy * dy);
 
-        // If projectile has radius, include it:
-        double projectileRadius = projectile.getRadius(); //
         double planetRadius = planet.getRadius();
 
-        return distance <= (planetRadius + projectileRadius);  //check the position of the projectile instead
+        return distance <= planetRadius; 
     }
     
      /**
@@ -58,8 +56,8 @@ public class collisionUtil {
      * @return true if projectile is outside boundaries
      */
     public static boolean isOutOfBounds(Projectile projectile, double width, double height) {
-        double x = projectile.getPosition().getX();//
-        double y = projectile.getPosition().getY();//
+        double x = projectile.getX();//
+        double y = projectile.getY();//
 
         return (x < 0 || x > width || y < 0 || y > height);
     }
