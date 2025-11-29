@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Vector;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.Light.Point;
+import Model.Vector2;
 
 /**
  * Represents a planet in the MODEL layer of the game
@@ -16,9 +17,6 @@ import javafx.scene.effect.Light.Point;
  * @author Vedika
  */
 public class Planet {
-
-    public Planet(Planet planet, double radiu, Point2D position) {
-    }
     double gravity;
 
     private String name; 
@@ -52,9 +50,9 @@ public class Planet {
      * @return true if the projectile hits the planet
      */
     public boolean checkHit(Projectile projectile) {
-        Point2D projPos = projectile.getPosition();
-        double dx = projPos.getX() - getX();
-        double dy = projPos.getY() - getY();
+        Vector2 projPos = projectile.getPosition();
+        double dx = projPos.x - getX();
+        double dy = projPos.y - getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
         return distance <= radius;
     }
@@ -110,8 +108,6 @@ public class Planet {
         return mass / (distance * distance);
     }
     
-
-    
     @Override
     public String toString() {
         return "Planet{name=" + name +
@@ -121,13 +117,12 @@ public class Planet {
                ", target=" + isTarget + "}";
     }
     
-    
-   public double getX() {
-    return position.getX(); 
-   }
+    public double getX() {
+        return position.getX(); 
+    }
    
     public double getY() {
-     return position.getY(); 
+        return position.getY(); 
     }
     
     public Point2D getCoordinates() {
@@ -145,7 +140,6 @@ public class Planet {
     public String getName() {
         return name; 
     }
-    
     
     public double getRadius() {
         return radius; 

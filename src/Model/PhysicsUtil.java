@@ -5,138 +5,65 @@
 package Model;
 
 import java.util.List;
-import java.math.*;
 import javafx.geometry.Point2D;
-import javafx.scene.effect.Light.Point;
 
 /**
- *
+ * The physics utility class
  * @author zeelg
  */
 public class PhysicsUtil {
-    private double G = 6.67430E-11;
+    private static final double G = 6.67430E-11;
     
     /**
-     * Calculates trajectory class
+     * Computes the acceleration pulling force by finding acceleration of all planets and adding together
+     * @param mass the given mass to travel through space
+     * @param position the given position to compute acceleration from
+     * @param planets the given list of planets to take into account
+     * @return an acceleration vector of form Vector2
+     */
+    public static Vector2 computeGravity(double mass, Vector2 position, List<Planet> planets) {
+        Vector2 total  = new Vector2(0, 0);
+        
+        for (Planet planet : planets) {
+            Vector2 direction = new Vector2(planet.getX() - position.x, planet.getY() - position.y);
+            
+            double distance = direction.magnitude();
+            
+            if(distance == 0) continue;
+            
+            double force = (G * mass * planet.getMass()) / (distance * distance);
+            
+            Vector2 acceleration = direction.normalize().scale(force / mass);
+            
+            total = total.add(acceleration);
+        }
+        
+        return total;
+    }
+    
+    /**
+     * Calculates trajectory and returns points 
      * @param speed the given speed
-     * @param angledeg the given angle
-     * @param t 
-     * @param planets
-     * @param initialPosition
-     * @return 
+     * @param angledeg the given angle in degrees
+     * @param t the given time 
+     * @param planets the given list of planets
+     * @param initialPosition the given initial position vector
+     * @param mass the given mass
+     * @return the next 2d point based on the path of trajectory
      */
-    public Point2D trajectory(double speed, double angledeg, double t, List<Planet> planets, Point initialPosition) {
-        double x = initialPosition.getX() + calculateHorizontal(speed, angledeg, t, planets);
-        double y = initialPosition.getY() + calculateVertical(speed, angledeg, t, planets);
-        return new Point2D(x,y);
-    }
-    
-    /**
-     * 
-     * @param p
-     * @param planet
-     * @return 
-     */
-    public static double gravityEffect(Projectile p, Planet planet) {
-        double G = 6.67430e-11;
-        double dx = planet.getX() - p.getX();
-        double dy = planet.getY() - p.getY();
-        double distance = Math.sqrt(dx*dx + dy*dy);
-        if(distance == 0){
-            return 0;
-        }
-        return G * p.getMass() * planet.getMass() / (distance * distance);
-    }
-    
-    /**
-     * 
-     * @param speed
-     * @param angle
-     * @param t
-     * @param planets
-     * @return 
-     */
-    public double calculateHorizontal(double speed, double angle, double t, List<Planet> planets) {
-        double angleRad = Math.toRadians(angle);
-        double horizontalSpeed = speed * Math.cos(angle);
+    public static Point2D trajectory(double speed, double angledeg, double t, List<Planet> planets, Vector2 initialPosition, double mass) {
+        double dt = 0.02;
         
-        double ax = 0;
-        for (Planet planet : planets) {
-            ax += gravityEffect(new Projectile(0.0, 0.0), planet);
-        }
-        return horizontalSpeed * t + 0.5 * ax * t * t;
-    }
-    
-    /**
-     * 
-     * @param speed
-     * @param angle
-     * @param t
-     * @param planets
-     * @return 
-     */
-    private double calculateVertical(double speed, double angle, double t, List<Planet> planets) {
-        double angleRad = Math.toRadians(angle);
-        double verticalSpeed = speed * Math.sin(angle);
+        Vector2 position = new Vector2(initialPosition.x, initialPosition.y);
+        Vector2 velocity = new Vector2(speed * Math.cos(Math.toRadians(angledeg)), speed * Math.sin(Math.toRadians(angledeg)));
         
-        double ax = 0;
-        for (Planet planet : planets) {
-            ax += gravityEffect(new Projectile(0.0, 0.0), planet);
-        }
-        return verticalSpeed * t + 0.5 * ax * t * t;
-    }
-    
-    public class Vector2 {
-        public double x;
-        public double y;
-        
-        public Vector2(double x, double y) {
-            this.x = x;
-            this.y = y;
+        for(double time = 0; time < t; time += dt) {
+            Vector2 acceleration = computeGravity(mass, position, planets);
+            
+            velocity = velocity.add(acceleration.scale(dt));
+            position = position.add(velocity.scale(dt));
         }
         
-        /**
-         * Adds a vector to another
-         * @param v the given vector
-         * @return the resultant vector of addition of both vectors
-         */
-        public Vector2 add(Vector2 v){
-            return new Vector2(this.x + v.x, this.y + v.y);
-        }
-        
-        /**
-         * Subtracts two vectors
-         * @param v the given vector to subtract from the original
-         * @return the resultant vector of subtraction of one from the other
-         */
-        public Vector2 subtract(Vector2 v) {
-            return new Vector2(this.x - v.x, this.y - v.y);
-        }
-        
-        /**
-         * Scales a vector by a given factor
-         * @param s the given vector
-         * @return the resultant scaled vector
-         */
-        public Vector2 scale(double s){
-            return new Vector2(this.x * s, this.y * s);
-        }
-        
-        /**
-         * Returns the magnitude of this vector
-         * @return the calculated magnitude
-         */
-        public double  magnitude(){
-            return Math.sqrt(x * x + y * y);
-        }
-        
-        /**
-         * Normalizes the vector enlarged by scaling
-         * @param n the given factor to undo the scaling for
-         * @return the given original vector
-         */
-        public Vector2 normalize(double n){
-            return (magnitude() == 0) ? new Vector2(0, 0) : new Vector2(x / n, y / n);
-        }
+        return new Point2D(position.x, position.y);
     }
 }
