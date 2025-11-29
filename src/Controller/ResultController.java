@@ -17,10 +17,10 @@ import javafx.stage.Stage;
  */
 public class ResultController {
     @FXML
-    private Label warningMessageLabel;    // Level reached
+    private Label warningMessageLabel;  //Display a warning or game-over title message  
 
     @FXML
-    private Button TryAgainBtn;       // Button to to try again
+    private Button TryAgainBtn;     
     
     @FXML
     private Label FailureReasonLabel; 
@@ -29,18 +29,25 @@ public class ResultController {
     private Label levelReachedLabel; 
 
      /**
-     * Initialize the ResultController with outcome data.
-     * Call this after loading the FXML.
+     * Initializes the result screen with game outcome details.
+     * This method must be called by the class loading the FXML.
+     *
+     * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
+     * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
+     * @param levelReached    The level number the player reached before losing
      */
     public void setResult(String warningMessage, String failureReason, int levelReached) {
-        warningMessageLabel.setText(warningMessage);
-        FailureReasonLabel.setText(failureReason);
+        warningMessageLabel.setText(warningMessage != null ? warningMessage : "No message");
+        FailureReasonLabel.setText(failureReason != null ? failureReason : "No reason provided");
         levelReachedLabel.setText("Level " + levelReached);
     }
     
     /**
-     * Handle Try Again button click.
-     * This will close the result window and return to the main menu or restart the game.
+     * Handles the Try Again button click.
+     * Closes the result window, allowing the caller to restart the game
+     * or return to the main menu.
+     *
+     * @param event The ActionEvent triggered by clicking the button
      */
     @FXML
     private void handleTryAgain(ActionEvent event) {
