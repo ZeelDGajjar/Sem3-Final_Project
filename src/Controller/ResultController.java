@@ -55,7 +55,6 @@ public class ResultController {
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
-
 }
      
      
