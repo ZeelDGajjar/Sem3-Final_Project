@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package Controller;
 
 import java.net.URL;
@@ -22,7 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import Model.Planet;
-import javafx.geometry.Point2D;
+import Model.Vector2;
 
 /**
  * FXML Controller class
@@ -90,7 +86,7 @@ public class GameViewController implements Initializable {
     @FXML
     private Button btnLaunch;
     @FXML
-    private Pane rocket;
+   // private Pane rocket;
     
     List<Circle> circlePlanets = List.of(Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranius, Neptune);
     double[] radius = {696340, 2440, 6052, 6371, 3390, 69911, 58232, 25559, 24764};
@@ -100,23 +96,19 @@ public class GameViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
             Image planetImg = new Image(getClass().getResourceAsStream(path));
             circlePlanets.get(i).setFill(new ImagePattern(planetImg));
             
-            Point2D position;
-            position = new Point2D(circlePlanets.get(i).centerXProperty(), circlePlanets.get(i).centerYProperty());
+            Vector2 position;
+            position = new Vector2(circlePlanets.get(i).centerXProperty(), circlePlanets.get(i).centerYProperty());
             Planet planet = new Planet(planet, radius[i], position);
         }
     }
     
     @FXML
     private void ResetBtnClicked(ActionEvent event) {
-        speedInput.setText("");
-        directionInput.setValue(0);
-        
-        Image img = new Image(getClass().getResourceAsStream("/Images/Earth.png"));
-        Earth.setFill(new ImagePattern(img));
-
     }
 
     @FXML

@@ -6,36 +6,41 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import javafx.geometry.Point2D;
 
-/**
- * Core game logic model : 
- * Handles level progression, physics simulation , and timer logic
- * Coordinates with GameState to track player progress 
- * Notifies observers (views/ controllers) when the state changes
- * @author Vedika
- */
-       public class GameModel {
+    /**
+     * Core game logic model : 
+     * Handles level progression, physics simulation , and timer logic
+     * Coordinates with GameState to track player progress 
+     * Notifies observers (views/ controllers) when the state changes
+     * @author Vedika
+     */
+    public class GameModel {
        private int currentLevel; 
-       private final int maxLevel = 5;  //make final and set a fix value 
-       private double difficultyFactor; //scales the difficulty , for example by increasing gravity, reducing accuracy
+       private final int maxLevel = 5;  
+       private double difficultyFactor; //ex. increase gravity, decrease accuracy
        private boolean isZombied; 
        
        //time 
        private long levelStartTime; 
-       private long levelTimeLimit = 30 ; //seconds allowed per level 
+       private long levelTimeLimit = 30 ; 
        
        //simulation objects
-       private Projectile projectile; //the launched object
+       private Projectile projectile; 
        private List<Planet> planets; 
        private Planet targetPlanet;  //represents win condition, calculated flight path of the projectile
        private Trajectory lastTrajectory; //most recent launch result (motion)
        
        //observer 
-       private List<GameObserver> observers; //controllers or views that react whenever something changes
+       private List<GameObserver> observers; //reacts wheneever somehting changes
        
        private GameState gameState; //tracks score, attempts etc..
     
-        // Constructor that receives the GameState
+        /**
+         * Creates a new GameModel using the provided gameState
+         * @param gameState 
+         */
         public GameModel(GameState gameState) {
             this.gameState = gameState;
             this.currentLevel = 1; 
@@ -43,7 +48,11 @@ import java.util.List;
             this.observers = new ArrayList<>();
         }
 
-        /** Start a level by updating timers and dynamic difficulty */
+        /**
+        * Starts the current level 
+        * resets timers, update the difficulty scaling, and refreshes level state
+        * GameState is updated to correspond with the active level
+        */
         public void startLevel() {
             System.out.println("Level " + currentLevel +  "started.");
              this.levelStartTime = System.currentTimeMillis();
@@ -53,7 +62,9 @@ import java.util.List;
         }
 
         /**
-         * advance to next level or ends game if last level reached
+         * Advance the game to the next level
+         * if the final level has been reached, the game ends and zombied state is triggered
+         * Otherwise, target planet updates and the next level begins 
          */
         public void advanceLevel() {
             if (currentLevel < maxLevel) {
@@ -67,16 +78,21 @@ import java.util.List;
             }
             notifyObservers();
         }
-
+        
+        /**
+         * resets the currentLevel by clearing trajectory and projectile data
+         * then restarting the level
+         */
         public void resetLevel() {
             projectile = null; 
             lastTrajectory = null; 
             startLevel();
         }
         
-         /**
-          * returns true if the current level is the last one
-          */
+        /**
+         * Indicates whether the current level is the final level 
+         * @return true if this is the final level, false otherwise
+         */
         public boolean isFinalLevel() {
             return currentLevel == maxLevel; 
         }
@@ -84,14 +100,16 @@ import java.util.List;
         //Time logic 
 
         /**
-         * Starts or restarts the level timer 
-         */ 
+         * Starts or restarts the level countdown timer 
+         */
         public void startLevelTimer() {
             this.levelStartTime = System.currentTimeMillis();
         }
 
         /**
-         * return remaining seconds for this level 
+         * Computes and returns the number of seconds remaining in the current level
+         * if the time runs out, the game enters zombied state
+         * @return remaining seconds (0 if already expired)
          */
         public long getRemainingLevelTime() {
             long elapsSec = (System.currentTimeMillis() - levelStartTime) / 1000; 
@@ -106,7 +124,8 @@ import java.util.List;
         }
 
         /**
-         * checks if level time is up
+         * Checks whether the current level's timer has expired.
+         * @return true if no time is left, false otherwise
          */
         public boolean isLevelTimeUp() {
             return getRemainingLevelTime() <= 0; 
@@ -114,11 +133,11 @@ import java.util.List;
 
          //Phyiscs simulation 
          /**
-          * Simulates the projectile launch
-          * Updates trajectory, detects collision,  and adjusts gameState
-          * @param speed
-          * @param angleDegrees
-          * @return 
+          * Simulates the projectile launch with the given speed and angle
+          * Generate trajectory data, detects collision,updates gameState and notifies observers
+          * @param speed initial speed of the projectile
+          * @param angleDegrees launch angle in degrees
+          * @return object representing the simulation result or null if the simulation could not run
           */
         public Trajectory simulateLaunch(double speed, double angleDegrees) {
 
@@ -127,26 +146,51 @@ import java.util.List;
                 return null; 
             }
             gameState.addAttempts();
-            projectile = new Projectile(speed, angleDegrees);
 
-            Trajectory trajectory = PhysicsUtil.calculateTrajectoryPoint(projectile, difficultyFactor);
-            this.lastTrajectory = trajectory;
+                // Starting position (0,0) as Point2D
+            Point2D initialPos = new Point2D(0, 0);
 
-            boolean hit = CollisionUtil.checkCollision(trajectory, targetPlanet);
+            // Use Projectile constructor exactly as given
+            projectile = new Projectile(speed, angleDegrees, targetPlanet);
 
-            if (hit) {
-                handleSuccessfulHit();
-                trajectory.setFailureReason(null);
-            } else {
-                handleMiss(trajectory);
+            // Compute trajectory using provided PhysicsUtil
+            PhysicsUtil physics = new PhysicsUtil();
+            List<Point2D> trajPoints = new ArrayList<>();
+
+            // simulate for a number of steps (time t)
+            double dt = 0.1;
+            double maxTime = 30; // prevent infinite loop
+            for (double t = 0; t <= maxTime; t += dt) {
+                Point2D pt = physics.trajectory(speed, angleDegrees, t, planets, new javafx.scene.effect.Light.Point());
+                if (pt != null) {
+                    trajPoints.add(pt);
+                }
             }
-            notifyObservers();
-            return trajectory;
+
+        lastTrajectory = new Trajectory(trajPoints);
+
+        // Check collisions
+        Planet hitPlanet = CollisionUtil.checkAnyCollsion(projectile, planets);
+
+        if (hitPlanet != null && hitPlanet.equals(targetPlanet)) {
+            handleSuccessfulHit();
+            lastTrajectory.setFailureReason(null);
+        } else {
+            handleMiss(lastTrajectory);
+        }
+
+        notifyObservers();
+        return lastTrajectory;
         }
 
         //success and failures handling 
 
-        //Determines and returns failure reason text for UI 
+        /**
+         * Determines and returns the appropriate failure message
+         * based on given trajectory and game status
+         * @param traj the trajectory to evaluate
+         * @return failure/ success message
+         */
         public String checkFailure(Trajectory traj) {
             if (traj == null) {
                 return "No trajectory.";
@@ -157,13 +201,16 @@ import java.util.List;
             }
             
             if (traj.getFailureReason() != null) {
-                return traj.getFailureReason().toString();
+                return traj.getFailureReason();
             }
             
             return "Success!";
         } 
 
-        //** Updates GameState depending on whether the player succeeded
+        /**
+         * Updates the player's score depending on success or failure 
+         * @param success true if the launch hit the target, false otherwise
+         */
         public void updateGameState(boolean success) {
             if (success) {
             int pointsEarned = (int) (100 * difficultyFactor);
@@ -174,9 +221,10 @@ import java.util.List;
             notifyObservers();
         }
 
-          /**
-         * Called when rocket reaches target planet
-         */
+        /**
+        * Called when the projectile successfully collides with the target planet.
+        * Awards score and advances to the next level, or ends the game if final level completed.
+        */
         private void handleSuccessfulHit() {
             int pointsEarned = (int) (100 * difficultyFactor);
             gameState.updateScore(pointsEarned);
@@ -191,9 +239,13 @@ import java.util.List;
             }
         }
 
-           /**
-         * Called when rocket fails: track failure reason and game over if planets/zombies eat you *
-         */
+        /**
+        * Called when the projectile misses the target.
+        * Determines failure reason (timeout or missed shot), applies score penalty,
+        * and stores the message in the trajectory.
+        *
+        * @param trajectory the generated trajectory for this launch
+        */
         private void handleMiss(Trajectory trajectory) {
 
             if (isLevelTimeUp()) {
@@ -213,7 +265,7 @@ import java.util.List;
         public void addObserver(GameObserver observer) {
             if (!observers.contains(observer)) { //checks wheter the list already contains the observer
             observers.add(observer); //if not present, then it adds it to the list 
-        }
+          }
         }
 
         /**
@@ -222,10 +274,10 @@ import java.util.List;
         public void notifyObservers() {
            if (observers == null || observers.isEmpty()) {
                return;
-           }
+            }
            for(GameObserver obs : observers) {
                obs.onGameStateChanged(gameState); 
-           }
+            }
         }
         
         /**
@@ -233,7 +285,6 @@ import java.util.List;
         * This method is called internally by the GameModel whenever the countdown changes.
         *
         * @param remaining the number of seconds remaining in the current level
-
         */
         private void notifyTimerUpdate(long remaining) {
            for (GameObserver obs : observers ) {
@@ -262,16 +313,13 @@ import java.util.List;
         
          /**
          * Checks whether the current level's time has run out.
-         *
-         * @return true if the level timer has reached zero, false otherwise
+         * @return true if the level timer has reached the end, false otherwise
          */
         public boolean isTimeUp() {
             return getRemainingLevelTime() <= 0;
-
         }
 
-
-        //getter and setters 
+ 
         public GameState getGameState() {
             return gameState;
         }
@@ -299,16 +347,25 @@ import java.util.List;
         public long getLevelTimeLimit() {
             return levelTimeLimit;
         }
-
+        
+        /**
+        * Sets the list of planets used for each level and updates the current target planet.
+        *
+        * @param planets list of planets assigned to sequential levels
+        */
          public void setPlanets(List<Planet> planets) {
             this.planets = planets;
             updateTargetPlanet();
         }
-
+        
+        /**
+        * Sets the level's time limit.
+        * @param limitSeconds the number of seconds each level should last
+        */
         public void setLevelTimeLimit(long limitSeconds) {
             this.levelTimeLimit = limitSeconds;
         }
-
+        
         public void setProjectile(Projectile projectile) {
             this.projectile = projectile;
         }
