@@ -7,7 +7,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import javafx.geometry.Point2D;
 
     /**
      * Core game logic model : 
@@ -123,6 +122,14 @@ import javafx.geometry.Point2D;
          */
         public boolean isLevelTimeUp() {
             return getRemainingLevelTime() <= 0; 
+        }
+        
+         /**
+         * Checks whether the current level's time has run out.
+         * @return true if the level timer has reached the end, false otherwise
+         */
+        public boolean isTimeUp() {
+            return isLevelTimeUp();
         }
 
          //Phyiscs simulation 
@@ -271,15 +278,6 @@ import javafx.geometry.Point2D;
            }
         }
         
-         /**
-         * Checks whether the current level's time has run out.
-         * @return true if the level timer has reached the end, false otherwise
-         */
-        public boolean isTimeUp() {
-            return getRemainingLevelTime() <= 0;
-        }
-
- 
         public GameState getGameState() {
             return gameState;
         }
