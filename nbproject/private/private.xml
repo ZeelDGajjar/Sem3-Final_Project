@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Planet.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/PhysicsUtil.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Vector2.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Controller/SoundController.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/CSSstyles/ResultView.css</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/GameState.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Main/Sem3Final_Project.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/GameModel.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Controller/GameViewController.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Projectile.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Controller/ResultController.java</file>
-            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Trajectory.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
