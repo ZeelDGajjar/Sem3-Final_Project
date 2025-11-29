@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/GameObserver.java</file>
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/PhysicsUtil.java</file>
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Vector2.java</file>
@@ -18,6 +19,12 @@
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/GameState.java</file>
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Controller/GameViewController.java</file>
             <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/sem3_Zombied-FinalProject/Sem3-Final_Project/src/Model/Projectile.java</file>
+=======
+            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/Sem3-Final_Project/src/Model/Vector2.java</file>
+            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/Sem3-Final_Project/src/Model/GameState.java</file>
+            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/Sem3-Final_Project/src/Model/Trajectory.java</file>
+            <file>file:/C:/Users/Vedika/OneDrive/Documents/NetBeansProjects/Sem3-Final_Project/test/Model/GameStateTest.java</file>
+>>>>>>> b6a162f5e85695625b5259fb97e174130f9b85b5
         </group>
     </open-files>
 </project-private>
