@@ -18,57 +18,12 @@
     -fx-font-weight: bold;
 }
 
-/* ===== TOP BAR (level / score / target) ===== */
-.top-info-bar {
-    -fx-background-color: rgba(255,255,255,0.10);
-    -fx-background-radius: 20px;
-    -fx-padding: 5px 20px;
-    -fx-border-color: rgba(255,255,255,0.3);
-    -fx-border-radius: 20px;
+/* ===== EXPLANATION / FAILURE TEXT ===== */
+.result-text {
+    -fx-text-fill: #3b2a4d;       /* dark purple/space gray */
+    -fx-font-size: 14px;
 }
 
-/* ===== LABELS & TEXT ===== */
-.text-title {
-    -fx-fill: #ffffff;
-    -fx-font-weight: bold;
-}
-
-.text-value {
-    -fx-fill: #ffe6ff;
-    -fx-font-weight: bold;
-}
-
-/* ===== INPUT FIELDS ===== */
-.input-field {
-    -fx-background-radius: 25px;
-    -fx-background-color: rgba(255,255,255,0.9);
-    -fx-text-fill: #3c2c4e;
-    -fx-border-color: #bda3ff;
-    -fx-border-radius: 25px;
-    -fx-border-width: 1px;
-}
-
-/* ===== SLIDER ===== */
-.slider-space .track {
-    -fx-background-color: rgba(255,255,255,0.3);
-    -fx-background-radius: 10px;
-}
-
-.slider-space .thumb {
-    -fx-background-color: #d7b0ff;
-    -fx-background-radius: 50%;
-}
-
-/* ===== BUTTON LAUNCH ===== */
-.btn-launch {
-    -fx-background-color: linear-gradient(#ffe56c, #ffd64f);
-    -fx-background-radius: 18px;
-    -fx-border-color: #000000;
-    -fx-border-width: 2px;
-    -fx-border-radius: 18px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(150,80,255,0.4), 20, 0.5, 0, 0);
-}
 
 /* ===== TRY AGAIN BUTTON ===== */
 .try-again-btn {
