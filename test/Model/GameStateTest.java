@@ -54,4 +54,88 @@ class GameStateTest {
     }
 
     @Test
-    void testUpdateScoreNegative
+    void testUpdateScoreNegativeBelowZero() {
+        gameState.updateScore(5);
+        gameState.updateScore(-10);
+        assertEquals(0, gameState.getScore()); // cannot go below 0
+    }
+
+    @Test
+    void testUpdateScoreZeroDoesNothing() {
+        gameState.updateScore(0);
+        assertEquals(0, gameState.getScore());
+    }
+
+    // ------------------------
+    // LEVEL TESTS
+    // ------------------------
+    @Test
+    void testSetCurrentLevelMinimumIsOne() {
+        gameState.setCurrentLevel(-5);
+        assertEquals(1, gameState.getCurrentLevel());
+    }
+
+    @Test
+    void testSetCurrentLevelUpdatesMaxLevel() {
+        gameState.setCurrentLevel(3);
+        assertEquals(3, gameState.getMaxLevelReached());
+
+        gameState.setCurrentLevel(2); 
+        assertEquals(3, gameState.getMaxLevelReached()); // does not decrease
+    }
+
+    @Test
+    void testGetCurrentLevel() {
+        gameState.setCurrentLevel(4);
+        assertEquals(4, gameState.getCurrentLevel());
+    }
+
+    // ------------------------
+    // ATTEMPTS TEST
+    // ------------------------
+    @Test
+    void testAddAttempts() {
+        gameState.addAttempts();
+        gameState.addAttempts();
+        assertEquals(2, gameState.getAttempts());
+    }
+
+    // ------------------------
+    // PLAY TIME TEST
+    // ------------------------
+    @Test
+    void testAddPlayTimePositive() {
+        gameState.addPlayTime(30);
+        assertEquals(30, gameState.getTotalPlayTimeSeconds());
+
+        gameState.addPlayTime(20);
+        assertEquals(50, gameState.getTotalPlayTimeSeconds());
+    }
+
+    @Test
+    void testAddPlayTimeNegativeDoesNothing() {
+        gameState.addPlayTime(-10);
+        assertEquals(0, gameState.getTotalPlayTimeSeconds());
+    }
+
+    // ------------------------
+    // ZOMBIED / GAME OVER TEST
+    // ------------------------
+    @Test
+    void testZombiedState() {
+        assertFalse(gameState.isZombied());
+
+        gameState.setZombied(true);
+        assertTrue(gameState.isZombied());
+
+        gameState.setZombied(false);
+        assertFalse(gameState.isZombied());
+    }
+
+    @Test
+    void testIsGameOver() {
+        assertFalse(gameState.isGameOver());
+        gameState.setZombied(true);
+        assertTrue(gameState.isGameOver());
+    }
+}
