@@ -23,15 +23,12 @@ public class ResultController {
     private Button TryAgainBtn;     
     
     @FXML
-    private Label FailureReasonLabel; 
+    private Label FailureReasonLabel; // Shows reason why player failed / lost
     
     @FXML
-    private Label levelReachedLabel; 
+    private Label levelReachedLabel;  // Shows level player reached before failing
 
      /**
-     * Initializes the result screen with game outcome details.
-     * This method must be called by the class loading the FXML.
-     *
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
      * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
      * @param levelReached    The level number the player reached before losing
