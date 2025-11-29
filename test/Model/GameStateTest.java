@@ -95,9 +95,11 @@ public class GameStateTest {
     // ------------------------
     @Test
     public void testAddAttempts() {
+       assertEquals(0, gameState.getAttempts(), "Initial attempts should be 0");
+
         gameState.addAttempts();
         gameState.addAttempts();
-        assertEquals(2, gameState.getAttempts());
+        assertEquals(2, gameState.getAttempts(), "Attempts should be 2 after adding twice");
     }
 
     // ------------------------
@@ -124,12 +126,18 @@ public class GameStateTest {
     @Test
     public void testZombiedState() {
         assertFalse(gameState.isZombied());
+    assertEquals(0, gameState.getScore(), "Score should initially be 0");
+    assertEquals(1, gameState.getCurrentLevel(), "Level should initially be 1");
 
-        gameState.setZombied(true);
-        assertTrue(gameState.isZombied());
+    gameState.setZombied(true);
+    assertTrue(gameState.isZombied());
 
-        gameState.setZombied(false);
-        assertFalse(gameState.isZombied());
+    gameState.setZombied(false);
+    assertFalse(gameState.isZombied());
+
+    // Verify score and level remain unchanged
+    assertEquals(0, gameState.getScore(), "Score should remain 0 after zombied toggled");
+    assertEquals(1, gameState.getCurrentLevel(), "Level should remain 1 after zombied toggled");
     }
 
     @Test

@@ -30,8 +30,9 @@ class PlanetTest {
 
     @Test
     void testCheckHit_Hit() {
-        // Projectile at center, should hit
-        assertTrue(planet.checkHit(projectile));
+       //test hit at the edge of the planet  
+      projectile.setPosition(new Vector2(10, 0)); // exactly on the edge
+      assertTrue(planet.checkHit(projectile), "Projectile should hit at the edge of the radius");
     }
 
     @Test
@@ -44,7 +45,11 @@ class PlanetTest {
     @Test
     void testIncreaseRadiusFactor() {
         planet.increaseRadiusFactor(2);
-        assertEquals(20, planet.getRadius());
+        assertEquals(20, planet.getRadius(), "Radius should double");
+
+        // Changed: decrease back to original and check
+        planet.decreaseRadiusFactor(2);
+        assertEquals(10, planet.getRadius(), "Radius should return to original after decrease");
     }
 
     @Test
