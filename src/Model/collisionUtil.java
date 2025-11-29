@@ -8,11 +8,11 @@ import java.util.List;
 import javafx.geometry.Point2D;
 
 /**
- *Utility class for collision detection between : 
+ * Utility class for collision detection between : 
  * projectiles and planets in the game
  * @author Vedika
  */
-public class CollisionUtil {
+public class collisionUtil {
     
     /**
      * Checks whether a projectile hits a specific planet 
