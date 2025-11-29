@@ -5,7 +5,6 @@
 package Controller;
 
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,10 +18,10 @@ import javafx.stage.Stage;
  */
 public class ResultController {
     @FXML
-    private Label warningMessageLabel; // Displays a warning or game-over title message
- 
+    private Label warningMessageLabel;  //Display a warning or game-over title message  
+
     @FXML
-    private Button TryAgainBtn; // Button to restart or return to main menu
+    private Button TryAgainBtn;     
     
     @FXML
     private Label FailureReasonLabel; // Shows reason why player failed / lost
@@ -31,12 +30,10 @@ public class ResultController {
     private Label levelReachedLabel;  // Shows level player reached before failing
 
      /**
-      * Initializes the result screen with game outcome details
-      * This method must be called by the class loading the FXML
-      * @param warningMessage A short warning or conclusion message (ex. "You were Zombied")
-      * @param failureReason Detailed explanation for failure (ex. " ran out of food")
-      * @param levelReached The level number the player reached before losing 
-      */
+     * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
+     * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
+     * @param levelReached    The level number the player reached before losing
+     */
     public void setResult(String warningMessage, String failureReason, int levelReached) {
         warningMessageLabel.setText(warningMessage != null ? warningMessage : "No message");
         FailureReasonLabel.setText(failureReason != null ? failureReason : "No reason provided");
@@ -44,8 +41,11 @@ public class ResultController {
     }
     
     /**
-     * Handle Try Again button click.
-     * This will close the result window and return to the main menu or restart the game.
+     * Handles the Try Again button click.
+     * Closes the result window, allowing the caller to restart the game
+     * or return to the main menu.
+     *
+     * @param event The ActionEvent triggered by clicking the button
      */
     @FXML
     private void handleTryAgain(ActionEvent event) {
@@ -53,7 +53,6 @@ public class ResultController {
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
-
 }
      
      
