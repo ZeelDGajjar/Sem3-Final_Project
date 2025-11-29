@@ -12,7 +12,7 @@ import javafx.geometry.Point2D;
  * projectiles and planets in the game
  * @author Vedika
  */
-public class collisionUtil {
+public class CollisionUtil {
     
     /**
      * Checks whether a projectile hits a specific planet 
@@ -22,11 +22,16 @@ public class collisionUtil {
      * @return true if projectile hits the planet 
      */
     public static boolean checkCollision(Projectile projectile, Planet planet) {
-        Point2D projPos = projectile.getPosition();
-        double dx = projPos.getX() - planet.getX();
-        double dy = projPos.getY() - planet.getY();
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        return distance <= planet.getRadius(); 
+         // projectile.position is now a Vector2
+        Vector2 projPos = projectile.getPosition();
+
+        // planet.getPosition() must return Vector2 too
+        Vector2 planetPos = planet.getPosition();
+
+        // distance = (projPos - planetPos).magnitude()
+        double distance = projPos.subtract(planetPos).magnitude();
+
+        return distance <= planet.getRadius();
     }
     
      /**
@@ -54,9 +59,9 @@ public class collisionUtil {
      * @return true if projectile is outside boundaries
      */
     public static boolean isOutOfBounds(Projectile projectile, double width, double height) {
-        Point2D pos = projectile.getPosition();
-        double x = pos.getX();
-        double y = pos.getY();
+        Vector2 pos = projectile.getPosition();
+        double x = pos.x;
+        double y = pos.y;
         return (x < 0 || x > width || y < 0 || y > height);
     }
 }
