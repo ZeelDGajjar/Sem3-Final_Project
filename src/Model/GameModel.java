@@ -32,11 +32,8 @@ import javafx.geometry.Point2D;
        private Planet targetPlanet;  //represents win condition, calculated flight path of the projectile
        private Trajectory lastTrajectory; //most recent launch result (motion)
        
-       //observer 
-       private List<GameObserver> observers; //reacts wheneever somehting changes
+       private GameState gameState; 
        
-       private GameState gameState; //tracks score, attempts etc..
-    
         /**
          * Creates a new GameModel using the provided gameState
          * @param gameState 
@@ -45,7 +42,6 @@ import javafx.geometry.Point2D;
             this.gameState = gameState;
             this.currentLevel = 1; 
             this.difficultyFactor = 1.0;
-            this.observers = new ArrayList<>();
         }
 
         /**
@@ -76,7 +72,6 @@ import javafx.geometry.Point2D;
                 isZombied = true; //game finised 
                 gameState.setZombied(true);
             }
-            notifyObservers();
         }
         
         /**
@@ -119,7 +114,6 @@ import javafx.geometry.Point2D;
                 isZombied = true; 
                 return 0; //timer expired 
             }
-            notifyTimerUpdate(remaining);
             return remaining; 
         }
 
@@ -147,29 +141,30 @@ import javafx.geometry.Point2D;
             }
             gameState.addAttempts();
 
-                // Starting position (0,0) as Point2D
-            Point2D initialPos = new Point2D(0, 0);
+             Vector2 initialPos = new Vector2(0, 0);
+            projectile = new Projectile(speed, angleDegrees, 1.0, initialPos);
 
-            // Use Projectile constructor exactly as given
-            projectile = new Projectile(speed, angleDegrees, targetPlanet);
-
-            // Compute trajectory using provided PhysicsUtil
-            PhysicsUtil physics = new PhysicsUtil();
-            List<Point2D> trajPoints = new ArrayList<>();
-
-            // simulate for a number of steps (time t)
+            List<Vector2> trajPoints = new ArrayList<>();
             double dt = 0.1;
-            double maxTime = 30; // prevent infinite loop
+            double maxTime = 30;
+
             for (double t = 0; t <= maxTime; t += dt) {
-                Point2D pt = physics.trajectory(speed, angleDegrees, t, planets, new javafx.scene.effect.Light.Point());
-                if (pt != null) {
-                    trajPoints.add(pt);
-                }
+            trajPoints.add(new Vector2(projectile.getPosition().x, projectile.getPosition().y));
+
+            Vector2 acceleration = PhysicsUtil.computeGravity(projectile.getMass(), projectile.getPosition(), planets);
+            projectile.setVelocity(projectile.getVelocity().add(acceleration.scale(dt)));
+            projectile.setPosition(projectile.getPosition().add(projectile.getVelocity().scale(dt)));
+
+            if (CollisionUtil.isOutOfBounds(projectile, 800, 600)) break; 
             }
+            
+            List<javafx.geometry.Point2D> trajPoints2D = new ArrayList<>();
+        for (Vector2 v : trajPoints) {
+            trajPoints2D.add(new javafx.geometry.Point2D(v.x, v.y));
+        }
 
-        lastTrajectory = new Trajectory(trajPoints);
+        lastTrajectory = new Trajectory(trajPoints2D);
 
-        // Check collisions
         Planet hitPlanet = CollisionUtil.checkAnyCollsion(projectile, planets);
 
         if (hitPlanet != null && hitPlanet.equals(targetPlanet)) {
@@ -179,9 +174,10 @@ import javafx.geometry.Point2D;
             handleMiss(lastTrajectory);
         }
 
-        notifyObservers();
         return lastTrajectory;
         }
+
+                
 
         //success and failures handling 
 
@@ -218,7 +214,6 @@ import javafx.geometry.Point2D;
             } else {
                 gameState.updateScore(-10); // penalty for failure
             }
-            notifyObservers();
         }
 
         /**
@@ -255,41 +250,6 @@ import javafx.geometry.Point2D;
                 gameState.updateScore(-10);
                 trajectory.setFailureReason("Missed the target planet!");
             }
-        }
-
-         //observers methods 
-        /** //no duplicate observers
-         * observer pattern : register observer
-         * @param observer the view or controller that reacts when a change happens
-         */
-        public void addObserver(GameObserver observer) {
-            if (!observers.contains(observer)) { //checks wheter the list already contains the observer
-            observers.add(observer); //if not present, then it adds it to the list 
-          }
-        }
-
-        /**
-         * notify all observers that the game state has changed
-         */
-        public void notifyObservers() {
-           if (observers == null || observers.isEmpty()) {
-               return;
-            }
-           for(GameObserver obs : observers) {
-               obs.onGameStateChanged(gameState); 
-            }
-        }
-        
-        /**
-        * Notifies all registered observers about the remaining level time.
-        * This method is called internally by the GameModel whenever the countdown changes.
-        *
-        * @param remaining the number of seconds remaining in the current level
-        */
-        private void notifyTimerUpdate(long remaining) {
-           for (GameObserver obs : observers ) {
-               obs.onTimerUpdate(remaining);
-           }
         }
 
          //GAME RESET AND PLANET MANAGEMENT 
