@@ -62,11 +62,15 @@ class GameModelTest {
     @Test
     void testAdvanceLevelNonFinal() {
         model.startLevel();
+
+        model.advanceLevel();
         model.advanceLevel();
 
-        assertEquals(2, model.getCurrentLevel());
-        assertEquals(2, gameState.getCurrentLevel());
-        assertFalse(model.isZombied());
+        assertEquals(3, model.getCurrentLevel(), "Current level should be 3 after advancing twice");
+        assertEquals(3, gameState.getCurrentLevel(), "GameState level should match");
+        assertFalse(model.isZombied(), "Game should not be zombied at non-final level");
+        assertFalse(model.isFinalLevel(), "Level 3 should not be final yet");
+
     }
 
     @Test
@@ -154,7 +158,8 @@ class GameModelTest {
     // ---------------------------
     @Test
     void testCheckFailure_NoTrajectory() {
-        assertEquals("No trajectory.", model.checkFailure(null));
+    assertEquals("No trajectory.", model.checkFailure(null));
+    assertFalse(model.isZombied(), "Game should not be zombied when trajectory is null");
     }
 
     @Test
@@ -173,8 +178,11 @@ class GameModelTest {
     @Test
     void testCheckFailure_Success() {
         DummyTrajectory traj = new DummyTrajectory();
-        traj.setFailureReason(null);
-        assertEquals("Success!", model.checkFailure(traj));
+    traj.setFailureReason(null);
+    assertEquals("Success!", model.checkFailure(traj));
+
+    model.updateGameState(true); // mark as success
+    assertEquals(100, gameState.getScore(), "Score should increase after successful trajectory");
     }
 
     // ---------------------------

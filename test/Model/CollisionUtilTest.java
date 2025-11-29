@@ -25,11 +25,11 @@ class CollisionUtilTest {
     void testCheckCollision_Hit() {
         assertTrue(CollisionUtil.checkCollision(projectile, planet), "Projectile should hit planet");
     }
-
+    
     @Test
     void testCheckCollision_Miss() {
-        projectile.setPosition(new Vector2(0, 0));
-        assertFalse(CollisionUtil.checkCollision(projectile, planet), "Projectile should miss planet");
+        projectile.setPosition(new Vector2(-20, -20));
+        assertFalse(CollisionUtil.checkCollision(projectile, planet), "Projectile should miss planet diagonally");
     }
 
     @Test
@@ -47,10 +47,14 @@ class CollisionUtilTest {
     void testCheckAnyCollision_None() {
         List<Planet> planets = new ArrayList<>();
         planets.add(new Planet("Mars", 0, 0, 5, 50, false));
+        planets.add(new Planet("Venus", 20, 20, 5, 50, false));
+        planets.add(new Planet("Jupiter", 80, 80, 10, 200, false));
 
-        projectile.setPosition(new Vector2(100, 100));
+        // Place projectile far from all planets
+        projectile.setPosition(new Vector2(200, 200));
+
         Planet hit = CollisionUtil.checkAnyCollsion(projectile, planets);
-        assertNull(hit, "No planet should be hit");
+        assertNull(hit, "Projectile should not hit any planet");
     }
 
     @Test
