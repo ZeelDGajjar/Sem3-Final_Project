@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane stylesheets="@../CSSstyles/ResultView.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+<StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="623.0">
          <children>
@@ -239,23 +239,6 @@
                                  </effect>
                               </Circle>
                               <ImageView fx:id="TryAgainBtn" fitHeight="49.0" fitWidth="47.0" layoutX="146.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" />
-                              <Pane layoutX="271.0" layoutY="68.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="204.0" style="-fx-background-color: yellow;" styleClass="result-window">
-                                 <children>
-                                    <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="207.0" layoutX="-73.0" layoutY="-28.0" stroke="BLACK" strokeType="INSIDE" width="350.0" />
-                                    <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0">
-                                       <children>
-                                          <Button fx:id="TryAgainBtn" mnemonicParsing="false" styleClass="try-again-btn" text="TryAgain " />
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="WarningMessageLabel" layoutX="14.0" layoutY="12.0" styleClass="result-title" text="Warning ">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="FailureReasonLabel" layoutX="22.0" layoutY="67.0" prefHeight="32.0" prefWidth="91.0" styleClass="result-text" text="FailureReason" />
-                                    <Label fx:id="LevelReachedLabel" layoutX="148.0" layoutY="27.0" prefHeight="17.0" prefWidth="44.0" styleClass="result-text" text="LevelReached" />
-                                 </children>
-                              </Pane>
                            </children>
                         </Pane>
                         <HBox prefHeight="47.0" prefWidth="431.0" spacing="20.0">
@@ -301,5 +284,22 @@
             </BorderPane>
          </children>
       </AnchorPane>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: yellow;" StackPane.alignment="CENTER">
+         <children>
+            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="207.0" layoutX="-44.0" layoutY="-24.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
+            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0">
+               <children>
+                  <Button fx:id="TryAgainBtn" mnemonicParsing="false" text="TryAgain " />
+               </children>
+            </HBox>
+            <Label fx:id="WarningMessageLabel" layoutX="59.0" layoutY="19.0" text="Warning ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="FailureReasonLabel" layoutX="22.0" layoutY="67.0" prefHeight="32.0" prefWidth="91.0" text="FailureReason" />
+            <Label fx:id="LevelReachedLabel" layoutX="148.0" layoutY="27.0" prefHeight="17.0" prefWidth="44.0" text="LevelReached" />
+         </children>
+      </Pane>
    </children>
 </StackPane>
