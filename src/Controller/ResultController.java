@@ -17,24 +17,27 @@ import javafx.stage.Stage;
  */
 public class ResultController {
     @FXML
-    private Label warningMessageLabel;    // Level reached
-
+    private Label warningMessageLabel; // Displays a warning or game-over title message
+ 
     @FXML
-    private Button TryAgainBtn;       // Button to to try again
+    private Button TryAgainBtn; // Button to restart or return to main menu
     
     @FXML
-    private Label FailureReasonLabel; 
+    private Label FailureReasonLabel; // Shows reason why player failed / lost
     
     @FXML
-    private Label levelReachedLabel; 
+    private Label levelReachedLabel;  // Shows level player reached before failing
 
      /**
-     * Initialize the ResultController with outcome data.
-     * Call this after loading the FXML.
-     */
+      * Initializes the result screen with game outcome details
+      * This method must be called by the class loading the FXML
+      * @param warningMessage A short warning or conclusion message (ex. "You were Zombied")
+      * @param failureReason Detailed explanation for failure (ex. " ran out of food")
+      * @param levelReached The level number the player reached before losing 
+      */
     public void setResult(String warningMessage, String failureReason, int levelReached) {
-        warningMessageLabel.setText(warningMessage);
-        FailureReasonLabel.setText(failureReason);
+        warningMessageLabel.setText(warningMessage != null ? warningMessage : "No message");
+        FailureReasonLabel.setText(failureReason != null ? failureReason : "No reason provided");
         levelReachedLabel.setText("Level " + levelReached);
     }
     
