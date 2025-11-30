@@ -49,7 +49,7 @@ public class MenuViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Image[] images = new Image[]{
-            new Image(getClass().getResourceAsStream("/Images/Earth.png")),
+            new Image(getClass().getResourceAsStream("/Images/Earth.jpg")),
             new Image(getClass().getResourceAsStream("/Images/Moon.png"))
         };
         
@@ -71,12 +71,12 @@ public class MenuViewController implements Initializable {
         
         btnInstructions.setOnAction(e -> {
             if (show) {
-                purposeText.setText("Your Goal: To **escape** to other planets before you've been 'Zombied'");
+                purposeText.setText("Your Goal: To escape to other planets before you've \nbeen captured by the spreading monsters through the space.");
                 title.setText("How to play?");
-                instructionsText.setText("Enter your rocket's **speed** and **direction** \n "
-                        + "Press **Launch** to fire toward the target planet \n"
-                        + "Get to the planet to score and level up \n "
-                        + "If you miss, just see the feedback and get back to try again");
+                instructionsText.setText("1) Enter your rocket's SPEED and DIRECTION \n"
+                        + "2) Press LAUNCH to fire toward the target planet \n"
+                        + "3) Get to the planet to score and level up \n"
+                        + "4) If you miss, just see the feedback and click RESET to try again");
                 show = false;
                 return;
             }
