@@ -30,10 +30,16 @@ public class ResultControllerTest {
         controller.TryAgainBtn = new Button("Try Again");
     }
 
-    // ───────────────────────────────────────────────
     // TEST setResult()
-    // ───────────────────────────────────────────────
+    @Test
+    void testSetResult_NullValues() {
+        controller.setResult(null, null, 2);
 
+        assertEquals("No message", controller.warningMessageLabel.getText());
+        assertEquals("No reason provided", controller.FailureReasonLabel.getText());
+        assertEquals("Level 2", controller.levelReachedLabel.getText());
+    }
+    
     @Test
     void testSetResult_NormalValues() {
         controller.setResult("Warning!", "Bad move", 5);
@@ -43,18 +49,7 @@ public class ResultControllerTest {
         assertEquals("Level 5", controller.levelReachedLabel.getText());
     }
 
-    @Test
-    void testSetResult_NullValues() {
-        controller.setResult(null, null, 2);
-
-        assertEquals("No message", controller.warningMessageLabel.getText());
-        assertEquals("No reason provided", controller.FailureReasonLabel.getText());
-        assertEquals("Level 2", controller.levelReachedLabel.getText());
-    }
-
-    // ───────────────────────────────────────────────
     // TEST handleTryAgain()
-    // ───────────────────────────────────────────────
 
     @Test
     void testHandleTryAgain_ClosesWindow() {
