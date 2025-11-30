@@ -27,12 +27,11 @@ public class Planet {
     /**
      * Constructor using Vector2 for position
      */
-    public Planet(String name, double x, double y, int radius, double mass, boolean isTarget) {
+    public Planet(String name, double x, double y, int radius, double mass) {
         this.name = name;
         this.position = new Vector2(x, y);  // store physics-friendly vector
         this.radius = radius;
         this.mass = mass;
-        this.isTarget = isTarget;
     }
     
     /**
