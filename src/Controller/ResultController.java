@@ -18,16 +18,16 @@ import javafx.stage.Stage;
  */
 public class ResultController {
     @FXML
-    private Label warningMessageLabel;  //Display a warning or game-over title message  
+     public Label warningMessageLabel;  //Display a warning or game-over title message  
 
     @FXML
-    private Button TryAgainBtn;     
+    public Button TryAgainBtn;     
     
     @FXML
-    private Label FailureReasonLabel; // Shows reason why player failed / lost
+     public Label FailureReasonLabel; // Shows reason why player failed / lost
     
     @FXML
-    private Label levelReachedLabel;  // Shows level player reached before failing
+    public  Label levelReachedLabel;  // Shows level player reached before failing
 
      /**
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
@@ -48,7 +48,7 @@ public class ResultController {
      * @param event The ActionEvent triggered by clicking the button
      */
     @FXML
-    private void handleTryAgain(ActionEvent event) {
+    public void handleTryAgain(ActionEvent event) {
         // Close the result window
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
