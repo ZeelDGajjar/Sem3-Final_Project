@@ -17,28 +17,19 @@ import Model.Vector2;
  * @author Vedika
  */
 public class Planet {
-    double gravity;
 
     private String name; 
-    private Point2D position; 
+    private Vector2 position;  
     private double radius; 
     private boolean isTarget; 
-    private Point2D coordinates; 
-    private double distance; 
     private double mass; 
     
     /**
-     * Constructor that creates a new planet 
-     * @param name name of the planet 
-     * @param x x-coordinate
-     * @param y y -coordinate
-     * @param radius collision radius
-     * @param mass mass used when gravity is applied
-     * @param isTarget whether this planet is the target for the current level
+     * Constructor using Vector2 for position
      */
     public Planet(String name, double x, double y, int radius, double mass) {
         this.name = name;
-        this.position = new Point2D(x,y);
+        this.position = new Vector2(x, y);  // store physics-friendly vector
         this.radius = radius;
         this.mass = mass;
     }
@@ -50,8 +41,10 @@ public class Planet {
      */
     public boolean checkHit(Projectile projectile) {
         Vector2 projPos = projectile.getPosition();
-        double dx = projPos.x - getX();
-        double dy = projPos.y - getY();
+        
+        double dx = projPos.x - position.x;
+        double dy = projPos.y - position.y;
+        
         double distance = Math.sqrt(dx * dx + dy * dy);
         return distance <= radius;
     }
@@ -71,11 +64,13 @@ public class Planet {
      */
     public void generateRandomPosition(int level) {
         Random rand = new Random();
+        
         double min = 100 * level;
         double max = 300 * level;
+        
         double x = min + rand.nextDouble() * (max - min);
         double y = min + rand.nextDouble() * (max - min);
-        this.position = new Point2D(x,y);
+        this.position = new Vector2(x,y);
     }
     
     /**
@@ -99,11 +94,13 @@ public class Planet {
      * @param Projectilepos
      * @return gravity strength value
      */
-    public double calculateGravityAt(Point2D point) {
-        double dx = getX() - point.getX();
-        double dy = getY() - point.getY();
-        double distance = Math.sqrt(dx*dx + dy*dy);
+    public double calculateGravityAt(Vector2 point) {
+        double dx = position.x - point.x;
+        double dy = position.y - point.y;
+
+        double distance = Math.sqrt(dx * dx + dy * dy);
         if (distance == 0) return 0;
+
         return mass / (distance * distance);
     }
     
@@ -117,14 +114,14 @@ public class Planet {
     }
     
     public double getX() {
-        return position.getX(); 
+        return position.x; 
     }
    
     public double getY() {
-        return position.getY(); 
+        return position.y; 
     }
     
-    public Point2D getCoordinates() {
+    public Vector2 getPosition() {
         return position; 
     }
     
