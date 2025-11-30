@@ -15,6 +15,7 @@ public class SoundControllerTest {
         assertFalse(sc.isMuted(), "Sound should start unmuted");
     }
 
+    
     @Test
     public void testToggleMute() {
         SoundController sc = new SoundController();
@@ -35,16 +36,16 @@ public class SoundControllerTest {
     }
 
     @Test
+    public void testStopBackgroundMusicDoesNotCrash() {
+        SoundController sc = new SoundController();
+        assertDoesNotThrow(() -> sc.stopBackgroundMusic());
+    }
+    
+    @Test
     public void testPlaySoundEffectDoesNotCrash() {
         SoundController sc = new SoundController();
 
         // Should NOT throw an exception even if files are missing
         assertDoesNotThrow(() -> sc.playSoundEffect());
-    }
-
-    @Test
-    public void testStopBackgroundMusicDoesNotCrash() {
-        SoundController sc = new SoundController();
-        assertDoesNotThrow(() -> sc.stopBackgroundMusic());
     }
 }
