@@ -8,9 +8,6 @@ import Model.GameState;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -39,7 +36,7 @@ public class Sem3Final_Project extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/View/MenuView.fxml"));
 
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Marathon Simulator");
+            primaryStage.setTitle("Zombied Game");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {

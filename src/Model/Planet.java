@@ -36,12 +36,11 @@ public class Planet {
      * @param mass mass used when gravity is applied
      * @param isTarget whether this planet is the target for the current level
      */
-    public Planet(String name, double x, double y, int radius, double mass, boolean isTarget) {
+    public Planet(String name, double x, double y, int radius, double mass) {
         this.name = name;
         this.position = new Point2D(x,y);
         this.radius = radius;
         this.mass = mass;
-        this.isTarget = isTarget;
     }
     
     /**
