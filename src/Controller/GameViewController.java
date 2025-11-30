@@ -6,8 +6,10 @@ package Controller;
 
 import Model.Planet;
 import Model.Projectile;
+import Model.Trajectory;
 import Model.Vector2;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
@@ -28,6 +30,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 /**
@@ -100,6 +103,11 @@ public class GameViewController implements Initializable {
     
     int[] radius = {696340, 2440, 6052, 6371, 1737, 3390, 69911, 58232, 25559, 24764};
     double[] planetMasses = {2E30, 3.30E23, 4.87E24, 5.97E24, 7.35E22, 6.42E23, 1.90E27, 5.68E26, 8.68E25, 1.02E26};
+    double rocketMass = 2970000;
+    
+    double speed;
+    double angle;
+    ArrayList<Planet> planets = new ArrayList<Planet>();
     
     /**
      * Initializes the controller class.
@@ -124,21 +132,30 @@ public class GameViewController implements Initializable {
         
         for (int i = 0; i < 10; i++) {
             circlePlanets.get(i).setFill(new ImagePattern(images[i]));
-            Planet[] planets = {new Planet(circlePlanets.get(i).getId(), circlePlanets.get(i).getCenterX(), circlePlanets.get(i).getCenterY(), radius[i], planetMasses[i])};
+            planets.add(new Planet(circlePlanets.get(i).getId(), circlePlanets.get(i).getCenterX(), circlePlanets.get(i).getCenterY(), radius[i], planetMasses[i]));
         }
-        
         
         fire.setOpacity(0);
         
         // Buttons
-        directionInput.valueProperty().addListener((observable, odlVal, newVal) -> {
-            rocket.setRotate(newVal.doubleValue());
+        directionInput.valueProperty().addListener((observable, oldVal, newVal) -> {
+           double dx = rocket.getLayoutX() - Earth.getCenterX();
+            double dy = rocket.getLayoutY() - Earth.getCenterY();
+            
+            angle = Math.toDegrees(Math.atan2(dy, dx));
+            
+            rocket.setRotate(angle + newVal.doubleValue());
         });
         
-    }
-    
-    @FXML
-    private void LaunchBtnClicked(ActionEvent event) {
-       
+        speedInput.alignmentProperty().addListener((observable, oldVal, newVal) -> {
+            speed = Double.parseDouble(newVal.toString());
+        });
+        
+        btnLaunch.setOnAction(e -> {
+            Vector2 initialPosition = new Vector2(rocket.getLayoutX(), rocket.getLayoutY());
+            
+            Projectile proj = new Projectile(rocketMass, initialPosition, speed, angle);
+            proj.calculateTrajectory(planets);
+        });
     }
 }

@@ -29,7 +29,7 @@ public class Planet {
      */
     public Planet(String name, double x, double y, int radius, double mass) {
         this.name = name;
-        this.position = new Vector2(x, y);  // store physics-friendly vector
+        this.position = new Vector2(x, y);  
         this.radius = radius;
         this.mass = mass;
     }
