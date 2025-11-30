@@ -64,21 +64,28 @@ public class ResultController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image[] images = new Image[]{
-            new Image(getClass().getResourceAsStream("/Images/Sun.png")),
-            new Image(getClass().getResourceAsStream("/Images/Mercury.png")),
-            new Image(getClass().getResourceAsStream("/Images/Venus.png")),
-            new Image(getClass().getResourceAsStream("/Images/Earth.jpg")),
-            new Image(getClass().getResourceAsStream("/Images/Moon.png")),
-            new Image(getClass().getResourceAsStream("/Images/Mars.png")),
-            new Image(getClass().getResourceAsStream("/Images/Jupiter.png")),
-            new Image(getClass().getResourceAsStream("/Images/Saturn.png")),
-            new Image(getClass().getResourceAsStream("/Images/Uranus.png")),
-            new Image(getClass().getResourceAsStream("/Images/Neptune.png")),
-        };
+      String[] imageFiles = {
+       "Sun.png", "Mercury.png", "Venus.png", "Earth.jpg", "Moon.png",
+       "Mars.png", "Jupiter.png", "Saturn.png", "Uranus.png", "Neptune.png"
+    };
+    
+    Image[] images = new Image[imageFiles.length];
+
+    for (int i = 0; i < imageFiles.length; i++) {
+        try {
+            images[i] = new Image(getClass().getResourceAsStream("/Images/" + imageFiles[i]));
+            if (images[i] == null) {
+                System.err.println("Image not found: " + imageFiles[i]);
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to load image: " + imageFiles[i]);
+            e.printStackTrace();
+        }
         
      }
+    }
 }
+
      
      
 

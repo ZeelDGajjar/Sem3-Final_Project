@@ -12,11 +12,16 @@ class CollisionUtilTest {
 
     private Planet planet;
     private Projectile projectile;
+    
+     @BeforeEach
+    void setUp() {
+        planet = new Planet("Earth", 50, 50, 50, 100);
+        projectile = new Projectile(0, 0, 1.0, new Vector2(50, 50));
+    }
 
 
     @Test
     void testCheckCollision_Hit() {
-        Planet planet = new Planet("Earth", 50, 50, 50, 100);
         assertTrue(CollisionUtil.checkCollision(projectile, planet), "Projectile should hit planet");
     }
     
@@ -24,7 +29,6 @@ class CollisionUtilTest {
     void testCheckCollision_Miss() {
         Planet planet = new Planet("Earth", 50, 50, 10, 100);
         Projectile projectile = new Projectile(0, 0, 1.0, new Vector2(-20, -20));
-
         assertFalse(CollisionUtil.checkCollision(projectile, planet), "Projectile should miss planet diagonally");
     }
 
@@ -39,9 +43,9 @@ class CollisionUtilTest {
         
         List<Planet> planets = new ArrayList<>();
         planets.add(planet1);
-        planets.add(planet2); // second planet will be hit
+        planets.add(planet2); // second planet should be hit
 
-        Planet hit = CollisionUtil.checkAnyCollsion(projectile, planets);
+        Planet hit = CollisionUtil.checkAnyCollision(projectile, planets);
         assertNotNull(hit, "Should detect a hit");
         assertEquals(planet, hit, "Hit planet should be Earth");
     }
@@ -51,9 +55,7 @@ class CollisionUtilTest {
         Planet planet1 = new Planet("Mars", 0, 0, 5, 50);
         Planet planet2 = new Planet("Venus", 20, 20, 5, 50);
         Planet planet3 = new Planet("Jupiter", 80, 80, 10, 200);
-
         Projectile projectile = new Projectile(0,0,1.0, new Vector2(200,200));
-        
         List<Planet> planets = new ArrayList<>();
         planets.add(planet1);
         planets.add(planet2);
