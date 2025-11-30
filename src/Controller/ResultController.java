@@ -5,10 +5,18 @@
 package Controller;
 
 
+import Model.Planet;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
@@ -16,7 +24,7 @@ import javafx.stage.Stage;
  * Displays outcome of the game (score, zombied status, and explanation)
  * and allows the user to return to the main menu.
  */
-public class ResultController {
+public class ResultController implements Initializable {
     @FXML
      public Label warningMessageLabel;  //Display a warning or game-over title message  
 
@@ -53,6 +61,23 @@ public class ResultController {
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        Image[] images = new Image[]{
+            new Image(getClass().getResourceAsStream("/Images/Sun.png")),
+            new Image(getClass().getResourceAsStream("/Images/Mercury.png")),
+            new Image(getClass().getResourceAsStream("/Images/Venus.png")),
+            new Image(getClass().getResourceAsStream("/Images/Earth.jpg")),
+            new Image(getClass().getResourceAsStream("/Images/Moon.png")),
+            new Image(getClass().getResourceAsStream("/Images/Mars.png")),
+            new Image(getClass().getResourceAsStream("/Images/Jupiter.png")),
+            new Image(getClass().getResourceAsStream("/Images/Saturn.png")),
+            new Image(getClass().getResourceAsStream("/Images/Uranus.png")),
+            new Image(getClass().getResourceAsStream("/Images/Neptune.png")),
+        };
+        
+     }
 }
      
      
