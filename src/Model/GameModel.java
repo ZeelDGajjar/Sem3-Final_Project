@@ -7,6 +7,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javafx.geometry.Point2D;
 
     /**
      * Core game logic model : 
@@ -152,26 +153,40 @@ import java.util.Vector;
             projectile = new Projectile(speed, angleDegrees, 1.0, initialPos);
 
             List<Vector2> trajPoints = new ArrayList<>();
-            double dt = 0.1;
+            double dt = 0.02;
             double maxTime = 30;
 
             for (double t = 0; t <= maxTime; t += dt) {
+                
             trajPoints.add(new Vector2(projectile.getPosition().x, projectile.getPosition().y));
-
+            
+            //Gravity
             Vector2 acceleration = PhysicsUtil.computeGravity(projectile.getMass(), projectile.getPosition(), planets);
-            projectile.setVelocity(projectile.getVelocity().add(acceleration.scale(dt)));
-            projectile.setPosition(projectile.getPosition().add(projectile.getVelocity().scale(dt)));
-
+            
+            //update velocity
+            projectile.setVelocity(
+                    projectile.getVelocity().add(acceleration.scale(dt))
+            );
+            
+            //update position
+                projectile.setPosition(
+                    projectile.getPosition().add(projectile.getVelocity().scale(dt))
+            );
+            
+            //stop if out of bounds 
             if (CollisionUtil.isOutOfBounds(projectile, 800, 600)) break; 
+            
             }
             
-            List<javafx.geometry.Point2D> trajPoints2D = new ArrayList<>();
-        for (Vector2 v : trajPoints) {
-            trajPoints2D.add(new javafx.geometry.Point2D(v.x, v.y));
-        }
-
+                // Convert to Point2D for Trajectory
+              List<Point2D> trajPoints2D = new ArrayList<>();
+              for (Vector2 v : trajPoints) {
+                  trajPoints2D.add(new Point2D(v.x, v.y));
+              }
+        
         lastTrajectory = new Trajectory(trajPoints2D);
 
+        //collsion check 
         Planet hitPlanet = CollisionUtil.checkAnyCollsion(projectile, planets);
 
         if (hitPlanet != null && hitPlanet.equals(targetPlanet)) {
