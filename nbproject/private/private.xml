@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Controller/GameViewController.java</file>
-            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Model/Projectile.java</file>
+            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Controller/MenuViewController.java</file>
+            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Model/Planet.java</file>
+            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Model/GameState.java</file>
+            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/View/GameView.fxml</file>
             <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Model/PhysicsUtil.java</file>
-            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Main/Sem3Final_Project.java</file>
+            <file>file:/C:/Users/zeelg/OneDrive/Documents/GitHub/Sem3-Final_Project/src/Controller/GameViewController.java</file>
         </group>
     </open-files>
 </project-private>
