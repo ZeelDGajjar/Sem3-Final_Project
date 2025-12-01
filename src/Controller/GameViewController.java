@@ -119,29 +119,24 @@ public class GameViewController implements Initializable {
     private GameState gameState = new GameState();
     private GameModel gameModel = new GameModel(gameState);
 
-    // Flight timeline for per-frame stepping
     private Timeline flightTimeline;
 
-    // Timeline to advance zombied level (1 -> 2 -> max) over time
     private Timeline zombiedLevelTimeline;
 
-    // Arcade physics tuning (UI coordinates / pixels)
-    private static final double GRAVITY_PIXELS = 300.0; // downward acceleration (pixels / s^2)
-    private static final double STEP_DT = 0.02; // seconds per physics step
-    private static final double SPEED_UI_SCALE = 1.0; // multiply user speed to convert to pixels/sec
+    private static final double GRAVITY_PIXELS = 300.0;
+    private static final double STEP_DT = 0.02; 
+    private static final double SPEED_UI_SCALE = 1.0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupPlanets();
         setupControls();
 
-        // keep GameModel in sync (some GameModel flows expect planets)
         gameModel.setPlanets(planets);
         gameModel.startLevel();
-        updateZomobieUI(); // show initial level
+        updateZomobieUI(); 
 
-        // Start zombied level progression: after X seconds advance to next level
-        startZombiedLevelCycle(12); // tweak interval as desired
+        startZombiedLevelCycle(12); 
 
         startCountdownTimer(100);
     }
@@ -178,15 +173,12 @@ public class GameViewController implements Initializable {
             Circle c = circlePlanets.get(i);
             c.setFill(new ImagePattern(images[i]));
 
-            // Use bounds in parent to get the on-screen center in pixels
             Bounds b = c.getBoundsInParent();
             double uiCenterX = b.getMinX() + b.getWidth() / 2.0;
             double uiCenterY = b.getMinY() + b.getHeight() / 2.0;
 
-            // Use circle radius (pixels) as planet radius for collision detection in UI space.
             double radiusPixels = c.getRadius();
 
-            // Create Planet with UI coordinates & pixel radius (mass kept, though not used in arcade mode)
             planets.add(new Planet(planetIds.get(i), uiCenterX, uiCenterY, (int) radiusPixels, planetMasses[i]));
         }
 
@@ -246,20 +238,25 @@ public class GameViewController implements Initializable {
         if (countdownTimeline != null) countdownTimeline.stop();
         startCountdownTimer(10);
 
-        // restart zombied cycle from level 1
         if (zombiedLevelTimeline != null) zombiedLevelTimeline.stop();
         gameModel.resetGame();
         updateZomobieUI();
         startZombiedLevelCycle(12);
     }
 
+    /**
+     * Stops the transition
+    */
     private void stopFlight() {
         if (flightTimeline != null) {
             flightTimeline.stop();
             flightTimeline = null;
         }
     }
-
+    
+    /**
+     * Updates the score
+     */
     private void updateScore() {
         scorePts.setText(String.valueOf(gameState.getAttempts()));
     }
@@ -269,28 +266,23 @@ public class GameViewController implements Initializable {
      * The rocket will stop as soon as it intersects any planet (based on circle radius).
      */
     private void launchRocket() {
-        // prevent multiple simultaneous flights
         stopFlight();
 
         gameState.addAttempts();
         updateScore();
 
-        // Get rocket center (UI coordinates)
         Bounds rb = rocket.getBoundsInParent();
         double uiStartX = rb.getMinX() + rb.getWidth() / 2.0;
         double uiStartY = rb.getMinY() + rb.getHeight() / 2.0;
 
-        // Convert user speed into pixels/sec (tweak SPEED_UI_SCALE if needed)
         double speedPx = speed * SPEED_UI_SCALE;
 
-        // Angle: rocket.getRotate() degrees. In UI, y increases downward.
         double angleDeg = rocket.getRotate();
         double angleRad = Math.toRadians(angleDeg);
 
-        double vx = speedPx * Math.cos(angleRad);          // pixels/sec
-        double vy = -speedPx * Math.sin(angleRad);         // negative sin -> upward on screen
+        double vx = speedPx * Math.cos(angleRad);          
+        double vy = -speedPx * Math.sin(angleRad);         
 
-        // Create a lightweight projectile state (not using model Projectile for UI sim)
         final double[] posX = {uiStartX};
         final double[] posY = {uiStartY};
         final double[] velX = {vx};
@@ -298,30 +290,23 @@ public class GameViewController implements Initializable {
 
         Pane parentPane = (Pane) rocket.getParent();
 
-        // Flight timeline: step simulation at STEP_DT seconds
         flightTimeline = new Timeline(new KeyFrame(Duration.seconds(STEP_DT), ev -> {
-            // Integrate velocity and position (simple Euler)
             velY[0] += GRAVITY_PIXELS * STEP_DT; // gravity pulls down (positive y)
             posX[0] += velX[0] * STEP_DT;
             posY[0] += velY[0] * STEP_DT;
 
-            // Move rocket center to new position (we need to set layout so that rocket's center matches pos)
             double rocketCenterOffsetX = rocket.getBoundsInParent().getWidth() / 2.0;
             double rocketCenterOffsetY = rocket.getBoundsInParent().getHeight() / 2.0;
             rocket.setLayoutX(posX[0] - rocketCenterOffsetX);
             rocket.setLayoutY(posY[0] - rocketCenterOffsetY);
 
-            // Create a temporary Projectile-like object for collision util (it expects model coords; we pass UI coords)
             Projectile tempProj = new Projectile(rocketMass, new Vector2(posX[0], posY[0]), 0, 0);
             tempProj.setPosition(new Vector2(posX[0], posY[0]));
 
-            // Check collision with planets (planets were initialized in UI coords)
             Planet collided = CollisionUtil.checkAnyCollsion(tempProj, planets);
             if (collided != null) {
-                // Stop flight, snap to planet edge (place rocket center on planet edge along approach vector)
                 stopFlight();
 
-                // compute vector from planet center to projectile center
                 double dx = posX[0] - collided.getX();
                 double dy = posY[0] - collided.getY();
                 double dist = Math.sqrt(dx * dx + dy * dy);
@@ -329,7 +314,6 @@ public class GameViewController implements Initializable {
 
                 double snapX, snapY;
                 if (dist == 0) {
-                    // rare degenerate case: place rocket at planet center
                     snapX = collided.getX();
                     snapY = collided.getY();
                 } else {
@@ -337,19 +321,14 @@ public class GameViewController implements Initializable {
                     snapY = collided.getY() + dy / dist * targetDist;
                 }
 
-                // Snap rocket (convert center to layout coords)
                 rocket.setLayoutX(snapX - rocketCenterOffsetX);
                 rocket.setLayoutY(snapY - rocketCenterOffsetY);
 
-                // Award points and stop countdown
                 gameState.updateScore(100);
                 updateScore();
                 if (countdownTimeline != null) countdownTimeline.stop();
-
-                // Optionally, you can navigate to a success screen here.
             }
 
-            // If rocket goes out of parent bounds, stop and redirect to missed screen
             if (posX[0] < -1000 || posX[0] > parentPane.getWidth() + 1000 || posY[0] < -1000 || posY[0] > parentPane.getHeight() + 1000) {
                 stopFlight();
                 redirectToMissedFXML();
@@ -368,20 +347,16 @@ public class GameViewController implements Initializable {
         if (zombiedLevelTimeline != null) zombiedLevelTimeline.stop();
 
         zombiedLevelTimeline = new Timeline(new KeyFrame(Duration.seconds(intervalSeconds), ev -> {
-            // If game already zombied (final reached), stop further progression
             if (gameModel.isZombied()) {
                 if (zomombieLevel != null) zomombieLevel.setText("MAX");
                 zombiedLevelTimeline.stop();
                 return;
             }
 
-            // Advance level in model (this will set zombied when final level passed)
             gameModel.advanceLevel();
 
-            // Update UI text to show current level (or MAX if zombied)
             updateZomobieUI();
 
-            // Stop if zombied now
             if (gameModel.isZombied()) {
                 if (zomombieLevel != null) zomombieLevel.setText("MAX");
                 zombiedLevelTimeline.stop();

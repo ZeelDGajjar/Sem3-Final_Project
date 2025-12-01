@@ -46,7 +46,6 @@ public class ResultViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-       setResults();
        btnTryAgain.setOnAction(e -> {
            try {
                 Parent pane = FXMLLoader.load(getClass().getResource("/View/GameView.fxml"));
@@ -55,6 +54,8 @@ public class ResultViewController implements Initializable {
                 System.getLogger(MenuViewController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
        });
+       String warning = "warning";
+       String failureReason = "Got Lost in Space";
     }
     
     /**
