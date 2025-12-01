@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -30,6 +32,9 @@ public class ResultController {
     
     @FXML
     private Label levelReachedLabel;  
+    
+    @FXML
+    private ImageView backgroundImageView;
     
      /**
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
@@ -55,5 +60,21 @@ public class ResultController {
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
+    
+    /**
+     * Initialize the controller: set background image and default result values.
+     */
+    public void initialize(URL url, ResourceBundle rb) {
+        // Load background image
+        try {
+            Image bgImage = new Image(getClass().getResourceAsStream("/Images/ResultBackground.png"));
+            backgroundImageView.setImage(bgImage);
+        } catch (Exception e) {
+            System.err.println("Failed to load background image");
+            e.printStackTrace();
+        }
+    }
+    
+    
 }
      
