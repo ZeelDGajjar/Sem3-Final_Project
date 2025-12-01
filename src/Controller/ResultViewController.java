@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * Displays outcome of the game (score, zombied status, and explanation)
  * and allows the user to return to the main menu.
  */
-public class ResultController implements Initializable {
+public class ResultViewController implements Initializable {
     @FXML
      public Label warningMessageLabel;  //Display a warning or game-over title message  
 

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ResultControllerTest {
 
-    public ResultController controller;
+    public ResultViewtController controller;
 
     @BeforeAll
     static void setupJFX() {
@@ -21,7 +21,7 @@ public class ResultControllerTest {
 
     @BeforeEach
     void init() {
-        controller = new ResultController();
+        controller = new ResultViewtController();
         controller.warningMessageLabel = new Label();
         controller.FailureReasonLabel = new Label();
         controller.levelReachedLabel = new Label();
