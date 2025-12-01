@@ -37,6 +37,9 @@ public class ResultViewController implements Initializable {
     @FXML
     public  Label levelReachedLabel;  // Shows level player reached before failing
 
+    @FXML
+    private ImageView backgroundImageView;
+
      /**
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
      * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
@@ -64,28 +67,19 @@ public class ResultViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      String[] imageFiles = {
-       "Sun.png", "Mercury.png", "Venus.png", "Earth.jpg", "Moon.png",
-       "Mars.png", "Jupiter.png", "Saturn.png", "Uranus.png", "Neptune.png"
-    };
-    
-    Image[] images = new Image[imageFiles.length];
-
-    for (int i = 0; i < imageFiles.length; i++) {
+       // Load background image
         try {
-            images[i] = new Image(getClass().getResourceAsStream("/Images/" + imageFiles[i]));
-            if (images[i] == null) {
-                System.err.println("Image not found: " + imageFiles[i]);
-            }
+            Image bgImage = new Image(getClass().getResourceAsStream("/Images/ResultBackground.png"));
+            backgroundImageView.setImage(bgImage);
         } catch (Exception e) {
-            System.err.println("Failed to load image: " + imageFiles[i]);
+            System.err.println("Failed to load background image");
             e.printStackTrace();
         }
-        
      }
     }
 }
 
      
      
+
 
