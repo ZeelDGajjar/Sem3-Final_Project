@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 public class ResultViewController implements Initializable {
     @FXML
     private Pane rootPane;
+    
     @FXML
     private Label warningMessageLabel;  
 
@@ -43,6 +45,7 @@ public class ResultViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
        setResults();
        btnTryAgain.setOnAction(e -> {
            try {

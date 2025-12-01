@@ -27,9 +27,19 @@
       </AnchorPane>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="194.0" prefWidth="375.0" style="-fx-background-color: yellow;" StackPane.alignment="CENTER">
          <children>
+<<<<<<< Updated upstream
             <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="262.0" layoutX="-34.0" layoutY="-34.0" stroke="BLACK" strokeType="INSIDE" width="457.0" />
             <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0" />
             <Label fx:id="warningMessageLabel" layoutX="14.0" layoutY="16.0" prefHeight="45.0" prefWidth="361.0" style="-fx-text-fill: yellow; -fx-background-color: black; -fx-background-radius: 12;" text="Warning ">
+=======
+            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="200.0" layoutX="-41.0" layoutY="-24.0" stroke="BLACK" strokeType="INSIDE" width="280.0" />
+            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0">
+               <children>
+                  <Button fx:id="TryAgainBtn" mnemonicParsing="false" style="-fx-background-color: black;" text="Try Again " textFill="WHITE" />
+               </children>
+            </HBox>
+            <Label fx:id="WarningMessageLabel" layoutX="14.0" layoutY="22.0" text="Warning ">
+>>>>>>> Stashed changes
                <font>
                   <Font name="Arial" size="22.0" />
                </font>
@@ -42,12 +52,17 @@
                   <Font size="17.0" />
                </font>
             </Label>
+<<<<<<< Updated upstream
             <Label fx:id="levelReachedLabel" layoutX="241.0" layoutY="30.0" text="LevelReached" textFill="WHITE" />
             <Button fx:id="btnTryAgain" layoutX="216.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: #000000;" text="Try Again " textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
             </Button>
+=======
+            <Label fx:id="FailureReasonLabel" layoutX="14.0" layoutY="67.0" prefHeight="32.0" prefWidth="161.0" style="-fx-text-fill: red;" text="FailureReason" />
+            <Label fx:id="LevelReachedLabel" layoutX="119.0" layoutY="28.0" prefHeight="17.0" prefWidth="44.0" text="LevelReached" />
+>>>>>>> Stashed changes
          </children>
       </Pane>
    </children>
