@@ -5,6 +5,8 @@
 package Controller;
 
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,17 +20,17 @@ import javafx.stage.Stage;
  */
 public class ResultController {
     @FXML
-    private Label warningMessageLabel;  //Display a warning or game-over title message  
+    private Label warningMessageLabel;  
 
     @FXML
     private Button TryAgainBtn;     
     
     @FXML
-    private Label FailureReasonLabel; // Shows reason why player failed / lost
+    private Label FailureReasonLabel; 
     
     @FXML
-    private Label levelReachedLabel;  // Shows level player reached before failing
-
+    private Label levelReachedLabel;  
+    
      /**
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
      * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
@@ -55,5 +57,3 @@ public class ResultController {
     }
 }
      
-     
-

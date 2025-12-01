@@ -28,6 +28,7 @@ public class Projectile {
         this.velocity = new Vector2(speed * Math.cos(Math.toRadians(angle)), speed * Math.sin(Math.toRadians(angle)));
     }
 
+
     /**
      * Simulates full trajectory based on planets given
      * @param planets the list of planets given
@@ -36,14 +37,12 @@ public class Projectile {
     public List<Point2D> calculateTrajectory(List<Planet> planets) {
         List<Point2D> points = new ArrayList<>();
 
-        // Use simulation copies so original projectile state isn't mutated by this helper
         Vector2 simPosition = new Vector2(position.x, position.y);
         Vector2 simVelocity = new Vector2(velocity.x, velocity.y);
 
         for (int i = 0; i < 2000; i++) {
             Vector2 acceleration = PhysicsUtil.computeGravity(mass, simPosition, planets);
 
-            // correct physics integration (semi-implicit Euler)
             simVelocity = simVelocity.add(acceleration.scale(dt));
             simPosition = simPosition.add(simVelocity.scale(dt));
 
@@ -99,7 +98,6 @@ public class Projectile {
     public Point2D updatePosition(double dt,  List<Planet> planets) {
         Vector2 acceleration = PhysicsUtil.computeGravity(mass, position, planets);
 
-        // correct updates: velocity updated by acceleration, position updated by velocity
         velocity = velocity.add(acceleration.scale(dt));
         position = position.add(velocity.scale(dt));
 
