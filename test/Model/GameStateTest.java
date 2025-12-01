@@ -4,18 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameStateTest {
+class GameStateTest {
 
     private GameState gameState;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         gameState = new GameState();
     }
 
+    // ------------------------
     // RESET TEST
+    // ------------------------
     @Test
-    public void testResetAll() {
+    void testResetAll() {
         gameState.updateScore(50);
         gameState.addAttempts();
         gameState.addPlayTime(40);
@@ -29,13 +31,14 @@ public class GameStateTest {
         assertEquals(0, gameState.getTotalPlayTimeSeconds());
         assertFalse(gameState.isZombied());
         assertEquals(1, gameState.getMaxLevelReached());
-        assertEquals(1, gameState.getCurrentLevel());
+        assertEquals(1, gameState.getCurrentLevel()); // because Math.max(1, level)
     }
 
+    // ------------------------
     // SCORE TESTS
-
+    // ------------------------
     @Test
-    public void testUpdateScorePositive() {
+    void testUpdateScorePositive() {
         gameState.updateScore(10);
         assertEquals(10, gameState.getScore());
 
@@ -44,60 +47,64 @@ public class GameStateTest {
     }
 
     @Test
-    public void testUpdateScoreNegativeButAboveZero() {
+    void testUpdateScoreNegativeButAboveZero() {
         gameState.updateScore(20);
         gameState.updateScore(-5);
         assertEquals(15, gameState.getScore());
     }
 
     @Test
-    public void testUpdateScoreNegativeBelowZero() {
+    void testUpdateScoreNegativeBelowZero() {
         gameState.updateScore(5);
         gameState.updateScore(-10);
-        assertEquals(0, gameState.getScore());
+        assertEquals(0, gameState.getScore()); // cannot go below 0
     }
 
     @Test
-    public void testUpdateScoreZeroDoesNothing() {
+    void testUpdateScoreZeroDoesNothing() {
         gameState.updateScore(0);
         assertEquals(0, gameState.getScore());
     }
 
+    // ------------------------
     // LEVEL TESTS
+    // ------------------------
     @Test
-    public void testSetCurrentLevelMinimumIsOne() {
+    void testSetCurrentLevelMinimumIsOne() {
         gameState.setCurrentLevel(-5);
         assertEquals(1, gameState.getCurrentLevel());
     }
 
     @Test
-    public void testSetCurrentLevelUpdatesMaxLevel() {
+    void testSetCurrentLevelUpdatesMaxLevel() {
         gameState.setCurrentLevel(3);
         assertEquals(3, gameState.getMaxLevelReached());
 
-        gameState.setCurrentLevel(2);
+        gameState.setCurrentLevel(2); 
         assertEquals(3, gameState.getMaxLevelReached()); // does not decrease
     }
 
     @Test
-    public void testGetCurrentLevel() {
+    void testGetCurrentLevel() {
         gameState.setCurrentLevel(4);
         assertEquals(4, gameState.getCurrentLevel());
     }
 
+    // ------------------------
     // ATTEMPTS TEST
+    // ------------------------
     @Test
-    public void testAddAttempts() {
-       assertEquals(0, gameState.getAttempts(), "Initial attempts should be 0");
-
+    void testAddAttempts() {
         gameState.addAttempts();
         gameState.addAttempts();
-        assertEquals(2, gameState.getAttempts(), "Attempts should be 2 after adding twice");
+        assertEquals(2, gameState.getAttempts());
     }
 
+    // ------------------------
     // PLAY TIME TEST
+    // ------------------------
     @Test
-    public void testAddPlayTimePositive() {
+    void testAddPlayTimePositive() {
         gameState.addPlayTime(30);
         assertEquals(30, gameState.getTotalPlayTimeSeconds());
 
@@ -106,31 +113,27 @@ public class GameStateTest {
     }
 
     @Test
-    public void testAddPlayTimeNegativeDoesNothing() {
+    void testAddPlayTimeNegativeDoesNothing() {
         gameState.addPlayTime(-10);
         assertEquals(0, gameState.getTotalPlayTimeSeconds());
     }
 
+    // ------------------------
     // ZOMBIED / GAME OVER TEST
+    // ------------------------
     @Test
-    public void testZombiedState() {
+    void testZombiedState() {
         assertFalse(gameState.isZombied());
-    assertEquals(0, gameState.getScore(), "Score should initially be 0");
-    assertEquals(1, gameState.getCurrentLevel(), "Level should initially be 1");
 
-    gameState.setZombied(true);
-    assertTrue(gameState.isZombied());
+        gameState.setZombied(true);
+        assertTrue(gameState.isZombied());
 
-    gameState.setZombied(false);
-    assertFalse(gameState.isZombied());
-
-    // Verify score and level remain unchanged
-    assertEquals(0, gameState.getScore(), "Score should remain 0 after zombied toggled");
-    assertEquals(1, gameState.getCurrentLevel(), "Level should remain 1 after zombied toggled");
+        gameState.setZombied(false);
+        assertFalse(gameState.isZombied());
     }
 
     @Test
-    public void testIsGameOver() {
+    void testIsGameOver() {
         assertFalse(gameState.isGameOver());
         gameState.setZombied(true);
         assertTrue(gameState.isGameOver());

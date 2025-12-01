@@ -5,9 +5,13 @@
 package Controller;
 
 
+<<<<<<< HEAD:src/Controller/ResultController.java
+import java.net.URL;
+=======
 import Model.Planet;
 import java.net.URL;
 import java.util.List;
+>>>>>>> vedika:src/Controller/ResultViewController.java
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +19,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+<<<<<<< HEAD:src/Controller/ResultController.java
+import javafx.scene.image.ImageView;
+=======
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+>>>>>>> vedika:src/Controller/ResultViewController.java
 import javafx.stage.Stage;
 
 /**
@@ -26,12 +34,26 @@ import javafx.stage.Stage;
  */
 public class ResultViewController implements Initializable {
     @FXML
+<<<<<<< HEAD:src/Controller/ResultController.java
+    private Label warningMessageLabel;  
+=======
      public Label warningMessageLabel;  //Display a warning or game-over title message  
+>>>>>>> vedika:src/Controller/ResultViewController.java
 
     @FXML
     public Button TryAgainBtn;     
     
     @FXML
+<<<<<<< HEAD:src/Controller/ResultController.java
+    private Label FailureReasonLabel; 
+    
+    @FXML
+    private Label levelReachedLabel;  
+    
+    @FXML
+    private ImageView backgroundImageView;
+    
+=======
      public Label FailureReasonLabel; // Shows reason why player failed / lost
     
     @FXML
@@ -40,6 +62,7 @@ public class ResultViewController implements Initializable {
     @FXML
     private ImageView backgroundImageView;
 
+>>>>>>> vedika:src/Controller/ResultViewController.java
      /**
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
      * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
@@ -64,10 +87,19 @@ public class ResultViewController implements Initializable {
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
+<<<<<<< HEAD:src/Controller/ResultController.java
+    
+    /**
+     * Initialize the controller: set background image and default result values.
+     */
+    public void initialize(URL url, ResourceBundle rb) {
+        // Load background image
+=======
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        // Load background image
+>>>>>>> vedika:src/Controller/ResultViewController.java
         try {
             Image bgImage = new Image(getClass().getResourceAsStream("/Images/ResultBackground.png"));
             backgroundImageView.setImage(bgImage);
@@ -75,6 +107,13 @@ public class ResultViewController implements Initializable {
             System.err.println("Failed to load background image");
             e.printStackTrace();
         }
+<<<<<<< HEAD:src/Controller/ResultController.java
+    }
+    
+    
+}
+     
+=======
      }
     }
 }
@@ -84,3 +123,4 @@ public class ResultViewController implements Initializable {
 
 
 
+>>>>>>> vedika:src/Controller/ResultViewController.java

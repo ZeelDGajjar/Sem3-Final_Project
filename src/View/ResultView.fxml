@@ -18,7 +18,7 @@
          <children>
             <ImageView fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../Pictures/Screenshots/Screenshot%202025-11-30%20190838.png" />
+                  <Image url="@../../../../../Pictures/Screenshots/Screenshot%202025-11-30%20190838.png" />
                </image>
             </ImageView>
             <BorderPane layoutX="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="794.0" />

@@ -8,6 +8,9 @@ import Model.GameState;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -32,11 +35,11 @@ public class Sem3Final_Project extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            System.out.println(getClass().getResource("/View/MenuView.fxml"));
-            Parent root = FXMLLoader.load(getClass().getResource("/View/MenuView.fxml"));
+            System.out.println(getClass().getResource("/View/GameView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/GameView.fxml"));
 
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Zombied Game");
+            primaryStage.setTitle("Marathon Simulator");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {

@@ -44,7 +44,7 @@ interface GameObserver {
      * @param newLevel the current level number
      */
     default void onLevelChanged(int newLevel) {
-        // default : do nothing 
+        
     }
 
     /**
@@ -53,7 +53,6 @@ interface GameObserver {
      * false if they won the final level
      */
     default void onGameOver(boolean isZombied) {
-        // optional implementation
     }
     
     /**
@@ -61,7 +60,6 @@ interface GameObserver {
      * @param reamainingSeconds how many seconds are left in the UI
      */
     default void onTimerUpdate( long reamainingSeconds) {
-        //default
     }
 }
 

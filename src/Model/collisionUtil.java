@@ -5,7 +5,8 @@
 package Model;
 
 import java.util.List;
-        
+import javafx.geometry.Point2D;
+
 /**
  * Utility class for collision detection between : 
  * projectiles and planets in the game
@@ -21,11 +22,16 @@ public class CollisionUtil {
      * @return true if projectile hits the planet 
      */
     public static boolean checkCollision(Projectile projectile, Planet planet) {
+         // projectile.position is now a Vector2
         Vector2 projPos = projectile.getPosition();
-        double dx = projPos.x - planet.getX();
-        double dy = projPos.y - planet.getY();
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        return distance <= planet.getRadius(); 
+
+        // planet.getPosition() must return Vector2 too
+        Vector2 planetPos = planet.getPosition();
+
+        // distance = (projPos - planetPos).magnitude()
+        double distance = projPos.subtract(planetPos).magnitude();
+
+        return distance <= planet.getRadius();
     }
     
      /**

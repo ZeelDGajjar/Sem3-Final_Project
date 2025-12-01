@@ -6,97 +6,191 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameModelTest {
 
-    private GameModel gameModel;
+    private GameModel model;
     private GameState gameState;
-    private Planet targetPlanet; 
 
-   @BeforeEach
+    // ---------- Dummy classes to satisfy dependencies ----------
+    static class DummyPlanet extends Planet {
+        public DummyPlanet() {
+            super("Dummy", 0, 0, 10, 1.0, false);
+        }
+    }
+
+    static class DummyTrajectory extends Trajectory {
+        public DummyTrajectory() {
+            super(new ArrayList<>()); // empty list of points
+        }
+    }
+
+    static class DummyProjectile extends Projectile {
+        public DummyProjectile() {
+            super(0, 0, 1.0, new Vector2(0,0));
+        }
+    }
+
+    @BeforeEach
     void setUp() {
         gameState = new GameState();
-        gameModel = new GameModel(gameState);
+        model = new GameModel(gameState);
 
-        // Set up planets for testing levels
+        // Add 5 dummy planets so GameModel can use them
         List<Planet> planets = new ArrayList<>();
-        planets.add(new Planet("Earth", 100, 100, 10, 100));
-        planets.add(new Planet("Mars", 200, 100, 10, 100));
-        planets.add(new Planet("Venus", 300, 100, 10, 100));
-        gameModel.setPlanets(planets);
-        
-         // Track the target planet for the first level
-        targetPlanet = planets.get(0);
-        gameModel.startLevel();
+        for (int i = 0; i < 5; i++) planets.add(new DummyPlanet());
+        model.setPlanets(planets);
     }
 
-     @Test
-    void testStartLevel() {
-        assertEquals(1, gameModel.getCurrentLevel());
-        assertFalse(gameModel.isZombied());
-        assertEquals(targetPlanet, gameModel.getTargetPlanet());
-    }
-
-    // ADVANCE LEVEL
+    // ---------------------------
+    // LEVEL START
+    // ---------------------------
     @Test
-    void testAdvanceLevel() {
-         gameModel.advanceLevel();
-        assertEquals(2, gameModel.getCurrentLevel());
-        assertEquals("Mars", gameModel.getTargetPlanet().getName());
+    void testStartLevel() {
+        model.startLevel();
 
+        assertEquals(1, model.getCurrentLevel());
+        assertEquals(1.0, model.getDifficultyFactor());
+        assertFalse(model.isZombied());
+        assertEquals(1, gameState.getCurrentLevel());
     }
-    
-     @Test
-    void testAdvanceToFinalLevelSetsZombied() {
-        while (!gameModel.isFinalLevel()) {
-            gameModel.advanceLevel();
-        }
-        // After advancing past final level
-        gameModel.advanceLevel();
-        assertTrue(gameModel.isZombied());
+
+    // ---------------------------
+    // ADVANCE LEVEL
+    // ---------------------------
+    @Test
+    void testAdvanceLevelNonFinal() {
+        model.startLevel();
+        model.advanceLevel();
+
+        assertEquals(2, model.getCurrentLevel());
+        assertEquals(2, gameState.getCurrentLevel());
+        assertFalse(model.isZombied());
+    }
+
+    @Test
+    void testAdvanceLevelFinalTriggersGameOver() {
+        model.startLevel();
+
+        // Move to final level
+        for (int i = 1; i < 5; i++) model.advanceLevel();
+
+        assertTrue(model.isFinalLevel());
+
+        model.advanceLevel(); // advancing AFTER final triggers zombied
+
+        assertTrue(model.isZombied());
         assertTrue(gameState.isZombied());
     }
 
+    // ---------------------------
     // RESET LEVEL
+    // ---------------------------
     @Test
     void testResetLevel() {
-        gameModel.resetLevel();
-        assertNull(gameModel.getLastTrajectory());
-        assertFalse(gameModel.isZombied());
-        assertEquals(1, gameModel.getCurrentLevel());
+        model.startLevel();
+        model.setLastTrajectory(new DummyTrajectory());
+        model.setProjectile(new DummyProjectile());
+
+        model.resetLevel();
+
+        assertNull(model.getLastTrajectory());
+        assertEquals(1, model.getCurrentLevel());
+        assertFalse(model.isZombied());
     }
 
-   
+    // ---------------------------
+    // FINAL LEVEL CHECK
+    // ---------------------------
+    @Test
+    void testIsFinalLevel() {
+        assertFalse(model.isFinalLevel());
+
+        for (int i = 1; i < 5; i++) model.advanceLevel();
+        assertTrue(model.isFinalLevel());
+    }
+
+    // ---------------------------
     // TIMER LOGIC
-   @Test
-    void testLevelTimeOut() throws InterruptedException {
-        gameModel.setLevelTimeLimit(1); // 1 second for fast test
-        Thread.sleep(1100);
-        assertTrue(gameModel.isLevelTimeUp());
-        assertTrue(gameState.isZombied());
+    // ---------------------------
+    @Test
+    void testLevelTimerCountsDown() throws InterruptedException {
+        model.setLevelTimeLimit(1); // 1 second
+        model.startLevelTimer();
+
+        Thread.sleep(1200); // wait >1 sec
+
+        long remaining = model.getRemainingLevelTime();
+
+        assertEquals(0, remaining);
+        assertTrue(model.isLevelTimeUp());
+        assertTrue(model.isTimeUp());
+        assertTrue(model.isZombied());
     }
 
+    // ---------------------------
+    // GAME RESET
+    // ---------------------------
+    @Test
+    void testResetGame() {
+        model.startLevel();
+        model.advanceLevel();
+        gameState.updateScore(100);
+        gameState.addAttempts();
+
+        model.resetGame();
+
+        assertEquals(1, model.getCurrentLevel());
+        assertEquals(1.0, model.getDifficultyFactor());
+        assertEquals(0, gameState.getScore());
+        assertEquals(0, gameState.getAttempts());
+        assertFalse(gameState.isZombied());
+        assertFalse(model.isZombied());
+    }
+
+    // ---------------------------
     // CHECK FAILURE
+    // ---------------------------
     @Test
     void testCheckFailure_NoTrajectory() {
-    assertEquals("No trajectory.", gameModel.checkFailure(null));
-    assertFalse(gameModel.isZombied(), "Game should not be zombied when trajectory is null");
+        assertEquals("No trajectory.", model.checkFailure(null));
     }
-    
+
+    @Test
+    void testCheckFailure_GameOver() {
+        gameState.setZombied(true);
+        assertEquals("Game over!", model.checkFailure(new DummyTrajectory()));
+    }
+
+    @Test
+    void testCheckFailure_WithFailureReason() {
+        DummyTrajectory traj = new DummyTrajectory();
+        traj.setFailureReason("Missed!");
+        assertEquals("Missed!", model.checkFailure(traj));
+    }
+
+    @Test
+    void testCheckFailure_Success() {
+        DummyTrajectory traj = new DummyTrajectory();
+        traj.setFailureReason(null);
+        assertEquals("Success!", model.checkFailure(traj));
+    }
+
+    // ---------------------------
     // UPDATE GAME STATE
+    // ---------------------------
     @Test
     void testUpdateGameStateSuccess() {
-        gameModel.startLevel();
-        gameModel.updateGameState(true);
+        model.startLevel();
+        model.updateGameState(true);
         assertEquals(100, gameState.getScore());
     }
 
     @Test
     void testUpdateGameStateFailure() {
-        gameModel.startLevel();
-        gameModel.updateGameState(false);
-        assertEquals(0, gameState.getScore()); // penalty ex. -10 but score can't go below 0
+        model.startLevel();
+        model.updateGameState(false);
+        assertEquals(0, gameState.getScore()); // penalty -10 but score can't go below 0
     }
 }

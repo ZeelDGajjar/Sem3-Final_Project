@@ -1,0 +1,44 @@
+/* ===== RESULT POPUP WINDOW ===== */
+.result-window {
+    -fx-background-color: rgba(255,255,255,0.92);   /* lots of white */
+    -fx-background-radius: 25px;
+    -fx-padding: 25px;
+    -fx-border-color: #cbb6ff;                      /* soft light purple */
+    -fx-border-radius: 25px;
+    -fx-border-width: 2px;
+
+    /* subtle purple glow */
+    -fx-effect: dropshadow(gaussian, rgba(160,120,255,0.35), 28, 0.5, 0, 4);
+}
+
+/* ===== TITLE LABEL (big text at top) ===== */
+.result-title {
+    -fx-text-fill: #6d4aff;       /* pastel space purple */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* ===== EXPLANATION / FAILURE TEXT ===== */
+.result-text {
+    -fx-text-fill: #3b2a4d;       /* dark purple/space gray */
+    -fx-font-size: 14px;
+}
+
+
+/* ===== TRY AGAIN BUTTON ===== */
+.try-again-btn {
+    -fx-background-color: linear-gradient(#f7e8ff, #e5d2ff);
+    -fx-background-radius: 15px;
+    -fx-border-color: #b89cff;
+    -fx-border-radius: 15px;
+    -fx-border-width: 1px;
+
+    -fx-text-fill: #3b2a4d;
+    -fx-font-weight: bold;
+
+    -fx-effect: dropshadow(gaussian, rgba(180,130,255,0.3), 20, 0.4, 0, 2);
+}
+
+.try-again-btn:hover {
+    -fx-background-color: linear-gradient(#ffffff, #eadbff);
+}
