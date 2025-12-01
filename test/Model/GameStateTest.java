@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameStateTest {
 
-    private GameState gameState;
+    public GameState gameState;
 
     @BeforeEach
     public void setUp() {
@@ -34,9 +34,7 @@ public class GameStateTest {
         assertEquals(1, gameState.getCurrentLevel());
     }
 
-    // ------------------------
     // SCORE TESTS
-    // ------------------------
     @Test
     public void testUpdateScorePositive() {
         gameState.updateScore(10);

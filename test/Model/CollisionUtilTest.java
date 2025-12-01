@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CollisionUtilTest {
+public class CollisionUtilTest {
 
     private Planet planet;
     private Projectile projectile;
