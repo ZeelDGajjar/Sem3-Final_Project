@@ -5,38 +5,45 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane stylesheets="@../CSSstyles/ResultView.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+<StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="623.0">
          <children>
-            <ImageView fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="backgroundImageView" fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/planets.png" />
+                  <Image url="@../../../../../../Pictures/Screenshots/Screenshot%202025-11-30%20190838.png" />
                </image>
             </ImageView>
+            <BorderPane layoutX="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="794.0" />
          </children>
       </AnchorPane>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: yellow;" styleClass="result-window" StackPane.alignment="CENTER">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="194.0" prefWidth="375.0" style="-fx-background-color: yellow;" StackPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="207.0" layoutX="-44.0" layoutY="-24.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
-            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0">
-               <children>
-                  <Button fx:id="TryAgainBtn" mnemonicParsing="false" styleClass="try-again-btn" text="TryAgain " />
-               </children>
-            </HBox>
-            <Label fx:id="WarningMessageLabel" layoutX="21.0" layoutY="22.0" styleClass="result-title" text="Warning ">
+            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="262.0" layoutX="-34.0" layoutY="-34.0" stroke="BLACK" strokeType="INSIDE" width="457.0" />
+            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0" />
+            <Label fx:id="WarningMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="37.0" layoutY="23.0" prefHeight="45.0" prefWidth="156.0" text="Warning ">
                <font>
-                  <Font size="16.0" />
+                  <Font name="Arial" size="22.0" />
                </font>
             </Label>
-            <Label fx:id="FailureReasonLabel" layoutX="22.0" layoutY="67.0" prefHeight="32.0" prefWidth="91.0" styleClass="result-text" text="FailureReason" />
-            <Label fx:id="LevelReachedLabel" layoutX="120.0" layoutY="28.0" prefHeight="17.0" prefWidth="44.0" styleClass="result-text" text="LevelReached" />
+            <Label fx:id="FailureReasonLabel" layoutX="55.0" layoutY="99.0" text="FailureReason">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="LevelReachedLabel" layoutX="259.0" layoutY="38.0" text="LevelReached" />
+            <Button fx:id="TryAgainBtn" layoutX="221.0" layoutY="147.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="107.0" text="TryAgain ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
