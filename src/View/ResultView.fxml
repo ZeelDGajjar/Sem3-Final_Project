@@ -6,64 +6,64 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResultViewController">
-   <children>
-      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="623.0">
-         <children>
-            <ImageView fx:id="backgroundImageView" fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/planets.png" />
-               </image>
-            </ImageView>
-            <BorderPane layoutX="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="794.0" />
-         </children>
-      </AnchorPane>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="194.0" prefWidth="375.0" style="-fx-background-color: yellow;" StackPane.alignment="CENTER">
-         <children>
-<<<<<<< Updated upstream
-            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="262.0" layoutX="-34.0" layoutY="-34.0" stroke="BLACK" strokeType="INSIDE" width="457.0" />
-            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0" />
-            <Label fx:id="warningMessageLabel" layoutX="14.0" layoutY="16.0" prefHeight="45.0" prefWidth="361.0" style="-fx-text-fill: yellow; -fx-background-color: black; -fx-background-radius: 12;" text="Warning ">
-=======
-            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="200.0" layoutX="-41.0" layoutY="-24.0" stroke="BLACK" strokeType="INSIDE" width="280.0" />
-            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0">
-               <children>
-                  <Button fx:id="TryAgainBtn" mnemonicParsing="false" style="-fx-background-color: black;" text="Try Again " textFill="WHITE" />
-               </children>
-            </HBox>
-            <Label fx:id="WarningMessageLabel" layoutX="14.0" layoutY="22.0" text="Warning ">
->>>>>>> Stashed changes
+    <children>
+        <AnchorPane prefHeight="400.0" prefWidth="623.0">
+            <children>
+                <ImageView fx:id="backgroundImageView" fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/planets.png" />
+                    </image>
+                </ImageView>
+      
+              <Pane layoutX="228.0" layoutY="120.0" prefHeight="194.0" prefWidth="375.0">
+                  <children>
+      
+                      <Label fx:id="warningMessageLabel" layoutX="14.0" layoutY="16.0" prefHeight="45.0" prefWidth="361.0" style="-fx-text-fill: yellow; -fx-background-color: black; -fx-background-radius: 12;" text="Warning">
+                          <font>
+                              <Font name="Arial" size="22.0" />
+                          </font>
+                          <padding>
+                              <Insets left="20.0" />
+                          </padding>
+                      </Label>
+                  <Label fx:id="failureReasonLabel" layoutX="54.0" layoutY="60.0" prefHeight="73.0" prefWidth="282.0" style="-fx-text-fill: red;" text="FailureReason">
+                          <font>
+                              <Font size="17.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="levelReachedLabel" layoutX="241.0" layoutY="30.0" text="LevelReached" textFill="WHITE" />
+                  <Button fx:id="btnTryAgain" layoutX="216.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: #000000;" text="Try Again " textFill="WHITE">
+                          <font>
+                              <Font size="19.0" />
+                          </font>
+                      </Button>
+                  </children>
+              </Pane>
+                <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="262.0" layoutX="188.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="457.0" />
+            <Text fill="#778201" layoutX="241.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Warning" wrappingWidth="104.3743896484375">
                <font>
-                  <Font name="Arial" size="22.0" />
+                  <Font size="24.0" />
                </font>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-            <Label fx:id="failureReasonLabel" layoutX="20.0" layoutY="61.0" prefHeight="73.0" prefWidth="282.0" style="-fx-text-fill: red;" text="FailureReason">
+            </Text>
+            <Text fx:id="failureTextOne" layoutX="243.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lost in Space" wrappingWidth="221.47003173828125">
                <font>
-                  <Font size="17.0" />
+                  <Font size="30.0" />
                </font>
-            </Label>
-<<<<<<< Updated upstream
-            <Label fx:id="levelReachedLabel" layoutX="241.0" layoutY="30.0" text="LevelReached" textFill="WHITE" />
-            <Button fx:id="btnTryAgain" layoutX="216.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: #000000;" text="Try Again " textFill="WHITE">
+            </Text>
+            <Button fx:id="btnTryAgain" layoutX="440.0" layoutY="263.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="136.0" style="-fx-background-color: black;" text="Try Again" textFill="WHITE" />
+            <Text fx:id="failureTextTwo" layoutX="243.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insufficent food and air" wrappingWidth="254.13671875">
                <font>
-                  <Font size="19.0" />
+                  <Font size="22.0" />
                </font>
-            </Button>
-=======
-            <Label fx:id="FailureReasonLabel" layoutX="14.0" layoutY="67.0" prefHeight="32.0" prefWidth="161.0" style="-fx-text-fill: red;" text="FailureReason" />
-            <Label fx:id="LevelReachedLabel" layoutX="119.0" layoutY="28.0" prefHeight="17.0" prefWidth="44.0" text="LevelReached" />
->>>>>>> Stashed changes
-         </children>
-      </Pane>
-   </children>
+            </Text>
+            </children>
+        </AnchorPane>
+    </children>
 </StackPane>
