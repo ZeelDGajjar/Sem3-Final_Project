@@ -5,10 +5,15 @@
 package Controller;
 
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -16,7 +21,7 @@ import javafx.stage.Stage;
  * Displays outcome of the game (score, zombied status, and explanation)
  * and allows the user to return to the main menu.
  */
-public class ResultController implem{
+public class ResultController implements Initializable {
     @FXML
     private Label warningMessageLabel;  //Display a warning or game-over title message  
 
@@ -28,7 +33,11 @@ public class ResultController implem{
     
     @FXML
     private Label levelReachedLabel;  // Shows level player reached before failing
+    
+     @FXML
+    private ImageView backgroundImageView; // Background image
 
+    
      /**
      * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
      * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
@@ -53,7 +62,22 @@ public class ResultController implem{
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
+
+
+    public void initialize(URL url, ResourceBundle rb) {
+    // Load background image into the ImageView
+    try {
+        Image bgImage = new Image(getClass().getResourceAsStream("/Images/ResultBackground.png"));
+        backgroundImageView.setImage(bgImage);
+    } catch (Exception e) {
+        System.err.println("Failed to load background image");
+        e.printStackTrace();
+    }
+
+    warningMessageLabel.setText("No message");
+    FailureReasonLabel.setText("No reason provided");
+    levelReachedLabel.setText("Level 0");
 }
-     
+} 
      
 
