@@ -81,7 +81,12 @@ public class GameState {
         return maxLevelReached;
     }
     
-    //ATTEMPTS METHODS 
+    /**
+     * Resets the attempts
+     */
+    public void resetAttempts() {
+        this.attempts = 0; 
+    }
     
     /**
      * Increments the number of attempts, whenever a projectile is launched
