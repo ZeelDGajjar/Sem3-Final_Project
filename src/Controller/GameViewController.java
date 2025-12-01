@@ -5,7 +5,6 @@ import Model.GameModel;
 import Model.GameState;
 import Model.Planet;
 import Model.Projectile;
-import Model.Trajectory;
 import Model.Vector2;
 import java.io.IOException;
 import java.net.URL;
@@ -17,10 +16,10 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -32,11 +31,16 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Controller for game view.
+ * Updated so the rocket uses a simple arcade projectile motion in UI coordinates (pixels),
+ * moves in the direction it's pointed, stops when it reaches a planet, and advances
+ * the "zombied level" over time (1 -> 2 -> max).
+ */
 public class GameViewController implements Initializable {
-    
+
     @FXML
     private Pane rootPane;
     @FXML
@@ -115,15 +119,33 @@ public class GameViewController implements Initializable {
     private GameState gameState = new GameState();
     private GameModel gameModel = new GameModel(gameState);
 
+    private Timeline flightTimeline;
+
+    private Timeline zombiedLevelTimeline;
+
+    private static final double GRAVITY_PIXELS = 300.0;
+    private static final double STEP_DT = 0.02; 
+    private static final double SPEED_UI_SCALE = 1.0;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupPlanets();
         setupControls();
-        startCountdownTimer(100); 
+
+        gameModel.setPlanets(planets);
+        gameModel.startLevel();
+        updateZomobieUI(); 
+
+        startZombiedLevelCycle(12); 
+
+        startCountdownTimer(100);
     }
 
     /**
-     * Sets up images of planets and other things
+     * Sets up images of planets and keeps planet positions in UI coordinates (pixels).
+     *
+     * Important: we store planet centers and radii in the Planet model in UI units so collision checks
+     * are straightforward (no model/UI scale conversions).
      */
     private void setupPlanets() {
         List<Circle> circlePlanets = List.of(Sun, Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune);
@@ -146,16 +168,25 @@ public class GameViewController implements Initializable {
         imgMute = new Image("/Images/volumeMute.png");
         audioInput.setImage(imgMute);
 
+        planets.clear();
         for (int i = 0; i < circlePlanets.size(); i++) {
-            circlePlanets.get(i).setFill(new ImagePattern(images[i]));
-            planets.add(new Planet(planetIds.get(i), circlePlanets.get(i).getCenterX(), circlePlanets.get(i).getCenterY(), radius[i], planetMasses[i]));
+            Circle c = circlePlanets.get(i);
+            c.setFill(new ImagePattern(images[i]));
+
+            Bounds b = c.getBoundsInParent();
+            double uiCenterX = b.getMinX() + b.getWidth() / 2.0;
+            double uiCenterY = b.getMinY() + b.getHeight() / 2.0;
+
+            double radiusPixels = c.getRadius();
+
+            planets.add(new Planet(planetIds.get(i), uiCenterX, uiCenterY, (int) radiusPixels, planetMasses[i]));
         }
 
         fire.setOpacity(0);
     }
 
     /**
-     * Sets uo controls of the buttons and inputs
+     * Sets up UI controls and listeners.
      */
     private void setupControls() {
         directionInput.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -164,8 +195,11 @@ public class GameViewController implements Initializable {
         });
 
         speedInput.textProperty().addListener((obs, oldVal, newVal) -> {
-            try { speed = Double.parseDouble(newVal); } 
-            catch (NumberFormatException e) { speed = 0; }
+            try {
+                speed = Double.parseDouble(newVal);
+            } catch (NumberFormatException e) {
+                speed = 0;
+            }
         });
 
         btnLaunch.setOnAction(e -> launchRocket());
@@ -174,7 +208,7 @@ public class GameViewController implements Initializable {
     }
 
     /**
-     * Manages the audio stop and play button
+     * Manages audio toggle.
      */
     private void toggleAudio() {
         if (playMusic) {
@@ -192,9 +226,10 @@ public class GameViewController implements Initializable {
     }
 
     /**
-     * Resets game
+     * Resets the visible rocket and timers.
      */
     private void resetGame() {
+        stopFlight();
         rocket.setLayoutX(400);
         rocket.setLayoutY(300);
         rocket.setRotate(0);
@@ -202,84 +237,152 @@ public class GameViewController implements Initializable {
         updateScore();
         if (countdownTimeline != null) countdownTimeline.stop();
         startCountdownTimer(10);
+
+        if (zombiedLevelTimeline != null) zombiedLevelTimeline.stop();
+        gameModel.resetGame();
+        updateZomobieUI();
+        startZombiedLevelCycle(12);
     }
 
     /**
-     * Updates score
+     * Stops the transition
+    */
+    private void stopFlight() {
+        if (flightTimeline != null) {
+            flightTimeline.stop();
+            flightTimeline = null;
+        }
+    }
+    
+    /**
+     * Updates the score
      */
     private void updateScore() {
         scorePts.setText(String.valueOf(gameState.getAttempts()));
     }
 
     /**
-     * Manages the launching of the rocket
+     * Launches the rocket. Uses simple arcade projectile physics in UI coordinates (pixels).
+     * The rocket will stop as soon as it intersects any planet (based on circle radius).
      */
     private void launchRocket() {
+        stopFlight();
+
         gameState.addAttempts();
         updateScore();
 
-        double scale = 1E-5;
-        double offsetX = 400, offsetY = 300;
-        Vector2 initialPosition = new Vector2((rocket.getLayoutX() - offsetX) / scale, (rocket.getLayoutY() - offsetY) / scale);
-        Projectile proj = new Projectile(rocketMass, initialPosition, speed, angle);
-        List<Point2D> trajectoryPoints = proj.calculateTrajectory(planets);
+        Bounds rb = rocket.getBoundsInParent();
+        double uiStartX = rb.getMinX() + rb.getWidth() / 2.0;
+        double uiStartY = rb.getMinY() + rb.getHeight() / 2.0;
 
-        animateWithTimeline(rocket, trajectoryPoints, 5, scale, offsetX, offsetY, proj);
+        double speedPx = speed * SPEED_UI_SCALE;
+
+        double angleDeg = rocket.getRotate();
+        double angleRad = Math.toRadians(angleDeg);
+
+        double vx = speedPx * Math.cos(angleRad);          
+        double vy = -speedPx * Math.sin(angleRad);         
+
+        final double[] posX = {uiStartX};
+        final double[] posY = {uiStartY};
+        final double[] velX = {vx};
+        final double[] velY = {vy};
+
+        Pane parentPane = (Pane) rocket.getParent();
+
+        flightTimeline = new Timeline(new KeyFrame(Duration.seconds(STEP_DT), ev -> {
+            velY[0] += GRAVITY_PIXELS * STEP_DT; // gravity pulls down (positive y)
+            posX[0] += velX[0] * STEP_DT;
+            posY[0] += velY[0] * STEP_DT;
+
+            double rocketCenterOffsetX = rocket.getBoundsInParent().getWidth() / 2.0;
+            double rocketCenterOffsetY = rocket.getBoundsInParent().getHeight() / 2.0;
+            rocket.setLayoutX(posX[0] - rocketCenterOffsetX);
+            rocket.setLayoutY(posY[0] - rocketCenterOffsetY);
+
+            Projectile tempProj = new Projectile(rocketMass, new Vector2(posX[0], posY[0]), 0, 0);
+            tempProj.setPosition(new Vector2(posX[0], posY[0]));
+
+            Planet collided = CollisionUtil.checkAnyCollsion(tempProj, planets);
+            if (collided != null) {
+                stopFlight();
+
+                double dx = posX[0] - collided.getX();
+                double dy = posY[0] - collided.getY();
+                double dist = Math.sqrt(dx * dx + dy * dy);
+                double targetDist = collided.getRadius() + Math.max(rocket.getBoundsInParent().getWidth(), rocket.getBoundsInParent().getHeight()) / 2.0;
+
+                double snapX, snapY;
+                if (dist == 0) {
+                    snapX = collided.getX();
+                    snapY = collided.getY();
+                } else {
+                    snapX = collided.getX() + dx / dist * targetDist;
+                    snapY = collided.getY() + dy / dist * targetDist;
+                }
+
+                rocket.setLayoutX(snapX - rocketCenterOffsetX);
+                rocket.setLayoutY(snapY - rocketCenterOffsetY);
+
+                gameState.updateScore(100);
+                updateScore();
+                if (countdownTimeline != null) countdownTimeline.stop();
+            }
+
+            if (posX[0] < -1000 || posX[0] > parentPane.getWidth() + 1000 || posY[0] < -1000 || posY[0] > parentPane.getHeight() + 1000) {
+                stopFlight();
+                redirectToMissedFXML();
+            }
+        }));
+        flightTimeline.setCycleCount(Timeline.INDEFINITE);
+        flightTimeline.play();
     }
 
     /**
-     * Animates the launching of the rocket
-     * @param node the given node
-     * @param points the given points of path
-     * @param totalTimeSeconds the given animation time
-     * @param scale the given scale number to scale down the real data of planets
-     * @param offsetX the given offset double of the rocket in x direction
-     * @param offsetY the given offset double of the rocket in y direction
-     * @param proj the projectile follow
+     * Start a repeating timeline that advances zombied level every intervalSeconds.
+     * Sequence: start at current level (likely 1), after interval -> advanceLevel() (becomes 2),
+     * after interval -> advanceLevel() again (could reach final -> gameModel will set zombied).
      */
-    private void animateWithTimeline(Node node, List<Point2D> points, double totalTimeSeconds, double scale, double offsetX, double offsetY, Projectile proj) {
-        Timeline timeline = new Timeline();
-        double dt = totalTimeSeconds / points.size();
-        boolean[] hitPlanet = {false};
-        Pane parentPane = (Pane) node.getParent();
+    private void startZombiedLevelCycle(int intervalSeconds) {
+        if (zombiedLevelTimeline != null) zombiedLevelTimeline.stop();
 
-        for (int i = 0; i < points.size(); i++) {
-            Point2D p = points.get(i);
-            double paneX = p.getX() * scale + offsetX;
-            double paneY = p.getY() * scale + offsetY;
+        zombiedLevelTimeline = new Timeline(new KeyFrame(Duration.seconds(intervalSeconds), ev -> {
+            if (gameModel.isZombied()) {
+                if (zomombieLevel != null) zomombieLevel.setText("MAX");
+                zombiedLevelTimeline.stop();
+                return;
+            }
 
-            KeyFrame kf = new KeyFrame(Duration.seconds(i * dt), e -> {
-                node.setLayoutX(paneX);
-                node.setLayoutY(paneY);
+            gameModel.advanceLevel();
 
-                Planet collided = CollisionUtil.checkAnyCollsion(proj, planets);
-                if (collided != null && !hitPlanet[0]) {
-                    hitPlanet[0] = true;
-                    gameState.updateScore(100);
-                    updateScore();
-                    if (countdownTimeline != null) countdownTimeline.stop();
-                }
+            updateZomobieUI();
 
-                if (paneX < 0 || paneX > parentPane.getWidth() || paneY < 0 || paneY > parentPane.getHeight()) {
-                    redirectToMissedFXML();
-                }
-            });
-            timeline.getKeyFrames().add(kf);
+            if (gameModel.isZombied()) {
+                if (zomombieLevel != null) zomombieLevel.setText("MAX");
+                zombiedLevelTimeline.stop();
+            }
+        }));
+        zombiedLevelTimeline.setCycleCount(Timeline.INDEFINITE);
+        zombiedLevelTimeline.play();
+    }
+
+    /**
+     * Updates zomobieLevel Text and targetPlanet Text from model.
+     */
+    private void updateZomobieUI() {
+        if (zomombieLevel != null) {
+            zomombieLevel.setText(String.valueOf(gameModel.getCurrentLevel()));
         }
-
-        timeline.setOnFinished(e -> {
-            if (!hitPlanet[0]) redirectToMissedFXML();
-        });
-
-        node.toFront();
-        node.setOpacity(1);
-        timeline.setCycleCount(1);
-        timeline.play();
+        if (targetPlanet != null) {
+            Planet t = gameModel.getTargetPlanet();
+            if (t != null) targetPlanet.setText(t.getName());
+        }
     }
 
     /**
      * The time counter of the game
-     * @param seconds the given seconds to work with 
+     *
+     * @param seconds the given seconds to work with
      */
     private void startCountdownTimer(int seconds) {
         if (countdownTimeline != null) countdownTimeline.stop();
@@ -297,7 +400,7 @@ public class GameViewController implements Initializable {
         countdownTimeline.setCycleCount(Timeline.INDEFINITE);
         countdownTimeline.play();
     }
-    
+
     /**
      * Manages the result view
      */
@@ -306,7 +409,7 @@ public class GameViewController implements Initializable {
             Parent pane = FXMLLoader.load(getClass().getResource("/View/ResultView.fxml"));
             rootPane.getChildren().setAll(pane);
         } catch (IOException ex) {
-            System.getLogger(MenuViewController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(MenuViewController.class.getName()).log(java.lang.System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 }
