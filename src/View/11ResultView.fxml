@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane stylesheets="@../CSSstyles/ResultView.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="623.0">
+         <children>
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="790.0">
+               <right>
+                  <VBox alignment="CENTER" prefHeight="403.0" prefWidth="195.0" spacing="20.0" style="-fx-background-radius: 25px; opacity: 0.5;" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="39.0" prefWidth="129.0" spacing="10.0">
+                           <children>
+                              <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="To survive, launch in: " textAlignment="CENTER" wrappingWidth="100.13672828674316">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" spacing="2.0">
+                                 <children>
+                                    <Text fx:id="timeLeftToLaunch" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="100" textAlignment="CENTER" wrappingWidth="34.803465366363525">
+                                       <font>
+                                          <Font name="Segoe UI Semibold" size="18.0" />
+                                       </font>
+                                       <rotationAxis>
+                                          <Point3D />
+                                       </rotationAxis>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="sec" textAlignment="CENTER" wrappingWidth="40.80340576171875">
+                                       <font>
+                                          <Font name="Segoe UI Semibold" size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="Speed:">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="speedInput" prefHeight="30.0" style="-fx-background-radius: 25px; -fx-background-color: white;" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="m/s">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox spacing="5.0" style="-fx-fill: white;">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="Direction:">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Slider fx:id="directionInput" onDragDropped="#DirectionDragDropped" prefHeight="19.0" prefWidth="129.0" style="-: red;" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnLaunch" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#LaunchBtnClicked" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: #ffde59; -fx-border-color: black; -fx-border-radius: 15px; -fx-border-width: 2px; -fx-background-radius: 16px;" text="Launch" textOverrun="CLIP">
+                           <font>
+                              <Font name="Segoe UI Emoji" size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets left="30.0" right="30.0" top="20.0" />
+                     </padding>
+                  </VBox>
+               </right>
+               <center>
+                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="49.0" prefWidth="555.0" style="-fx-background-radius: 15px;">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Zoombie level: " wrappingWidth="101.47003364562988">
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="zomombieLevel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="22.468750953674316">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:" wrappingWidth="41.47002983093262">
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="scorePts" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="RIGHT" wrappingWidth="21.802063941955566">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="pts">
+                                 <HBox.margin>
+                                    <Insets left="2.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="129.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target:" textAlignment="RIGHT" wrappingWidth="65.47003746032715">
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="targetPlanet" fill="WHITE" layoutX="129.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" wrappingWidth="45.47003364562988">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Dubai Light" size="17.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="20.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="15.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                        <Pane prefHeight="303.0" prefWidth="431.0" style="-fx-background-image: url(&quot;\src\Images&quot;);">
+                           <children>
+                              <Circle fx:id="marsPath" fill="#1f93ff00" layoutX="18.0" layoutY="169.0" radius="244.0" stroke="WHITE" strokeDashOffset="1.0" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="jupiterPath" fill="#1f93ff00" layoutX="54.0" layoutY="168.0" radius="291.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="saturnPath" fill="#1f93ff00" layoutX="93.0" layoutY="168.0" radius="330.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="uraniusPath" fill="#1f93ff00" layoutX="100.0" layoutY="172.0" radius="395.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="neptunePath" fill="#1f93ff00" layoutX="120.0" layoutY="166.0" radius="435.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.6px;" />
+                              <Circle fx:id="venusPath" fill="#1f93ff00" layoutX="-18.0" layoutY="166.0" radius="152.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="earthPath" fill="#1f93ff00" layoutX="5.0" layoutY="165.0" radius="188.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="moonPath" fill="#1f93ff00" layoutX="191.0" layoutY="175.0" radius="40.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle fx:id="mercuryPath" fill="#1f93ff00" layoutX="-14.0" layoutY="165.0" radius="110.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                              <Circle id="Earth" fx:id="Earth" layoutX="191.0" layoutY="176.0" radius="19.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle> 
+                              <Circle id="Sun" fx:id="Sun" fill="DODGERBLUE" layoutX="-6.0" layoutY="167.0" radius="75.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Venus" fx:id="Venus" fill="DODGERBLUE" layoutX="108.0" layoutY="256.0" radius="12.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Mercury" fx:id="Mercury" fill="DODGERBLUE" layoutX="86.0" layoutY="114.0" radius="10.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Mars" fx:id="Mars" fill="DODGERBLUE" layoutX="245.0" layoutY="79.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Jupiter" fx:id="Jupiter" fill="DODGERBLUE" layoutX="339.0" layoutY="233.0" radius="30.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Saturn" fx:id="Saturn" fill="DODGERBLUE" layoutX="420.0" layoutY="94.0" radius="25.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Uranius" fx:id="Uranius" fill="DODGERBLUE" layoutX="485.0" layoutY="255.0" radius="18.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Neptune" fx:id="Neptune" fill="DODGERBLUE" layoutX="551.0" layoutY="96.0" radius="15.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <Circle id="Moon" fx:id="Moon" fill="DODGERBLUE" layoutX="214.0" layoutY="146.0" radius="8.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                                 <effect>
+                                    <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
+                                 </effect>
+                              </Circle>
+                              <ImageView fx:id="TryAgainBtn" fitHeight="49.0" fitWidth="47.0" layoutX="146.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <HBox prefHeight="47.0" prefWidth="431.0" spacing="20.0">
+                           <children>
+                              <Button fx:id="btnReset" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ResetBtnClicked" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: f2efeb; -fx-background-radius: 10px;" text="Reset" textFill="#1c2120">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Segoe UI Semibold" size="13.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow height="83.29" radius="44.5525" spread="0.42" width="96.92">
+                                       <color>
+                                          <Color red="0.32302001118659973" green="0.1023000031709671" blue="0.9300000071525574" opacity="0.5806599259376526" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                              <ImageView fx:id="audioInput" fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Images/Volume.jpg" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow height="66.75" radius="33.1175" spread="0.73" width="67.72">
+                                       <color>
+                                          <Color red="0.11403508484363556" green="0.11333116888999939" blue="0.11333116888999939" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </ImageView>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" top="10.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="15.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: yellow;" styleClass="result-window" StackPane.alignment="CENTER">
+         <children>
+            <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#f6f6f6" height="207.0" layoutX="-44.0" layoutY="-24.0" stroke="BLACK" strokeType="INSIDE" width="298.0" />
+            <HBox layoutX="102.0" layoutY="109.0" prefHeight="32.0" prefWidth="76.0">
+               <children>
+                  <Button fx:id="TryAgainBtn" mnemonicParsing="false" styleClass="try-again-btn" text="TryAgain " />
+               </children>
+            </HBox>
+            <Label fx:id="WarningMessageLabel" layoutX="59.0" layoutY="19.0" styleClass="result-title" text="Warning ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="FailureReasonLabel" layoutX="22.0" layoutY="67.0" prefHeight="32.0" prefWidth="91.0" styleClass="result-text" text="FailureReason" />
+            <Label fx:id="LevelReachedLabel" layoutX="148.0" layoutY="27.0" prefHeight="17.0" prefWidth="44.0" styleClass="result-text" text="LevelReached" />
+         </children>
+      </Pane>
+   </children>
+</StackPane>

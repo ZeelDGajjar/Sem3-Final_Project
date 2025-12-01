@@ -6,16 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameStateTest {
 
-    private GameState gameState;
+    public GameState gameState;
 
     @BeforeEach
     public void setUp() {
         gameState = new GameState();
     }
 
-    // ------------------------
     // RESET TEST
-    // ------------------------
     @Test
     public void testResetAll() {
         gameState.updateScore(50);
@@ -34,9 +32,7 @@ public class GameStateTest {
         assertEquals(1, gameState.getCurrentLevel());
     }
 
-    // ------------------------
     // SCORE TESTS
-    // ------------------------
     @Test
     public void testUpdateScorePositive() {
         gameState.updateScore(10);
@@ -66,9 +62,7 @@ public class GameStateTest {
         assertEquals(0, gameState.getScore());
     }
 
-    // ------------------------
     // LEVEL TESTS
-    // ------------------------
     @Test
     public void testSetCurrentLevelMinimumIsOne() {
         gameState.setCurrentLevel(-5);
@@ -90,9 +84,7 @@ public class GameStateTest {
         assertEquals(4, gameState.getCurrentLevel());
     }
 
-    // ------------------------
     // ATTEMPTS TEST
-    // ------------------------
     @Test
     public void testAddAttempts() {
         gameState.addAttempts();
@@ -100,9 +92,7 @@ public class GameStateTest {
         assertEquals(2, gameState.getAttempts());
     }
 
-    // ------------------------
-    // PLAY TIME TEST
-    // ------------------------
+    //Play test 
     @Test
     public void testAddPlayTimePositive() {
         gameState.addPlayTime(30);
@@ -118,9 +108,7 @@ public class GameStateTest {
         assertEquals(0, gameState.getTotalPlayTimeSeconds());
     }
 
-    // ------------------------
     // ZOMBIED / GAME OVER TEST
-    // ------------------------
     @Test
     public void testZombiedState() {
         assertFalse(gameState.isZombied());
