@@ -16,7 +16,7 @@ class GameModelTest {
     // ---------- Dummy classes to satisfy dependencies ----------
     static class DummyPlanet extends Planet {
         public DummyPlanet() {
-            super("Dummy", 0, 0, 10, 1.0, false);
+            super("Dummy", 0, 0, 10, 1.0);
         }
     }
 
@@ -43,9 +43,6 @@ class GameModelTest {
         model.setPlanets(planets);
     }
 
-    // ---------------------------
-    // LEVEL START
-    // ---------------------------
     @Test
     void testStartLevel() {
         model.startLevel();
@@ -56,9 +53,6 @@ class GameModelTest {
         assertEquals(1, gameState.getCurrentLevel());
     }
 
-    // ---------------------------
-    // ADVANCE LEVEL
-    // ---------------------------
     @Test
     void testAdvanceLevelNonFinal() {
         model.startLevel();
@@ -84,9 +78,6 @@ class GameModelTest {
         assertTrue(gameState.isZombied());
     }
 
-    // ---------------------------
-    // RESET LEVEL
-    // ---------------------------
     @Test
     void testResetLevel() {
         model.startLevel();
@@ -100,9 +91,6 @@ class GameModelTest {
         assertFalse(model.isZombied());
     }
 
-    // ---------------------------
-    // FINAL LEVEL CHECK
-    // ---------------------------
     @Test
     void testIsFinalLevel() {
         assertFalse(model.isFinalLevel());
@@ -111,9 +99,6 @@ class GameModelTest {
         assertTrue(model.isFinalLevel());
     }
 
-    // ---------------------------
-    // TIMER LOGIC
-    // ---------------------------
     @Test
     void testLevelTimerCountsDown() throws InterruptedException {
         model.setLevelTimeLimit(1); // 1 second
@@ -129,9 +114,6 @@ class GameModelTest {
         assertTrue(model.isZombied());
     }
 
-    // ---------------------------
-    // GAME RESET
-    // ---------------------------
     @Test
     void testResetGame() {
         model.startLevel();
@@ -149,9 +131,6 @@ class GameModelTest {
         assertFalse(model.isZombied());
     }
 
-    // ---------------------------
-    // CHECK FAILURE
-    // ---------------------------
     @Test
     void testCheckFailure_NoTrajectory() {
         assertEquals("No trajectory.", model.checkFailure(null));
@@ -177,9 +156,6 @@ class GameModelTest {
         assertEquals("Success!", model.checkFailure(traj));
     }
 
-    // ---------------------------
-    // UPDATE GAME STATE
-    // ---------------------------
     @Test
     void testUpdateGameStateSuccess() {
         model.startLevel();

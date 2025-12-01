@@ -13,7 +13,7 @@ class PlanetTest {
     @BeforeEach
     void setUp() {
         // Planet at (0,0) radius 10, mass 100
-        planet = new Planet("Earth", 0, 0, 10, 100, true);
+        planet = new Planet("Earth", 0, 0, 10, 100);
         // Projectile at origin by default
         projectile = new Projectile(0, 0, 1.0, new Vector2(0,0));
     }

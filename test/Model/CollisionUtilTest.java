@@ -16,7 +16,7 @@ class CollisionUtilTest {
     @BeforeEach
     void setUp() {
         // Planet at (50,50) radius 10
-        planet = new Planet("Earth", 50, 50, 10, 100, true);
+        planet = new Planet("Earth", 50, 50, 10, 100);
         // Projectile initially at (50,50)
         projectile = new Projectile(0, 0, 1.0, new Vector2(50, 50));
     }
@@ -35,7 +35,7 @@ class CollisionUtilTest {
     @Test
     void testCheckAnyCollision_Hit() {
         List<Planet> planets = new ArrayList<>();
-        planets.add(new Planet("Mars", 0, 0, 5, 50, false));
+        planets.add(new Planet("Mars", 0, 0, 5, 50));
         planets.add(planet); // second planet will be hit
 
         Planet hit = CollisionUtil.checkAnyCollsion(projectile, planets);
@@ -46,7 +46,7 @@ class CollisionUtilTest {
     @Test
     void testCheckAnyCollision_None() {
         List<Planet> planets = new ArrayList<>();
-        planets.add(new Planet("Mars", 0, 0, 5, 50, false));
+        planets.add(new Planet("Mars", 0, 0, 5, 50));
 
         projectile.setPosition(new Vector2(100, 100));
         Planet hit = CollisionUtil.checkAnyCollsion(projectile, planets);
