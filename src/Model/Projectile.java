@@ -28,7 +28,6 @@ public class Projectile {
         this.velocity = new Vector2(speed * Math.cos(Math.toRadians(angle)), speed * Math.sin(Math.toRadians(angle)));
     }
 
-
     /**
      * Simulates full trajectory based on planets given
      * @param planets the list of planets given

@@ -119,7 +119,7 @@
                               <Font name="Dubai Light" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="zomombieLevel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="22.468750953674316">
+                        <Text fx:id="zomombieLevel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="42.468749046325684">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
