@@ -159,7 +159,7 @@
                               <Font name="Dubai Light" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="targetPlanet" fill="WHITE" layoutX="129.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" wrappingWidth="45.47003364562988">
+                        <Text fx:id="targetPlanet" fill="WHITE" layoutX="129.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" wrappingWidth="98.1367244720459">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
