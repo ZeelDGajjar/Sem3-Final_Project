@@ -1,8 +1,9 @@
 package Model;
 
-import javafx.geometry.Point2D;
+
 import java.util.ArrayList;
 import java.util.List;
+import javafx.geometry.Point2D;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

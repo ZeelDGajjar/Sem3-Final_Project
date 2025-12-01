@@ -17,8 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -229,19 +227,12 @@ public class GameViewController implements Initializable {
      * Resets the visible rocket and timers.
      */
     private void resetGame() {
-        stopFlight();
-        rocket.setLayoutX(400);
-        rocket.setLayoutY(300);
-        rocket.setRotate(0);
-        gameState.resetAttempts();
-        updateScore();
-        if (countdownTimeline != null) countdownTimeline.stop();
-        startCountdownTimer(10);
-
-        if (zombiedLevelTimeline != null) zombiedLevelTimeline.stop();
-        gameModel.resetGame();
-        updateZomobieUI();
-        startZombiedLevelCycle(12);
+        try {
+            Parent pane = FXMLLoader.load(getClass().getResource("/View/GameView.fxml"));
+            rootPane.getChildren().setAll(pane);
+        } catch (IOException ex) {
+            System.getLogger(MenuViewController.class.getName()).log(java.lang.System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     /**

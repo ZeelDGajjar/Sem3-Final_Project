@@ -33,7 +33,6 @@ public class PhysicsUtil {
             
             total = total.add(acceleration);
         }
-        
         return total;
     }
     

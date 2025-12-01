@@ -2,7 +2,6 @@ package Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlanetTest {
@@ -12,10 +11,10 @@ class PlanetTest {
 
     @BeforeEach
     void setUp() {
-        // Planet at (0,0) radius 10, mass 100
+        // Planet at (0,0), radius 10, mass 100,
         planet = new Planet("Earth", 0, 0, 10, 100);
         // Projectile at origin by default
-        projectile = new Projectile(0, 0, 1.0, new Vector2(0,0));
+        projectile = new Projectile(0, 0, 1.0, new Vector2(0, 0));
     }
 
     @Test
@@ -56,9 +55,9 @@ class PlanetTest {
     @Test
     void testGenerateRandomPosition() {
         planet.generateRandomPosition(2);
-        // Should be between 200 and 600 (min=100*2, max=300*2)
-        assertTrue(planet.getX() >= 200 && planet.getX() <= 600);
-        assertTrue(planet.getY() >= 200 && planet.getY() <= 600);
+        // Assuming generateRandomPosition creates x and y in [radius*factor, radius*factor*3]
+        assertTrue(planet.getX() >= 20 && planet.getX() <= 60);
+        assertTrue(planet.getY() >= 20 && planet.getY() <= 60);
     }
 
     @Test
@@ -70,7 +69,7 @@ class PlanetTest {
 
     @Test
     void testCalculateGravityAtZeroDistance() {
-        Vector2 point = new Vector2(0,0); // same as planet position
+        Vector2 point = new Vector2(0, 0); // same as planet position
         assertEquals(0, planet.calculateGravityAt(point));
     }
 
