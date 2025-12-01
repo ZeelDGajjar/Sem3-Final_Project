@@ -1,31 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controller;
 
 
 import java.net.URL;
+import Model.Planet;
+import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
  * Controller for the result screen.
  * Displays outcome of the game (score, zombied status, and explanation)
  * and allows the user to return to the main menu.
+ * @author Vedika
  */
-public class ResultController {
+public class ResultViewController implements Initializable {
     @FXML
     private Label warningMessageLabel;  
 
     @FXML
-    private Button TryAgainBtn;     
+    public Button TryAgainBtn;     
     
     @FXML
     private Label FailureReasonLabel; 
@@ -55,17 +58,15 @@ public class ResultController {
      * @param event The ActionEvent triggered by clicking the button
      */
     @FXML
-    private void handleTryAgain(ActionEvent event) {
+    public void handleTryAgain(ActionEvent event) {
         // Close the result window
         Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
         stage.close();
     }
     
-    /**
-     * Initialize the controller: set background image and default result values.
-     */
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Load background image
+       // Load background image
         try {
             Image bgImage = new Image(getClass().getResourceAsStream("/Images/ResultBackground.png"));
             backgroundImageView.setImage(bgImage);
@@ -74,7 +75,4 @@ public class ResultController {
             e.printStackTrace();
         }
     }
-    
-    
 }
-     
