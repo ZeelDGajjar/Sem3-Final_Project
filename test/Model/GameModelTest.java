@@ -20,7 +20,7 @@ class GameModelTest {
 
         // Minimal planets for levels
         List<Planet> planets = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             planets.add(new Planet("Planet" + i, 0, 0, 10, 1.0));
         }
         gameModel.setPlanets(planets);
