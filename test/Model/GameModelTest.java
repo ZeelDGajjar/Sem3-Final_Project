@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for the GameModel class
  * This class tests core game logic, including level progression, 
  * resetting levels/game, failure detection, and updating the game state.
+ * @author Vedika
  */
 class GameModelTest {
 
@@ -59,7 +60,11 @@ class GameModelTest {
         assertEquals(2, gameModel.getCurrentLevel());
         assertFalse(gameModel.isZombied());
     }
-
+     
+    /**
+     * Tests advancing through levels until the final level.
+     * Checks that the game correctly enters the zombied state after the final level.
+     */
     @Test
     void testAdvanceToFinalLevel() {
         for (int i = 1; i <= 5; i++) {
@@ -68,6 +73,10 @@ class GameModelTest {
         assertTrue(gameModel.isZombied());
     }
 
+     /**
+     * Tests resetting the current level.
+     * Verifies that the current level is reset to 1 and zombied state is false.
+     */
     @Test
     void testResetLevel() {
         gameModel.startLevel();
@@ -76,6 +85,10 @@ class GameModelTest {
         assertFalse(gameModel.isZombied());
     }
 
+     /**
+     * Tests resetting the entire game.
+     * Verifies that the level, score, and zombied state are reset correctly.
+     */
     @Test
     void testResetGame() {
         gameModel.startLevel();
@@ -87,6 +100,10 @@ class GameModelTest {
         assertFalse(gameModel.isZombied());
     }
 
+     /**
+     * Tests failure detection in the game.
+     * Checks the returned failure message for null trajectory and zombied state.
+     */
     @Test
     void testCheckFailure() {
         assertEquals("No trajectory.", gameModel.checkFailure(null));
@@ -94,6 +111,10 @@ class GameModelTest {
         assertEquals("Game over!", gameModel.checkFailure(gameModel.getLastTrajectory()));
     }
 
+    /**
+     * Tests updating the game state based on success or failure.
+     * Verifies that the score is updated correctly with rewards or penalties.
+     */
     @Test
     void testUpdateGameState() {
         gameModel.updateGameState(true);
@@ -102,4 +123,5 @@ class GameModelTest {
         assertEquals(90, gameState.getScore()); // penalty of -10
     }
 }
+
 
