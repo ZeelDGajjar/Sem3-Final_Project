@@ -1,5 +1,7 @@
 package Controller;
 
+<<<<<<< HEAD
+=======
 import Model.CollisionUtil;
 import Model.GameModel;
 import Model.GameState;
@@ -7,17 +9,26 @@ import Model.Planet;
 import Model.Projectile;
 import Model.Vector2;
 import java.io.IOException;
+>>>>>>> 34e517bcfae844cb6d7b9f3b2c14267c01c61383
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
+import javafx.event.ActionEvent;
+=======
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+>>>>>>> 34e517bcfae844cb6d7b9f3b2c14267c01c61383
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+<<<<<<< HEAD
+
+=======
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
+>>>>>>> 34e517bcfae844cb6d7b9f3b2c14267c01c61383
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -29,7 +40,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+import Model.Planet;
+import Model.Vector2;
 
 /**
  * Controller for game view.
@@ -54,17 +66,17 @@ public class GameViewController implements Initializable {
     @FXML
     private Circle saturnPath;
     @FXML
-    private Circle uranusPath;
+    private Circle uraniusPath;
     @FXML
     private Circle neptunePath;
     @FXML
     private Circle venusPath;
     @FXML
-    private Circle mercuryPath;
-    @FXML
     private Circle earthPath;
     @FXML
     private Circle moonPath;
+    @FXML
+    private Circle mercuryPath;
     @FXML
     private Circle Earth;
     @FXML
@@ -80,15 +92,13 @@ public class GameViewController implements Initializable {
     @FXML
     private Circle Saturn;
     @FXML
-    private Circle Uranus;
+    private Circle Uranius;
     @FXML
     private Circle Neptune;
     @FXML
     private Circle Moon;
     @FXML
-    private Pane rocket;
-    @FXML
-    private Pane fire;
+    private ImageView rocket;
     @FXML
     private Button btnReset;
     @FXML
@@ -101,6 +111,32 @@ public class GameViewController implements Initializable {
     private Slider directionInput;
     @FXML
     private Button btnLaunch;
+<<<<<<< HEAD
+    @FXML
+   // private Pane rocket;
+    
+    List<Circle> circlePlanets = List.of(Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranius, Neptune);
+    double[] radius = {696340, 2440, 6052, 6371, 3390, 69911, 58232, 25559, 24764};
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        
+            Image planetImg = new Image(getClass().getResourceAsStream(path));
+            circlePlanets.get(i).setFill(new ImagePattern(planetImg));
+            
+            Vector2 position;
+            position = new Vector2(circlePlanets.get(i).centerXProperty(), circlePlanets.get(i).centerYProperty());
+            Planet planet = new Planet(planet, radius[i], position);
+        }
+    }
+    
+    @FXML
+    private void ResetBtnClicked(ActionEvent event) {
+=======
 
     private double speed;
     private double angle;
@@ -402,5 +438,15 @@ public class GameViewController implements Initializable {
         } catch (IOException ex) {
             System.getLogger(MenuViewController.class.getName()).log(java.lang.System.Logger.Level.ERROR, (String) null, ex);
         }
+>>>>>>> 34e517bcfae844cb6d7b9f3b2c14267c01c61383
+    }
+
+    @FXML
+    private void DirectionDragDropped(DragEvent event) {
+        
+    }
+
+    @FXML
+    private void LaunchBtnClicked(ActionEvent event) {
     }
 }

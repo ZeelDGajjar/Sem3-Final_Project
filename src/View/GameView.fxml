@@ -15,13 +15,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+=======
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="400.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+>>>>>>> 34e517bcfae844cb6d7b9f3b2c14267c01c61383
    <children>
       <ImageView fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -89,7 +91,7 @@
                               <Font name="Segoe UI Bold" size="18.0" />
                            </font>
                         </Text>
-                        <Slider fx:id="directionInput" majorTickUnit="30.0" max="180.0" min="-180.0" minorTickCount="10" prefHeight="19.0" prefWidth="129.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <Slider fx:id="directionInput" onDragDropped="#DirectionDragDropped" prefHeight="19.0" prefWidth="129.0" style="-: red;" />
                      </children>
                   </VBox>
                   <Button fx:id="btnLaunch" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: #ffde59; -fx-border-color: black; -fx-border-radius: 15px; -fx-border-width: 2px; -fx-background-radius: 16px;" text="Launch" textOverrun="CLIP">
@@ -180,12 +182,12 @@
                         <Circle fx:id="marsPath" fill="#1f93ff00" layoutX="18.0" layoutY="169.0" radius="244.0" stroke="WHITE" strokeDashOffset="1.0" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
                         <Circle fx:id="jupiterPath" fill="#1f93ff00" layoutX="54.0" layoutY="168.0" radius="291.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
                         <Circle fx:id="saturnPath" fill="#1f93ff00" layoutX="93.0" layoutY="168.0" radius="330.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
-                        <Circle fx:id="uranusPath" fill="#1f93ff00" layoutX="100.0" layoutY="172.0" radius="395.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="uraniusPath" fill="#1f93ff00" layoutX="100.0" layoutY="172.0" radius="395.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
                         <Circle fx:id="neptunePath" fill="#1f93ff00" layoutX="120.0" layoutY="166.0" radius="435.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.6px;" />
                         <Circle fx:id="venusPath" fill="#1f93ff00" layoutX="-18.0" layoutY="166.0" radius="152.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
-                        <Circle fx:id="earthPath" fill="#1f93ff00" layoutX="14.0" layoutY="165.0" radius="188.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
-                        <Circle fx:id="mercuryPath" fill="#1f93ff00" layoutX="-15.0" layoutY="169.0" radius="115.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="earthPath" fill="#1f93ff00" layoutX="5.0" layoutY="165.0" radius="188.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
                         <Circle fx:id="moonPath" fill="#1f93ff00" layoutX="191.0" layoutY="175.0" radius="40.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
+                        <Circle fx:id="mercuryPath" fill="#1f93ff00" layoutX="-14.0" layoutY="165.0" radius="110.0" stroke="WHITE" strokeType="INSIDE" style="-fx-stroke-dash-array: 1 6; -fx-stroke-width: 0.75px;" />
                         <Circle id="Earth" fx:id="Earth" layoutX="191.0" layoutY="176.0" radius="19.0" stroke="TRANSPARENT" strokeType="INSIDE">
                            <effect>
                               <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
@@ -214,7 +216,7 @@
                            <effect>
                               <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
                            </effect></Circle>
-                        <Circle id="Uranus" fx:id="Uranus" fill="DODGERBLUE" layoutX="485.0" layoutY="255.0" radius="18.0" stroke="TRANSPARENT" strokeType="INSIDE">
+                        <Circle id="Uranius" fx:id="Uranius" fill="DODGERBLUE" layoutX="485.0" layoutY="255.0" radius="18.0" stroke="TRANSPARENT" strokeType="INSIDE">
                            <effect>
                               <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
                            </effect></Circle>
@@ -226,28 +228,13 @@
                            <effect>
                               <DropShadow height="50.2" radius="26.060000000000002" width="56.04" />
                            </effect></Circle>
-                        <Pane fx:id="rocket" layoutX="195.0" layoutY="152.0" prefHeight="29.0" prefWidth="22.0" rotate="74.7">
-                           <children>
-                              <Pane fx:id="fire" layoutX="5.0" layoutY="18.0" prefHeight="17.0" prefWidth="10.0">
-                                 <children>
-                                    <QuadCurve controlX="12.933328628540039" controlY="38.53334045410156" endX="20.656429290771484" endY="48.88839340209961" fill="#f7aa25" layoutX="-15.0" layoutY="-32.0" startX="21.066665649414062" startY="36.13333511352539" stroke="TRANSPARENT" strokeType="INSIDE" />
-                                    <QuadCurve controlX="19.20000648498535" controlY="28.66667366027832" endX="10.333328247070312" endY="37.80000686645508" fill="#f7aa25" layoutX="-5.0" layoutY="-21.0" startX="10.333328247070312" startY="24.13333511352539" stroke="TRANSPARENT" strokeType="INSIDE" />
-                                    <QuadCurve controlX="14.000003814697266" controlY="28.999998092651367" endX="9.00000286102295" endY="36.06666946411133" fill="#ffed62" layoutX="-3.0" layoutY="-22.0" startX="9.00000286102295" startY="28.999998092651367" stroke="TRANSPARENT" strokeType="INSIDE" />
-                                    <QuadCurve fx:id="fire1" controlX="6.000002861022949" controlY="29.999998092651367" endX="11.066665649414062" endY="37.46666717529297" fill="#ffed62" layoutX="-5.0" layoutY="-23.0" startX="11.00000286102295" startY="29.999998092651367" stroke="TRANSPARENT" strokeType="INSIDE" />
-                                 </children>
-                              </Pane>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="15.0" layoutX="6.0" layoutY="10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="10.0" />
-                              <Circle fill="#4ca9ff" layoutX="11.0" layoutY="15.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.4" />
-                              <Polygon fill="#ff851f" layoutX="18.0" layoutY="13.0" points="-3.466671943664551, 10.116558074951172, -0.399993896484375, 16.9333438873291, -0.3999977111816406, 10.116558074951172" stroke="TRANSPARENT" strokeType="INSIDE" />
-                              <Polygon fill="#ff851f" layoutX="8.0" layoutY="11.0" points="-3.533334255218506, 18.400005340576172, -0.26667165756225586, 12.400005340576172, -3.533334255218506, 11.200004577636719" stroke="TRANSPARENT" strokeType="INSIDE" />
-                              <QuadCurve controlX="-33.19999694824219" controlY="-54.86666488647461" endX="-27.999996185302734" endY="-36.88344955444336" fill="#ff3e21" layoutX="44.0" layoutY="48.0" startX="-37.999996185302734" startY="-36.88344955444336" stroke="#0000000e" strokeType="INSIDE" />
-                           </children>
-                        </Pane>
+                        <ImageView fx:id="image" fitHeight="49.0" fitWidth="47.0" layoutX="146.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" />
+                        <Pane fx:id="rocket" layoutX="180.0" layoutY="146.0" prefHeight="22.0" prefWidth="22.0" />
                      </children>
                   </Pane>
                   <HBox prefHeight="47.0" prefWidth="431.0" spacing="20.0">
                      <children>
-                        <Button fx:id="btnReset" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: f2efeb; -fx-background-radius: 10px;" text="Reset" textFill="#1c2120">
+                        <Button fx:id="btnReset" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ResetBtnClicked" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: f2efeb; -fx-background-radius: 10px;" text="Reset" textFill="#1c2120">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
@@ -272,8 +259,7 @@
                                     <Color red="0.11403508484363556" green="0.11333116888999939" blue="0.11333116888999939" />
                                  </color>
                               </DropShadow>
-                           </effect>
-                        </ImageView>
+                           </effect></ImageView>
                      </children>
                      <padding>
                         <Insets left="10.0" top="10.0" />

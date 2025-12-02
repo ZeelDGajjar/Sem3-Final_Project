@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Point2D;
+import Controller.GameViewController;
 
 /**
  * Trajectory class that handles the trajectory

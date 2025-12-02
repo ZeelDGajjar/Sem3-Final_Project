@@ -4,18 +4,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameStateTest {
+ /**
+ * Unit tests for GameState class, covering score, level, attempts,
+ * playtime, and zombied (game over) behavior.
+ * @author Vedika
+ */
+class GameStateTest {
 
     public GameState gameState;
 
+     /** 
+     * Initialize GameState before each test
+     */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         gameState = new GameState();
     }
 
-    // RESET TEST
+     /** 
+     * Test resetting all fields to initial state 
+     */
     @Test
-    public void testResetAll() {
+    void testResetAll() {
         gameState.updateScore(50);
         gameState.addAttempts();
         gameState.addPlayTime(40);
@@ -29,12 +39,14 @@ public class GameStateTest {
         assertEquals(0, gameState.getTotalPlayTimeSeconds());
         assertFalse(gameState.isZombied());
         assertEquals(1, gameState.getMaxLevelReached());
-        assertEquals(1, gameState.getCurrentLevel());
+        assertEquals(1, gameState.getCurrentLevel()); // because Math.max(1, level)
     }
 
-    // SCORE TESTS
+    /**
+    * Test adding positive score 
+    */
     @Test
-    public void testUpdateScorePositive() {
+    void testUpdateScorePositive() {
         gameState.updateScore(10);
         assertEquals(10, gameState.getScore());
 
@@ -42,75 +54,98 @@ public class GameStateTest {
         assertEquals(15, gameState.getScore());
     }
 
+    /** 
+    * Test negative score above zero 
+    */
     @Test
-    public void testUpdateScoreNegativeButAboveZero() {
+    void testUpdateScoreNegativeButAboveZero() {
         gameState.updateScore(20);
         gameState.updateScore(-5);
         assertEquals(15, gameState.getScore());
     }
 
+    /*
+    * test negative score below zero
+    */
     @Test
-    public void testUpdateScoreNegativeBelowZero() {
+    void testUpdateScoreNegativeBelowZero() {
         gameState.updateScore(5);
         gameState.updateScore(-10);
-        assertEquals(0, gameState.getScore());
+        assertEquals(0, gameState.getScore()); // cannot go below 0
     }
-
+ 
+    /**
+     * Test zero score does nothing
+     */
     @Test
-    public void testUpdateScoreZeroDoesNothing() {
+    void testUpdateScoreZeroDoesNothing() {
         gameState.updateScore(0);
         assertEquals(0, gameState.getScore());
     }
 
-    // LEVEL TESTS
+    /**
+    * current level cannot go below 1
+    */
     @Test
-    public void testSetCurrentLevelMinimumIsOne() {
+    void testSetCurrentLevelMinimumIsOne() {
         gameState.setCurrentLevel(-5);
         assertEquals(1, gameState.getCurrentLevel());
     }
-
+    
+    /*
+    * check if Max level updates correctly
+    */
     @Test
-    public void testSetCurrentLevelUpdatesMaxLevel() {
+    void testSetCurrentLevelUpdatesMaxLevel() {
         gameState.setCurrentLevel(3);
         assertEquals(3, gameState.getMaxLevelReached());
 
-        gameState.setCurrentLevel(2);
+        gameState.setCurrentLevel(2); 
         assertEquals(3, gameState.getMaxLevelReached()); // does not decrease
     }
-
+ 
+    /*
+    * get current level test
+    */
     @Test
-    public void testGetCurrentLevel() {
+    void testGetCurrentLevel() {
         gameState.setCurrentLevel(4);
         assertEquals(4, gameState.getCurrentLevel());
     }
 
-    // ATTEMPTS TEST
+    // test add attempts 
     @Test
-    public void testAddAttempts() {
+    void testAddAttempts() {
         gameState.addAttempts();
         gameState.addAttempts();
         assertEquals(2, gameState.getAttempts());
     }
 
-    //Play test 
+    /*
+    * test adding positive play time
+    */
     @Test
-    public void testAddPlayTimePositive() {
+    void testAddPlayTimePositive() {
         gameState.addPlayTime(30);
         assertEquals(30, gameState.getTotalPlayTimeSeconds());
 
         gameState.addPlayTime(20);
         assertEquals(50, gameState.getTotalPlayTimeSeconds());
     }
-
+     /**
+     * Negative play time should be ignored
+     **/
     @Test
-    public void testAddPlayTimeNegativeDoesNothing() {
+    void testAddPlayTimeNegativeDoesNothing() {
         gameState.addPlayTime(-10);
         assertEquals(0, gameState.getTotalPlayTimeSeconds());
     }
 
-    // ZOMBIED / GAME OVER TEST
+     /**
+     * set and check zombied state
+     */
     @Test
-    public void testZombiedState() {
+    void testZombiedState() {
         assertFalse(gameState.isZombied());
 
         gameState.setZombied(true);
@@ -120,10 +155,16 @@ public class GameStateTest {
         assertFalse(gameState.isZombied());
     }
 
+    /*
+    * check game over state
+    */
     @Test
-    public void testIsGameOver() {
+    void testIsGameOver() {
         assertFalse(gameState.isGameOver());
         gameState.setZombied(true);
         assertTrue(gameState.isGameOver());
     }
 }
+
+
+
