@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for CollisionUtil class.
  * Tests collision detection between projectiles and planets, as well as boundary checks.
- * @Vedika
+ * @author Vedika
  */
 public class CollisionUtilTest {
 
@@ -118,4 +118,5 @@ public class CollisionUtilTest {
         assertTrue(CollisionUtil.isOutOfBounds(projectile, 100, 100), "Projectile outside bounds bottom");
     }
 }
+
 
