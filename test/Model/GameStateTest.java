@@ -64,14 +64,18 @@ class GameStateTest {
         assertEquals(15, gameState.getScore());
     }
 
+    /*
+    * test negative score below zero
+    */
     @Test
     void testUpdateScoreNegativeBelowZero() {
         gameState.updateScore(5);
         gameState.updateScore(-10);
         assertEquals(0, gameState.getScore()); // cannot go below 0
     }
+ 
     /**
-     * Test negative score below zero
+     * Test zero score does nothing
      */
     @Test
     void testUpdateScoreZeroDoesNothing() {
@@ -80,7 +84,7 @@ class GameStateTest {
     }
 
     /**
-    * Test that the zero score does nothing 
+    * current level cannot go below 1
     */
     @Test
     void testSetCurrentLevelMinimumIsOne() {
@@ -89,7 +93,8 @@ class GameStateTest {
     }
     
     /*
-    * 
+    * check if Max level updates correctly
+    */
     @Test
     void testSetCurrentLevelUpdatesMaxLevel() {
         gameState.setCurrentLevel(3);
@@ -98,14 +103,17 @@ class GameStateTest {
         gameState.setCurrentLevel(2); 
         assertEquals(3, gameState.getMaxLevelReached()); // does not decrease
     }
-
+ 
+    /*
+    * get current level test
+    */
     @Test
     void testGetCurrentLevel() {
         gameState.setCurrentLevel(4);
         assertEquals(4, gameState.getCurrentLevel());
     }
 
-    // ATTEMPTS TEST
+    // test add attempts 
     @Test
     void testAddAttempts() {
         gameState.addAttempts();
@@ -113,7 +121,9 @@ class GameStateTest {
         assertEquals(2, gameState.getAttempts());
     }
 
-    //Play test 
+    /*
+    * test adding positive play time
+    */
     @Test
     void testAddPlayTimePositive() {
         gameState.addPlayTime(30);
@@ -122,7 +132,9 @@ class GameStateTest {
         gameState.addPlayTime(20);
         assertEquals(50, gameState.getTotalPlayTimeSeconds());
     }
-
+     /**
+     * Negative play time should be ignored
+     **/
     @Test
     void testAddPlayTimeNegativeDoesNothing() {
         gameState.addPlayTime(-10);
@@ -148,4 +160,5 @@ class GameStateTest {
         assertTrue(gameState.isGameOver());
     }
 }
+
 
