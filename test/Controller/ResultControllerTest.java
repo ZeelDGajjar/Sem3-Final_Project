@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class ResultControllerTest {
 
     public ResultViewtController controller;
@@ -48,3 +49,4 @@ public class ResultControllerTest {
     }
 
 }
+
