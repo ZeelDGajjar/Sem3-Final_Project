@@ -8,11 +8,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the GameModel class
+ * This class tests core game logic, including level progression, 
+ * resetting levels/game, failure detection, and updating the game state.
+ */
 class GameModelTest {
 
     private GameState gameState;
     private GameModel gameModel;
 
+     /**
+     * Sets up before starting the tests
+     * Initializes a GameState and GameModel with minimal planets for testing.
+     */
     @BeforeEach
     void setUp() {
         gameState = new GameState();
@@ -26,6 +35,10 @@ class GameModelTest {
         gameModel.setPlanets(planets);
     }
 
+     /**
+     * Tests starting a new level.
+     * Checks that the current level, difficulty, zombied state, and game state are correctly initialized.
+     */
     @Test
     void testStartLevel() {
         gameModel.startLevel();
@@ -35,6 +48,10 @@ class GameModelTest {
         assertEquals(1, gameState.getCurrentLevel());
     }
 
+     /**
+     * Tests advancing to the next level.
+     * Verifies that level increments and the zombied state remains false.
+     */
     @Test
     void testAdvanceLevel() {
         gameModel.startLevel();
@@ -85,3 +102,4 @@ class GameModelTest {
         assertEquals(90, gameState.getScore()); // penalty of -10
     }
 }
+
