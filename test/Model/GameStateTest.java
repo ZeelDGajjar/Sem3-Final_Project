@@ -141,7 +141,9 @@ class GameStateTest {
         assertEquals(0, gameState.getTotalPlayTimeSeconds());
     }
 
-    // ZOMBIED / GAME OVER TEST
+     /**
+     * set and check zombied state
+     */
     @Test
     void testZombiedState() {
         assertFalse(gameState.isZombied());
@@ -153,6 +155,9 @@ class GameStateTest {
         assertFalse(gameState.isZombied());
     }
 
+    /*
+    * check game over state
+    */
     @Test
     void testIsGameOver() {
         assertFalse(gameState.isGameOver());
@@ -160,5 +165,6 @@ class GameStateTest {
         assertTrue(gameState.isGameOver());
     }
 }
+
 
 
