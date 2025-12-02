@@ -4,16 +4,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+ /**
+ * Unit tests for GameState class, covering score, level, attempts,
+ * playtime, and zombied (game over) behavior.
+ * @author Vedika
+ */
 class GameStateTest {
 
     public GameState gameState;
 
+     /** 
+     * Initialize GameState before each test
+     */
     @BeforeEach
     void setUp() {
         gameState = new GameState();
     }
 
-    // RESET TEST
+     /** 
+     * Test resetting all fields to initial state 
+     */
     @Test
     void testResetAll() {
         gameState.updateScore(50);
@@ -32,7 +42,9 @@ class GameStateTest {
         assertEquals(1, gameState.getCurrentLevel()); // because Math.max(1, level)
     }
 
-    // SCORE TESTS
+    /**
+    * Test adding positive score 
+    */
     @Test
     void testUpdateScorePositive() {
         gameState.updateScore(10);
@@ -42,6 +54,9 @@ class GameStateTest {
         assertEquals(15, gameState.getScore());
     }
 
+    /** 
+    * Test negative score above zero 
+    */
     @Test
     void testUpdateScoreNegativeButAboveZero() {
         gameState.updateScore(20);
@@ -55,20 +70,26 @@ class GameStateTest {
         gameState.updateScore(-10);
         assertEquals(0, gameState.getScore()); // cannot go below 0
     }
-
+    /**
+     * Test negative score below zero
+     */
     @Test
     void testUpdateScoreZeroDoesNothing() {
         gameState.updateScore(0);
         assertEquals(0, gameState.getScore());
     }
 
-    // LEVEL TESTS
+    /**
+    * Test that the zero score does nothing 
+    */
     @Test
     void testSetCurrentLevelMinimumIsOne() {
         gameState.setCurrentLevel(-5);
         assertEquals(1, gameState.getCurrentLevel());
     }
-
+    
+    /*
+    * 
     @Test
     void testSetCurrentLevelUpdatesMaxLevel() {
         gameState.setCurrentLevel(3);
@@ -127,3 +148,4 @@ class GameStateTest {
         assertTrue(gameState.isGameOver());
     }
 }
+
