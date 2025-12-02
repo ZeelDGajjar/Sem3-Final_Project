@@ -76,7 +76,8 @@ public class MenuViewController implements Initializable {
                 instructionsText.setText("1) Enter your rocket's SPEED and DIRECTION \n"
                         + "2) Press LAUNCH to fire toward the target planet \n"
                         + "3) Get to the planet to score and level up \n"
-                        + "4) If you miss, just see the feedback and click RESET to try again");
+                        + "4) If you miss, just see the feedback and click RESET to try again /n "
+                        + "HINT: Earth is the only safest place.");
                 show = false;
                 return;
             }

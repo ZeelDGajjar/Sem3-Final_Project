@@ -32,7 +32,6 @@ public class Sem3Final_Project extends Application {
         launch(args);
     }
 
-    @Override
     public void start(Stage primaryStage) {
         try {
             System.out.println(getClass().getResource("/View/GameView.fxml"));
@@ -42,7 +41,7 @@ public class Sem3Final_Project extends Application {
             primaryStage.setTitle("Marathon Simulator");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (IOException ex) {
+        } catch (IOException ex) {  
             System.getLogger(Sem3Final_Project.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }

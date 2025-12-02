@@ -19,7 +19,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+=======
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="400.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameViewController">
+>>>>>>> 34e517bcfae844cb6d7b9f3b2c14267c01c61383
    <children>
       <ImageView fitHeight="420.0" fitWidth="792.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -90,7 +94,7 @@
                         <Slider fx:id="directionInput" onDragDropped="#DirectionDragDropped" prefHeight="19.0" prefWidth="129.0" style="-: red;" />
                      </children>
                   </VBox>
-                  <Button fx:id="btnLaunch" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#LaunchBtnClicked" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: #ffde59; -fx-border-color: black; -fx-border-radius: 15px; -fx-border-width: 2px; -fx-background-radius: 16px;" text="Launch" textOverrun="CLIP">
+                  <Button fx:id="btnLaunch" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: #ffde59; -fx-border-color: black; -fx-border-radius: 15px; -fx-border-width: 2px; -fx-background-radius: 16px;" text="Launch" textOverrun="CLIP">
                      <font>
                         <Font name="Segoe UI Emoji" size="14.0" />
                      </font>
@@ -117,7 +121,7 @@
                               <Font name="Dubai Light" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="zomombieLevel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="22.468750953674316">
+                        <Text fx:id="zomombieLevel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="42.468749046325684">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -157,7 +161,7 @@
                               <Font name="Dubai Light" size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="targetPlanet" fill="WHITE" layoutX="129.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" wrappingWidth="45.47003364562988">
+                        <Text fx:id="targetPlanet" fill="WHITE" layoutX="129.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" wrappingWidth="98.1367244720459">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

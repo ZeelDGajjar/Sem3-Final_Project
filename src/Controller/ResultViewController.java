@@ -1,30 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controller;
 
-
-<<<<<<< HEAD:src/Controller/ResultController.java
-import java.net.URL;
-=======
 import Model.Planet;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
->>>>>>> vedika:src/Controller/ResultViewController.java
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-<<<<<<< HEAD:src/Controller/ResultController.java
 import javafx.scene.image.ImageView;
-=======
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
->>>>>>> vedika:src/Controller/ResultViewController.java
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -33,94 +24,64 @@ import javafx.stage.Stage;
  * and allows the user to return to the main menu.
  */
 public class ResultViewController implements Initializable {
-    @FXML
-<<<<<<< HEAD:src/Controller/ResultController.java
-    private Label warningMessageLabel;  
-=======
-     public Label warningMessageLabel;  //Display a warning or game-over title message  
->>>>>>> vedika:src/Controller/ResultViewController.java
 
     @FXML
-    public Button TryAgainBtn;     
-    
+    private Pane rootPane;
+
     @FXML
-<<<<<<< HEAD:src/Controller/ResultController.java
-    private Label FailureReasonLabel; 
-    
+    private Label warningMessageLabel;
+
     @FXML
-    private Label levelReachedLabel;  
-    
+    private Label failureReasonLabel;
+
     @FXML
-    private ImageView backgroundImageView;
-    
-=======
-     public Label FailureReasonLabel; // Shows reason why player failed / lost
-    
+    private Label levelReachedLabel;
+
     @FXML
-    public  Label levelReachedLabel;  // Shows level player reached before failing
+    private Button btnTryAgain;
 
     @FXML
     private ImageView backgroundImageView;
-
->>>>>>> vedika:src/Controller/ResultViewController.java
-     /**
-     * @param warningMessage  A short warning or conclusion message (e.g., "You were zombied!")
-     * @param failureReason   Detailed explanation for failure (e.g., "You ran out of oxygen")
-     * @param levelReached    The level number the player reached before losing
-     */
-    public void setResult(String warningMessage, String failureReason, int levelReached) {
-        warningMessageLabel.setText(warningMessage != null ? warningMessage : "No message");
-        FailureReasonLabel.setText(failureReason != null ? failureReason : "No reason provided");
-        levelReachedLabel.setText("Level " + levelReached);
-    }
-    
-    /**
-     * Handles the Try Again button click.
-     * Closes the result window, allowing the caller to restart the game
-     * or return to the main menu.
-     *
-     * @param event The ActionEvent triggered by clicking the button
-     */
-    @FXML
-    public void handleTryAgain(ActionEvent event) {
-        // Close the result window
-        Stage stage = (Stage) TryAgainBtn.getScene().getWindow();
-        stage.close();
-    }
-<<<<<<< HEAD:src/Controller/ResultController.java
-    
-    /**
-     * Initialize the controller: set background image and default result values.
-     */
-    public void initialize(URL url, ResourceBundle rb) {
-        // Load background image
-=======
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // Load background image
->>>>>>> vedika:src/Controller/ResultViewController.java
+        // Load background image
         try {
-            Image bgImage = new Image(getClass().getResourceAsStream("/Images/ResultBackground.png"));
+            Image bgImage = new Image(
+                getClass().getResourceAsStream("/Images/ResultBackground.png")
+            );
             backgroundImageView.setImage(bgImage);
         } catch (Exception e) {
             System.err.println("Failed to load background image");
             e.printStackTrace();
         }
-<<<<<<< HEAD:src/Controller/ResultController.java
+
+        // Try again button reloads GameView
+        btnTryAgain.setOnAction(e -> {
+            try {
+                Parent pane = FXMLLoader.load(getClass().getResource("/View/GameView.fxml"));
+                rootPane.getChildren().setAll(pane);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
-    
-    
-}
-     
-=======
-     }
+
+    /**
+     * Sets the game result text fields.
+     */
+    public void setResult(String warningMessage, String failureReason, int levelReached) {
+        warningMessageLabel.setText(warningMessage != null ? warningMessage : "No message");
+        failureReasonLabel.setText(failureReason != null ? failureReason : "No reason provided");
+        levelReachedLabel.setText("Level " + levelReached);
+    }
+
+    /**
+     * Closes the result window (if used as popup).
+     */
+    @FXML
+    public void handleTryAgain(ActionEvent event) {
+        Stage stage = (Stage) btnTryAgain.getScene().getWindow();
+        stage.close();
     }
 }
-
-     
-     
-
-
-
->>>>>>> vedika:src/Controller/ResultViewController.java
