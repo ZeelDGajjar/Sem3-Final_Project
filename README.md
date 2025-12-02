@@ -5,6 +5,8 @@
 **Zombied** is an educational space-themed game that helps players develop **physics intuition**.
 Players explore how objects move in a multi-planetary system by setting **speed** and **direction** to navigate through space with realistic acceleration effects.
 
+---
+
 ## How to Run the Project
 
 ### In NetBeans
@@ -23,6 +25,8 @@ Players explore how objects move in a multi-planetary system by setting **speed*
 6. Right-click the project → **Run** or press **F6**
 7. Click **Start** in the main menu, input speed and direction, and observe the object’s motion
 
+---
+
 ## Overview
 
 In **Zombied**, players interact with a **multi-planetary system**, learning how forces and motion affect trajectories.
@@ -32,6 +36,7 @@ The game emphasizes understanding **acceleration, velocity, and motion dynamics*
 * **Learning Focus:** Physics intuition through observation of motion in a multi-planet system
 * **Theme:** Minimalist space visuals focusing on motion dynamics
 
+---
 
 ## Features
 
@@ -41,6 +46,7 @@ The game emphasizes understanding **acceleration, velocity, and motion dynamics*
 * **Immediate Feedback:** Observe trajectory changes based on inputs
 * **Learning Focus:** Understand how objects respond to forces in space
 
+---
 
 ## Teamwork Summary
 
@@ -56,6 +62,7 @@ Each member also worked on their model’s test units.
 * ResultView and its Controller
 * Models: CollisionUtil, GameModel, GameState, and Planet
 
+---
 
 ## Educational Value
 
@@ -66,6 +73,7 @@ Each member also worked on their model’s test units.
 * Experiment safely to explore physics concepts visually
 * Strengthen analytical thinking and experimentation skills
 
+---
 
 ## Technologies Used
 
@@ -73,6 +81,7 @@ Each member also worked on their model’s test units.
 * **Framework:** JavaFX 21+ (for GUI, animation, and interactivity)
 * **Concepts:** Object-Oriented Programming, Event Handling, Physics Simulation
 
+---
 
 ### 🌌 “Learn. Observe. Understand.”
 
