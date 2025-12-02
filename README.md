@@ -3,8 +3,6 @@
 **Zombied** is an educational space-themed game that turns physics practice into an engaging, interactive experience.  
 Players launch a projectile through space, adjusting **speed** and **direction** to hit a **target planet** — learning key physics concepts like motion, velocity, and trajectory along the way.
 
----
-
 ## 🚀 Overview
 
 In **Zombied**, you become a space explorer learning to master the laws of motion.  
@@ -16,18 +14,14 @@ The game responds dynamically based on your inputs — teaching through both **s
 - 💡 **Learning Focus:** Basic physics principles (motion, angles, and projectile dynamics).  
 - 🌌 **Theme:** A fun, cosmic environment with colorful planets and space visuals.
 
----
-
 ## 🧩 Features
 
-- 🌠 **Multiple Levels:** Increasing difficulty to match growing player skill.  
-- ⚙️ **Interactive Input:** Players set initial velocity and direction.  
-- 🪐 **Realistic Motion:** Projectiles travel through space according to real physics logic.  
-- 📊 **Score System:** Earn points for every successful hit.  
-- 🤖 **Learning Feedback:** When you miss, the game explains *why* — reinforcing understanding.  
-- 🎨 **Engaging Visuals:** Space-themed design with moving planets and glowing effects.  
-
----
+-  **Multiple Levels:** Increasing difficulty to match growing player skill.  
+-  **Interactive Input:** Players set initial velocity and direction.  
+-  **Realistic Motion:** Projectiles travel through space according to real physics logic.  
+-  **Score System:** Earn points for every successful hit.  
+-  **Learning Feedback:** When you miss, the game explains *why* — reinforcing understanding.  
+-  **Engaging Visuals:** Space-themed design with moving planets and glowing effects.  
 
 ## 🕹️ How to Play
 
@@ -39,8 +33,6 @@ The game responds dynamically based on your inputs — teaching through both **s
 
 > 💡 *Tip:* Experiment with different values to see how changes affect your projectile’s path.
 
----
-
 ## 🧠 Educational Value
 
 Zombied helps players intuitively understand:
@@ -49,7 +41,6 @@ Zombied helps players intuitively understand:
 - Real-time cause and effect through simulation  
 - Analytical thinking and experimentation  
 
----
 
 ## 🧰 Technologies Used
 
@@ -57,7 +48,6 @@ Zombied helps players intuitively understand:
 - **Framework:** JavaFX (for GUI, animation, and interactivity)  
 - **Concepts:** Object-Oriented Programming, Event Handling, Physics Simulation  
 
----
 
 ### 🌌 “Learn. Launch. Land.”  
 *Explore the universe — one physics problem at a time.*
